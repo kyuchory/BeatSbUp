@@ -1,0 +1,37 @@
+*{
+    margin:0;
+    padding:0;
+}
+
+.mainPageContainer {
+    background-color: aquamarine;
+    display: flex;
+    flex-direction: column;
+}
+  .headerContainer {
+    background-color: red;
+    width: 940px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .logoHeaderContainer {
+    background-color: blueviolet;
+    height: 90px;
+  }
+  .menuHedaerContainer {
+    background-color: brown;
+    height: 65px;
+  }
+  .mainImageContainer {
+    background-color: blue;
+    height: 450px; /* 내용물에따라 수정 */
+    width: 100%;
+    margin: 0 auto;
+  }
+  .contentContainer {
+    background-color: bisque;
+    height: 1000px; /* 내용물에따라 수정 */
+    width: 940px;
+    margin: 0 auto;
+  }
