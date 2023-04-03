@@ -8,19 +8,42 @@
   flex-direction: column;
 }
 
-.headerContainer {
-  width: 940px;
-  margin: 0 auto;
-}
-
-
-
-.mainImageContainer {
-  background-color: blue;
+.imageContainer {
+  position: relative;
+  background-color: rgb(212, 212, 212);
   height: 450px;
   /* 내용물에따라 수정 */
   width: 100%;
   margin: 0 auto;
+}
+
+.imageLeft {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.imageRight {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.search {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 50%;
+  height: 50px;
+  padding: 5px 10px;
+  border-radius: 25px;
+  border: 0;
+  box-shadow: 3px 3px 5px rgb(192, 192, 192);
+  font-size: 1.2rem;
+  opacity: 0.7;
 }
 
 .contentContainer {
