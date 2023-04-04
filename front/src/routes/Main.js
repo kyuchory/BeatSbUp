@@ -14,8 +14,8 @@ function Main() {
     <div className={styles.mainPageContainer}>
       <Header />
       <div className={styles.imageContainer}>
-        <AiFillCaretLeft size={50} color='grey' className={styles.imageLeft} />
-        <AiFillCaretRight size={50} color='grey' className={styles.imageRight} />
+        <AiFillCaretLeft size={50} color='grey' className={styles.imageLeft} cursor='pointer' />
+        <AiFillCaretRight size={50} color='grey' className={styles.imageRight} cursor='pointer' />
         <input
           type="text"
           value={search}
