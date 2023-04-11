@@ -1,37 +1,55 @@
-*{
-    margin:0;
-    padding:0;
+* {
+  margin: 0;
+  padding: 0;
 }
 
 .mainPageContainer {
-    background-color: aquamarine;
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
-  .headerContainer {
-    background-color: red;
-    width: 940px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-  }
-  .logoHeaderContainer {
-    background-color: blueviolet;
-    height: 90px;
-  }
-  .menuHedaerContainer {
-    background-color: brown;
-    height: 65px;
-  }
-  .mainImageContainer {
-    background-color: blue;
-    height: 450px; /* 내용물에따라 수정 */
-    width: 100%;
-    margin: 0 auto;
-  }
-  .contentContainer {
-    background-color: bisque;
-    height: 1000px; /* 내용물에따라 수정 */
-    width: 940px;
-    margin: 0 auto;
-  }
+
+.imageContainer {
+  position: relative;
+  background-color: rgb(212, 212, 212);
+  height: 450px;
+  /* 내용물에따라 수정 */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.imageLeft {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.imageRight {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translate(0%, -50%);
+}
+
+.search {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 50%;
+  height: 50px;
+  padding: 5px 10px;
+  border-radius: 25px;
+  border: 0;
+  box-shadow: 3px 3px 5px rgb(192, 192, 192);
+  font-size: 1.2rem;
+  opacity: 0.7;
+}
+
+.contentContainer {
+  background-color: bisque;
+  height: 1000px;
+  /* 내용물에따라 수정 */
+  width: 940px;
+  margin: 0 auto;
+}
