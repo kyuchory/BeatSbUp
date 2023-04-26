@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 
 import Header from '../components/Header';
@@ -23,9 +24,11 @@ function Main() {
           placeholder="검색어를 입력해주세요."
           className={styles.search}
         />
+        <Link to='/' ><img src='./logo.png' size="100%"/></Link>
 
       </div>
-      <div className={styles.contentContainer}>content</div>
+      <div className={styles.contentContainer}>
+      </div>
     </div>
   );
 }
