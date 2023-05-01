@@ -1,6 +1,46 @@
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import './modal.css';
+import axios from 'axios';
+
+const Modal = (props) => {
+    // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
+    const { open, close, header } = props;
+    
+    return (
+      // 모달이 열릴때 openModal 클래스가 생성된다.
+      <div className={open ? 'openModal modal' : 'modal'}>
+        {open ? (
+          <section>
+            <header>
+              {header}
+              <button className="close" onClick={close}>
+                &times;
+              </button>
+            </header>
+            <main>{props.children}</main>
+            <footer>
+              <button className="close" onClick={close}>
+                close
+              </button>
+            </footer>
+          </section>
+        ) : null}
+      </div>
+    );
+  };
 
 function MainTest() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const openModal = () => {
+        setModalOpen(true);
+      };
+      const closeModal = () => {
+        setModalOpen(false);
+      };
+      axios.get('http://localhost:3001/test').then(function(response){
+        console.log(response);
+      });
     return (
         <div>
             개발단계용입니다.
@@ -58,6 +98,11 @@ function MainTest() {
             <div>
                 <Link to="/boardviewrecommand">boardviewrecommand</Link>
             </div>
+            <button onClick={openModal}>일정에 추가</button>
+            <Modal open={modalOpen} close={closeModal} header="일정에 추가">
+                날짜 : <textarea></textarea>
+                시간 : <textarea></textarea>
+            </Modal>
         </div>
     );
 }
