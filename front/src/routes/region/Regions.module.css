@@ -7,13 +7,20 @@
     flex-direction: column;
     background-color: aqua;
 }
-.Regions{
+.regions{
     flex:1;
     display: inline;
     text-align: center;
     font-size: 3em;
     background-color:blue;
     vertical-align: middle;
+}
+.outline{
+    flex:1;
+    display:flex;
+    text-align: center;
+    justify-content: center;
+    vertical-align: middle;    
 }
 .list{
     flex:2;
