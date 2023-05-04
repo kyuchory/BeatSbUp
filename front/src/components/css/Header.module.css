@@ -1,7 +1,12 @@
+a {
+    text-decoration: none;
+    color: none;
+}
+
 .container {
     width: 940px;
     margin: 0 auto;
-    position:relative;
+    position: relative;
 }
 
 .logoContainer {
@@ -9,27 +14,29 @@
     text-align: center;
 }
 
-.profile{
-    position:absolute;
-    right:10px;
-    top:10px;
-    width:200px;
+.profile {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    width: 200px;
     text-align: center;
-    
-}
-.profile:hover .profileSelector{
-    animation-name: slide;
-    animation-duration: 1s;
-    transform: scale(1, 1);
 }
 
-.profileSelector{
+/* 나중에 애니메이션 효과로 바꾸기 */
+.profile:hover .profileSelector {
+    display: block;
+}
+
+.profileSelector {
+    display: none;
     border: 2px solid grey;
     border-radius: 10px;
     background-color: white;
-    padding:5px;
+    padding: 5px;
     line-height: 30px;
-    transition: all 0.5s;
+    animation-duration: 1s;
+    /* transition: all 0.5s; */
+    cursor: pointer;
 
 }
 
@@ -37,10 +44,23 @@
     from {
         display: none;
     }
-  
+
     to {
-        display: block;
+        display: inline-block;
     }
+}
+
+.profileSelect {
+    font-weight: bold;
+}
+
+.profileSelect:hover a {
+    color: black;
+    text-decoration: underline;
+}
+
+.profileSelect>a {
+    color: rgb(155, 155, 155)
 }
 
 .menuContainer {

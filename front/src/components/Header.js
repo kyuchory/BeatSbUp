@@ -8,12 +8,12 @@ function Header() {
             <div className={styles.logoContainer}>
                 <Link to='/' ><img src='./logo.png' /></Link>
             </div>
-            <div className={styles.profile}>           
-                <CgProfile size={'50px'} color='rgb(72, 72, 72)'/>
+            <div className={styles.profile}>
+                <CgProfile size={'50px'} color='rgb(72, 72, 72)' cursor='pointer' />
                 <div className={styles.profileSelector}>
-                    <div>내정보</div>
-                    <div>정보 수정</div>
-                    <div>로그아웃</div>
+                    <div className={styles.profileSelect}><Link to="/mypage">내정보</Link></div>
+                    <div className={styles.profileSelect}><Link to="./">정보 수정</Link></div>
+                    <div className={styles.profileSelect}><Link to="./">로그아웃</Link></div>
                 </div>
             </div>
             <div className={styles.menuContainer}>
