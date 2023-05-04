@@ -1,11 +1,46 @@
 .container {
     width: 940px;
     margin: 0 auto;
+    position:relative;
 }
 
 .logoContainer {
     height: 90px;
     text-align: center;
+}
+
+.profile{
+    position:absolute;
+    right:10px;
+    top:10px;
+    width:200px;
+    text-align: center;
+    
+}
+.profile:hover .profileSelector{
+    animation-name: slide;
+    animation-duration: 1s;
+    transform: scale(1, 1);
+}
+
+.profileSelector{
+    border: 2px solid grey;
+    border-radius: 10px;
+    background-color: white;
+    padding:5px;
+    line-height: 30px;
+    transition: all 0.5s;
+
+}
+
+@keyframes slide {
+    from {
+        display: none;
+    }
+  
+    to {
+        display: block;
+    }
 }
 
 .menuContainer {

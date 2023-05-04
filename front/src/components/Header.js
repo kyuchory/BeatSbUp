@@ -1,11 +1,20 @@
 import { Link } from 'react-router-dom';
 import styles from './css/Header.module.css';
+import { CgProfile } from "react-icons/cg";
 
 function Header() {
     return (
         <div className={styles.container}>
             <div className={styles.logoContainer}>
                 <Link to='/' ><img src='./logo.png' /></Link>
+            </div>
+            <div className={styles.profile}>           
+                <CgProfile size={'50px'} color='rgb(72, 72, 72)'/>
+                <div className={styles.profileSelector}>
+                    <div>내정보</div>
+                    <div>정보 수정</div>
+                    <div>로그아웃</div>
+                </div>
             </div>
             <div className={styles.menuContainer}>
                 <div className={styles.menus}>

@@ -39,7 +39,7 @@ function MainTest() {
         setModalOpen(false);
       };
       axios.get('http://localhost:3001/test').then(function(response){
-        console.log(response.data[0].name);
+        console.log(response.data[0]);
       });
     return (
         <div>

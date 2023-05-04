@@ -6,8 +6,8 @@ const mysql = require('mysql2');
 
 var connection = mysql.createConnection({
   host: "localhost",
-  user: "루트 말고 딴걸로 해야할듯",
-  password: "본인 비밀번호",
+  user: "root",
+  password: "123456",
   database: "travel"
 });
 
