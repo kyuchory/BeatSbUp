@@ -4,10 +4,10 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 
-var connection = mysql.createConnection({
+const connection = mysql.createConnection({
   host: "localhost",
-  user: "root",
-  password: "123456",
+  user: "manager",
+  password: "test1234",
   database: "travel"
 });
 
@@ -20,13 +20,32 @@ app.get('/', (req, res) => {
 })
 //DB테스트
 app.get('/test', (req, res) => {
-    connection.query('select * from sight',
-    function(error,results,fields){
+  connection.query(`select * from sight`,
+    function (error, results, fields) {
       console.log(results)
-      if(error) throw error;
+      if (error) throw error;
       res.json(results);
     })
 })
+
+app.post('/insertdata', (req, res, next) => {
+  const data = JSON.parse(req.body.data);
+  console.log(data);
+  data.map((element, index) => {
+    console.log(element.title);
+    connection.query(
+      "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
+      [element.title, element.addr1, element.cat3, element.firstimage, element.tel, element.contentid, element.contenttypeid],
+      function (error, results, fields) {
+        console.log(results)
+        if (error) {
+          console.log('중복 발생');
+        }
+      }
+    );
+  });
+  res.send('Data inserted successfully.');
+});
 
 app.listen(3001, () => {
   console.log('3001 port running')
