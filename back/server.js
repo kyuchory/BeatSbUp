@@ -30,16 +30,17 @@ app.get('/test', (req, res) => {
 
 app.post('/insertdata', (req, res, next) => {
   const data = req.body.data;
-  console.log(data);
   data.map((element, index) => {
-    console.log(element.title);
+    // console.log(element.title);
     connection.query(
       "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
       [element.title, element.addr1, element.cat3, element.firstimage, element.tel, element.contentid, element.contenttypeid],
       function (error, results, fields) {
-        console.log(results)
-        if (error) {
-          console.log('중복 발생');
+        if (error) {  // 중복되었으면
+          // console.log('중복 발생');
+        }
+        else {  // 추가된 데이터 출력
+          console.log('Insert data : ' + element.title);
         }
       }
     );
