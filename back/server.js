@@ -11,9 +11,9 @@ const connection = mysql.createConnection({
   database: "travel"
 });
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
-app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: '50mb' }));
 
 app.get('/', (req, res) => {
   res.send('HelloWorld')
@@ -29,7 +29,7 @@ app.get('/test', (req, res) => {
 })
 
 app.post('/insertdata', (req, res, next) => {
-  const data = JSON.parse(req.body.data);
+  const data = req.body.data;
   console.log(data);
   data.map((element, index) => {
     console.log(element.title);

@@ -35,30 +35,24 @@ function MainTest() {
 
 
   const dataInsert = () => {
-    const typeId = [12, 14, 28, 38, 39];
+    const typeId = [12, 14, 28, 38, 39]  // 차례대로 관광지, 문화시설, 레포츠, 쇼핑, 음식점
 
-    const promises = typeId.map((id) =>
-      axios.get(`https://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=SaXEWBrqfLH2I6uYF88gUq7wTPmI7VxP7lAvYCJmsAo80LmwmPB8tDMoZRM3%2Bo39PLk32tOm6exWqvROqh0aDg%3D%3D&numOfRows=100&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&mapX=126.981611&mapY=37.568477&radius=1000000&contentTypeId=${id}`)
-        .then((response) => response.data.response.body.items.item)
-    );
-
-    Promise.all(promises)
-      .then((responseData) => {
-        setData([...data, ...responseData.flat()]);
-      })
-      .catch((error) => console.log(error));
-    axios
-      .post("http://localhost:3001/insertdata", {
-        data: data,
-      })
-      .then((response) => {
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
+    axios.get(`https://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=SaXEWBrqfLH2I6uYF88gUq7wTPmI7VxP7lAvYCJmsAo80LmwmPB8tDMoZRM3%2Bo39PLk32tOm6exWqvROqh0aDg%3D%3D&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&mapX=126.981611&mapY=37.568477&radius=1000000&contentTypeId=15`)
+      .then(function (response) {
+        const resdata = response.data.response.body.items.item;
+        console.log(typeof (resdata));
+        setData(resdata);
       });
-  };
 
+    axios.post("http://localhost:3001/insertdata", {
+      data
+    })
+      .then(function (response) {
+        console.log(response);
+      }).catch(function (error) {
+        console.log(error);
+      })
+  }
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => {
     setModalOpen(true);
