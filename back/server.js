@@ -28,24 +28,42 @@ app.get('/test', (req, res) => {
     })
 })
 
-app.post('/insertdata', (req, res, next) => {
+app.post('/insertdata', async (req, res, next) => {
+  let errorCount = 0;
+  let insertCount = 0;
   const data = req.body.data;
-  data.map((element, index) => {
-    // console.log(element.title);
-    connection.query(
-      "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
-      [element.title, element.addr1, element.cat3, element.firstimage, element.tel, element.contentid, element.contenttypeid],
-      function (error, results, fields) {
-        if (error) {  // 중복되었으면
-          // console.log('중복 발생');
-        }
-        else {  // 추가된 데이터 출력
-          console.log('Insert data : ' + element.title);
-        }
+
+  for (let i = 0; i < data.length; i++) {
+    const element = data[i];
+    try {
+      const result = await connection.promise().query(
+        "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
+        [element.title, element.addr1, element.cat3, element.firstimage, element.tel, element.contentid, element.contenttypeid]
+      );
+      insertCount++;
+      console.log('Insert data : ' + element.title);
+    } catch (error) {
+      if (error.code === 'ER_DUP_ENTRY') {
+        console.log('Duplicate data : ' + element.title);
+      } else {
+        console.log('Error while inserting data : ' + element.title);
       }
-    );
-  });
+      errorCount++;
+    }
+  }
+
+  console.log("에러 or 중복된 데이터 개수 : " + errorCount);
+  console.log("추가된 데이터 개수 : " + insertCount);
   res.send('Data inserted successfully.');
+});
+
+app.get('/initdata', (req, res, next) => {
+  connection.query(`truncate sight`,
+    function (error, results, fields) {
+      console.log(results)
+      if (error) throw error;
+      res.json(results);
+    })
 });
 
 app.listen(3001, () => {

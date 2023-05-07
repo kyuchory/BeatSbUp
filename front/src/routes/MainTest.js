@@ -31,27 +31,35 @@ const Modal = (props) => {
 };
 
 function MainTest() {
-  const [data, setData] = useState();
+  const [data, setData] = useState([]);
 
+  const insertData = async () => {
+    try {
+      const typeId = [12, 14, 28, 38, 39]; // 차례대로 관광지, 문화시설, 레포츠, 쇼핑, 음식점
+      const responseData = [];
+      for (const id of typeId) {
+        const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=SaXEWBrqfLH2I6uYF88gUq7wTPmI7VxP7lAvYCJmsAo80LmwmPB8tDMoZRM3%2Bo39PLk32tOm6exWqvROqh0aDg%3D%3D&numOfRows=100000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&mapX=126.981611&mapY=37.568477&radius=100000000&contentTypeId=${id}`);
+        const resData = response.data.response.body.items.item;
+        console.log(`${id}에서 ${resData.length}개의 데이터를 받아왔습니다.`); // 받아온 데이터
+        responseData.push(...resData);
+      }
 
-  const dataInsert = () => {
-    const typeId = [12, 14, 28, 38, 39]  // 차례대로 관광지, 문화시설, 레포츠, 쇼핑, 음식점
+      setData(responseData);
+      await axios.post("http://localhost:3001/insertdata", {
+        data: responseData
+      })
+      console.log("데이터 삽입 성공!");
 
-    axios.get(`https://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=SaXEWBrqfLH2I6uYF88gUq7wTPmI7VxP7lAvYCJmsAo80LmwmPB8tDMoZRM3%2Bo39PLk32tOm6exWqvROqh0aDg%3D%3D&numOfRows=100000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&mapX=126.981611&mapY=37.568477&radius=100000000&contentTypeId=38`)
-      .then(function (response) {
-        const resdata = response.data.response.body.items.item;
-        console.log(resdata.length);  // 받아온 데이터
-        setData(resdata);
-      });
+    } catch (error) {
+      console.error(`데이터 삽입 중 에러 발생: ${error}`);
+    }
+  };
 
-    axios.post("http://localhost:3001/insertdata", {
-      data
-    })
+  const initData = () => {
+    axios.get('http://localhost:3001/initdata')
       .then(function (response) {
         console.log(response);
-      }).catch(function (error) {
-        console.log(error);
-      })
+      });
   }
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => {
@@ -125,7 +133,10 @@ function MainTest() {
         날짜 : <textarea></textarea>
         시간 : <textarea></textarea>
       </Modal>
-      <button onClick={() => dataInsert()}>data 삽입</button>
+      <div>
+        <button onClick={() => insertData()}>data 삽입</button>
+      </div>
+      <button onClick={() => initData()}>data 초기화</button>
     </div>
   );
 }
