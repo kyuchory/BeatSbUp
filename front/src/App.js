@@ -12,6 +12,8 @@ import Login from './routes/Login.js';
 import Register from './routes/Register.js';
 import AddSchedule from './routes/AddSchedule.js';
 
+import SearchDetail from './routes/SearchDetail.js';
+
 import RegionMain from './routes/region/RegionMain'
 import Regions from './routes/region/Regions'
 import RegionDetail from './routes/region/RegionDetail'
@@ -37,6 +39,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/addschedule" element={<AddSchedule />} />
+
+        <Route path="/searchDetail" element={<SearchDetail />} />
 
         <Route path="/regionmain" element={<RegionMain />} />
         <Route path="/regions" element={<Regions />} />

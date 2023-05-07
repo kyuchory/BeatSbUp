@@ -28,6 +28,7 @@ app.get('/test', (req, res) => {
     })
 })
 
+// 여행지 데이터 추가
 app.post('/insertdata', async (req, res, next) => {
   let errorCount = 0;
   let insertCount = 0;
@@ -57,6 +58,7 @@ app.post('/insertdata', async (req, res, next) => {
   res.send('Data inserted successfully.');
 });
 
+// 여행지 데이터 전부 삭제
 app.get('/initdata', (req, res, next) => {
   connection.query(`truncate sight`,
     function (error, results, fields) {
