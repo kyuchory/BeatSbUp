@@ -1,0 +1,19 @@
+.content {
+    width: 940px;
+    margin: 0 auto;
+}
+
+.lists {
+    list-style: none;
+}
+
+.list {
+    height: 120px;
+    background-color: aliceblue;
+}
+
+.imageContainer {
+    width: 100%;
+    background-color: aqua;
+    display: inline-block;
+}
