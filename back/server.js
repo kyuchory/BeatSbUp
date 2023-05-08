@@ -11,6 +11,14 @@ const connection = mysql.createConnection({
   database: "travel"
 });
 
+connection.connect((error) => {
+  if (error) {
+    console.error('Error connecting to MySQL server: ' + error.stack);
+    return;
+  }
+  console.log('Connected to MySQL server as id ' + connection.threadId);
+});
+
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 app.use(cors());
 app.use(bodyParser.json({ limit: '50mb' }));
@@ -19,7 +27,7 @@ app.get('/', (req, res) => {
   res.send('HelloWorld')
 })
 //DB테스트
-app.get('/test', (req, res) => {
+app.get('/showdata', (req, res) => {
   connection.query(`select * from sight`,
     function (error, results, fields) {
       console.log(results)

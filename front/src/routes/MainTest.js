@@ -55,6 +55,13 @@ function MainTest() {
     }
   };
 
+  const printData = () => {
+    axios.get('http://localhost:3001/showdata')
+      .then(function (response) {
+        console.log(response);
+      });
+  }
+
   const initData = () => {
     axios.get('http://localhost:3001/initdata')
       .then(function (response) {
@@ -134,7 +141,8 @@ function MainTest() {
         시간 : <textarea></textarea>
       </Modal>
       <div>
-        <button onClick={() => insertData()}>data 삽입</button>
+      <button onClick={() => insertData()}>data 삽입</button>
+      <button onClick={() => printData()}>data 출력</button>
       </div>
       <button onClick={() => initData()}>data 초기화</button>
     </div>
