@@ -145,6 +145,13 @@ function MainTest() {
       <button onClick={() => printData()}>data 출력</button>
       </div>
       <button onClick={() => initData()}>data 초기화</button>
+      <button onClick={()=>
+      {
+        axios.get('http://localhost:3001/authCheck')
+          .then(function (response) {
+            console.log(response);
+          });
+      }}>dd</button>
     </div>
   );
 }
