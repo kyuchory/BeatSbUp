@@ -8,7 +8,8 @@ const connection = mysql.createConnection({
   host: "127.0.0.1",
   user: "manager",
   password: "test1234",
-  database: "travel"
+  database: "travel",
+  port: "3306",
 });
 
 connection.connect((error) => {
