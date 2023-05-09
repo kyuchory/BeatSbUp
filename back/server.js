@@ -26,10 +26,11 @@ app.use(session({
 	saveUninitialized: false
 }))
 const connection = mysql.createConnection({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "manager",
   password: "test1234",
-  database: "travel"
+  database: "travel",
+  port: "3306",
 });
 
 connection.connect((error) => {
@@ -162,10 +163,11 @@ app.post('/insertdata', async (req, res, next) => {
     } catch (error) {
       if (error.code === 'ER_DUP_ENTRY') {
         console.log('Duplicate data : ' + element.title);
+        errorCount++;
       } else {
         console.log('Error while inserting data : ' + element.title);
+        errorCount++;
       }
-      errorCount++;
     }
   }
 
