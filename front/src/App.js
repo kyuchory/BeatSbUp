@@ -4,7 +4,8 @@ import {
   Route,
 } from "react-router-dom";
 import MainTest from './routes/MainTest.js';
-
+import { useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import Main from './routes/Main.js';
 import Mypage from './routes/Mypage.js';
 import Class from './routes/Class.js';
@@ -26,10 +27,18 @@ import BoardWriteTogether from './routes/board/BoardWriteTogether'
 import BoardViewTogether from './routes/board/BoardViewTogether'
 import BoardViewRecommand from './routes/board/BoardViewRecommand'
 
+function ScrollToTop(){
+  const {pathname} = useLocation();
 
+  useEffect(()=>{
+    window.scrollTo(0,0);
+  },[pathname]);
+  return null;
+}
 function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
+      <ScrollToTop/>
       <Routes>
         <Route path="/" element={<MainTest />} />  {/* 개발 초기 테스트용 페이지 전환할때 사용 */}
 

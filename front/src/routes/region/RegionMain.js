@@ -43,21 +43,7 @@ function RegionMain() {
                 </div>
             </div>
             </div>
-            <div className={styles.list}>
-                <button className={styles.listInner}></button>
-                <button className={styles.listInner}></button>
-                <button className={styles.listInner}></button>
-                <button className={styles.listInner}></button>
-                <button className={styles.listInner}>더 보기
-                    <ul className={styles.detail}>
-                        <li>강릉</li>
-                        <li>강릉</li>
-                        <li>강릉</li>
-                        <li>강릉</li>
-                        <li>강릉</li>
-                    </ul>
-                </button>
-            </div>
+            
         </div>
     );
 }
