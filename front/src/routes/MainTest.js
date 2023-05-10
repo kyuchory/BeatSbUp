@@ -3,6 +3,9 @@ import { useState } from "react";
 import './modal.css';
 import axios from 'axios';
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+console.log(API_KEY)
+
 const Modal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
   const { open, close, header } = props;
@@ -38,7 +41,7 @@ function MainTest() {
       const typeId = [12, 14, 28, 38, 39]; // 차례대로 관광지, 문화시설, 레포츠, 쇼핑, 음식점
       const responseData = [];
       for (const id of typeId) {
-        const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=SaXEWBrqfLH2I6uYF88gUq7wTPmI7VxP7lAvYCJmsAo80LmwmPB8tDMoZRM3%2Bo39PLk32tOm6exWqvROqh0aDg%3D%3D&numOfRows=100000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&mapX=126.981611&mapY=37.568477&radius=100000000&contentTypeId=${id}`);
+        const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=${API_KEY}&numOfRows=100000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&mapX=126.981611&mapY=37.568477&radius=100000000&contentTypeId=${id}`);
         const resData = response.data.response.body.items.item;
         console.log(`${id}에서 ${resData.length}개의 데이터를 받아왔습니다.`); // 받아온 데이터
         responseData.push(...resData);
