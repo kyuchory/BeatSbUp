@@ -1,10 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import './modal.css';
-import axios from 'axios';
-
-const API_KEY = process.env.REACT_APP_API_KEY;
-console.log(API_KEY)
+// import axios from 'axios';
 
 const Modal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
@@ -34,43 +31,6 @@ const Modal = (props) => {
 };
 
 function MainTest() {
-  const [data, setData] = useState([]);
-
-  const insertData = async () => {
-    try {
-      const typeId = [12, 14, 28, 38, 39]; // 차례대로 관광지, 문화시설, 레포츠, 쇼핑, 음식점
-      const responseData = [];
-      for (const id of typeId) {
-        const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/locationBasedList1?serviceKey=${API_KEY}&numOfRows=100000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&mapX=126.981611&mapY=37.568477&radius=100000000&contentTypeId=${id}`);
-        const resData = response.data.response.body.items.item;
-        console.log(`${id}에서 ${resData.length}개의 데이터를 받아왔습니다.`); // 받아온 데이터
-        responseData.push(...resData);
-      }
-
-      setData(responseData);
-      await axios.post("http://localhost:3001/insertdata", {
-        data: responseData
-      })
-      console.log("데이터 삽입 성공!");
-
-    } catch (error) {
-      console.error(`데이터 삽입 중 에러 발생: ${error}`);
-    }
-  };
-
-  const printData = () => {
-    axios.get('http://localhost:3001/showdata')
-      .then(function (response) {
-        console.log(response);
-      });
-  }
-
-  const initData = () => {
-    axios.get('http://localhost:3001/initdata')
-      .then(function (response) {
-        console.log(response);
-      });
-  }
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => {
     setModalOpen(true);
