@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { useState } from "react";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
-console.log(API_KEY)
 
 function Admin() {
+    const API_KEY = process.env.REACT_APP_API_KEY;
+    console.log(API_KEY)
     const [data, setData] = useState([]);
 
     const insertData = async () => {
@@ -19,7 +19,7 @@ function Admin() {
             }
 
             setData(responseData);
-            await axios.post("http://localhost:3001/insertdata", {
+            await axios.post("http://localhost:3001/data/insert", {
                 data: responseData
             })
             console.log("데이터 삽입 성공!");
@@ -29,8 +29,8 @@ function Admin() {
         }
     };
 
-    const printData = () => {
-        axios.get('http://localhost:3001/showdata')
+    const showData = () => {
+        axios.get('http://localhost:3001/data/show')
             .then(function (response) {
                 console.log(response.data.length + "개의 데이터 : ")
                 console.log(response.data);
@@ -38,7 +38,38 @@ function Admin() {
     }
 
     const initData = () => {
-        axios.get('http://localhost:3001/initdata')
+        axios.get('http://localhost:3001/data/init')
+            .then(function (response) {
+                console.log(response);
+            });
+    }
+
+    const insertFestival = async () => {
+        try {
+            const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230511}`);
+            const resData = response.data.response.body.items.item;
+            console.log(`${resData.length}개의 데이터를 받아왔습니다.`); // 받아온 데이터
+
+            await axios.post("http://localhost:3001/festival/insert", {
+                data: resData
+            })
+            console.log("데이터 삽입 성공!");
+
+        } catch (error) {
+            console.error(`데이터 삽입 중 에러 발생: ${error}`);
+        }
+    };
+
+    const showFestival = () => {
+        axios.get('http://localhost:3001/festival/show')
+            .then(function (response) {
+                console.log(response.data.length + "개의 데이터 : ")
+                console.log(response.data);
+            });
+    }
+
+    const initFestival = () => {
+        axios.get('http://localhost:3001/data/init')
             .then(function (response) {
                 console.log(response);
             });
@@ -48,9 +79,14 @@ function Admin() {
         <div>
             <div>
                 <button onClick={() => insertData()}>data 삽입</button>
-                <button onClick={() => printData()}>data 출력</button>
+                <button onClick={() => showData()}>data 출력</button>
+                <button onClick={() => initData()}>data 초기화</button>
             </div>
-            <button onClick={() => initData()}>data 초기화</button>
+            <div>
+                <button onClick={() => insertFestival()}>festival 삽입</button>
+                <button onClick={() => showFestival()}>festival 출력</button>
+                <button onClick={() => initFestival()}>festival 초기화</button>
+            </div>
             <button onClick={() => {
                 axios.get('http://localhost:3001/authCheck')
                     .then(function (response) {

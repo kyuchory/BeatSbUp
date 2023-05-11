@@ -27,7 +27,7 @@ function SearchDetail() {
             });
     }, [searchText]);
 
-    const [text, setText] = useState("");
+    const [text, setText] = useState(location.state.searchText);
     const onSearchChange = (e) => {
         setText(e.target.value)
     }
@@ -54,9 +54,6 @@ function SearchDetail() {
             <div className={styles.content}>
                 {res ? (
                     <ul className={styles.lists}>
-                        <li>
-
-                        </li>
                         {res.map(item => (
                             <li key={item.contentid} className={styles.list}>
                                 <div className={styles.imageContainer}>
