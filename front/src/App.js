@@ -13,6 +13,8 @@ import Login from './routes/Login.js';
 import Register from './routes/Register.js';
 import AddSchedule from './routes/AddSchedule.js';
 
+import Admin from './routes/Admin.js';
+
 import SearchDetail from './routes/SearchDetail.js';
 
 import RegionMain from './routes/region/RegionMain'
@@ -27,18 +29,18 @@ import BoardWriteTogether from './routes/board/BoardWriteTogether'
 import BoardViewTogether from './routes/board/BoardViewTogether'
 import BoardViewRecommand from './routes/board/BoardViewRecommand'
 
-function ScrollToTop(){
-  const {pathname} = useLocation();
+function ScrollToTop() {
+  const { pathname } = useLocation();
 
-  useEffect(()=>{
-    window.scrollTo(0,0);
-  },[pathname]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
   return null;
 }
 function App() {
   return (
     <Router basename={process.env.PUBLIC_URL}>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<MainTest />} />  {/* 개발 초기 테스트용 페이지 전환할때 사용 */}
 
@@ -48,6 +50,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/addschedule" element={<AddSchedule />} />
+
+        <Route path="/admin" element={<Admin />} />
 
         <Route path="/searchDetail" element={<SearchDetail />} />
 

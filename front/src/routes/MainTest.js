@@ -90,6 +90,9 @@ function MainTest() {
         <Link to="/main">메인</Link>
       </div>
       <div>
+        <Link to="/admin">관리자 페이지</Link>
+      </div>
+      <div>
         <Link to="/mypage">Mypage</Link>
       </div>
       <div>
@@ -143,18 +146,6 @@ function MainTest() {
         날짜 : <textarea></textarea>
         시간 : <textarea></textarea>
       </Modal>
-      <div>
-      <button onClick={() => insertData()}>data 삽입</button>
-      <button onClick={() => printData()}>data 출력</button>
-      </div>
-      <button onClick={() => initData()}>data 초기화</button>
-      <button onClick={()=>
-      {
-        axios.get('http://localhost:3001/authCheck')
-          .then(function (response) {
-            console.log(response);
-          });
-      }}>dd</button>
     </div>
   );
 }
