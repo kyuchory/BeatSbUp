@@ -1,100 +1,117 @@
-const express = require('express')
-const app = express()
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-const session = require('express-session')
+const express = require("express");
+const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const bcrypt = require("bcrypt");
+const session = require("express-session");
 
-const manageData = require('./route/data');
-const manageFestival = require('./route/festival');
+const manageData = require("./route/data");
+const manageFestival = require("./route/festival");
 
-var MySQLStore = require('express-mysql-session')(session);
+var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionOption);
 
 var sessionOption = {
-  host: 'localhost',
-  user: 'manager',
-  password: 'test1234',
-  database: 'travel',
+  host: "localhost",
+  user: "manager",
+  password: "test1234",
+  database: "travel",
   port: 3306,
 
-  clearExpired: true,             // 만료된 세션 자동 확인 및 지우기 여부
-  checkExpirationInterval: 10000,   // 만료된 세션이 지워지는 빈도 (milliseconds)
-  expiration: 1000 * 60 * 60 * 2,         // 유효한 세션의 최대 기간 2시간으로 설정 (milliseconds) 
+  clearExpired: true, // 만료된 세션 자동 확인 및 지우기 여부
+  checkExpirationInterval: 10000, // 만료된 세션이 지워지는 빈도 (milliseconds)
+  expiration: 1000 * 60 * 60 * 2, // 유효한 세션의 최대 기간 2시간으로 설정 (milliseconds)
 };
-app.use(session({
-  key: 'session_cookie_name',
-  secret: '~',
-  store: sessionStore,
-  resave: false,
-  saveUninitialized: false
-}))
+app.use(
+  session({
+    key: "session_cookie_name",
+    secret: "~",
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
 
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
-app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.json({ limit: "50mb" }));
 
-app.use('/data', manageData);  // 여행지 데이터 입출력 라우트
-app.use('/festival', manageFestival);  // 행사 데이터 입출력 라우트
+app.use("/data", manageData); // 여행지 데이터 입출력 라우트
+app.use("/festival", manageFestival); // 행사 데이터 입출력 라우트
 
-app.get('/', (req, res) => {
-  res.send('HelloWorld')
-})
+app.get("/", (req, res) => {
+  res.send("HelloWorld");
+});
 
 //권한 있으면 True반환 없으면 False반환
-app.get('/authcheck', (req, res) => {
+app.get("/authcheck", (req, res) => {
   const sendData = { isLogin: "" };
   if (req.session.is_logined) {
-    sendData.isLogin = "True"
+    sendData.isLogin = "True";
   } else {
-    sendData.isLogin = "False"
+    sendData.isLogin = "False";
   }
   res.send(sendData);
-})
+});
 //로그아웃하면 메인페이지로
-app.get('/logout', function (req, res) {
+app.get("/logout", function (req, res) {
   req.session.destroy(function (err) {
-    res.redirect('/');
+    res.redirect("/");
   });
 });
-app.post("/login", (req, res) => { // 데이터 받아서 결과 전송
+app.post("/login", (req, res) => {
+  // 데이터 받아서 결과 전송
   const username = req.body.userId;
   const password = req.body.userPassword;
   const sendData = { isLogin: "" };
 
-  if (username && password) {             // id와 pw가 입력되었는지 확인
-    connection.query('SELECT * FROM userTable WHERE username = ?', [username], function (error, results, fields) {
-      if (error) throw error;
-      if (results.length > 0) {       // db에서의 반환값이 있다 = 일치하는 아이디가 있다.      
+  if (username && password) {
+    // id와 pw가 입력되었는지 확인
+    connection.query(
+      "SELECT * FROM userTable WHERE username = ?",
+      [username],
+      function (error, results, fields) {
+        if (error) throw error;
+        if (results.length > 0) {
+          // db에서의 반환값이 있다 = 일치하는 아이디가 있다.
 
-        bcrypt.compare(password, results[0].userchn, (err, result) => {    // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
+          bcrypt.compare(password, results[0].userchn, (err, result) => {
+            // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
 
-          if (result === true) {                  // 비밀번호가 일치하면
-            req.session.is_logined = true;      // 세션 정보 갱신
-            req.session.nickname = username;
-            req.session.save(function () {
-              sendData.isLogin = "True"
+            if (result === true) {
+              // 비밀번호가 일치하면
+              req.session.is_logined = true; // 세션 정보 갱신
+              req.session.nickname = username;
+              req.session.save(function () {
+                sendData.isLogin = "True";
+                res.send(sendData);
+              });
+              connection.query(
+                `INSERT INTO logTable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`,
+                [req.session.nickname, "-", `React 로그인 테스트`],
+                function (error, result) {}
+              );
+            } else {
+              // 비밀번호가 다른 경우
+              sendData.isLogin = "로그인 정보가 일치하지 않습니다.";
               res.send(sendData);
-            });
-            connection.query(`INSERT INTO logTable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`
-              , [req.session.nickname, '-', `React 로그인 테스트`], function (error, result) { });
-          }
-          else {                                   // 비밀번호가 다른 경우
-            sendData.isLogin = "로그인 정보가 일치하지 않습니다."
-            res.send(sendData);
-          }
-        })
-      } else {    // db에 해당 아이디가 없는 경우
-        sendData.isLogin = "아이디 정보가 일치하지 않습니다."
-        res.send(sendData);
+            }
+          });
+        } else {
+          // db에 해당 아이디가 없는 경우
+          sendData.isLogin = "아이디 정보가 일치하지 않습니다.";
+          res.send(sendData);
+        }
       }
-    });
-  } else {            // 아이디, 비밀번호 중 입력되지 않은 값이 있는 경우
-    sendData.isLogin = "아이디와 비밀번호를 입력하세요!"
+    );
+  } else {
+    // 아이디, 비밀번호 중 입력되지 않은 값이 있는 경우
+    sendData.isLogin = "아이디와 비밀번호를 입력하세요!";
     res.send(sendData);
   }
 });
-app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
+app.post("/signin", (req, res) => {
+  // 데이터 받아서 결과 전송
   const username = req.body.userId;
   const password = req.body.userPassword;
   const password2 = req.body.userPassword2;
@@ -102,34 +119,43 @@ app.post("/signin", (req, res) => {  // 데이터 받아서 결과 전송
   const sendData = { isSuccess: "" };
 
   if (username && password && password2) {
-    connection.query('SELECT * FROM userTable WHERE username = ?', [username], function (error, results, fields) { // DB에 같은 이름의 회원아이디가 있는지 확인
-      if (error) throw error;
-      if (results.length <= 0 && password == password2) {         // DB에 같은 이름의 회원아이디가 없고, 비밀번호가 올바르게 입력된 경우
-        const hasedPassword = bcrypt.hashSync(password, 10);    // 입력된 비밀번호를 해시한 값
-        connection.query('INSERT INTO userTable (username, userchn) VALUES(?,?)', [username, hasedPassword], function (error, data) {
-          if (error) throw error;
-          req.session.save(function () {
-            sendData.isSuccess = "True"
-            res.send(sendData);
-          });
-        });
-      } else if (password != password2) {                     // 비밀번호가 올바르게 입력되지 않은 경우                  
-        sendData.isSuccess = "입력된 비밀번호가 서로 다릅니다."
-        res.send(sendData);
+    connection.query(
+      "SELECT * FROM userTable WHERE username = ?",
+      [username],
+      function (error, results, fields) {
+        // DB에 같은 이름의 회원아이디가 있는지 확인
+        if (error) throw error;
+        if (results.length <= 0 && password == password2) {
+          // DB에 같은 이름의 회원아이디가 없고, 비밀번호가 올바르게 입력된 경우
+          const hasedPassword = bcrypt.hashSync(password, 10); // 입력된 비밀번호를 해시한 값
+          connection.query(
+            "INSERT INTO userTable (username, userchn) VALUES(?,?)",
+            [username, hasedPassword],
+            function (error, data) {
+              if (error) throw error;
+              req.session.save(function () {
+                sendData.isSuccess = "True";
+                res.send(sendData);
+              });
+            }
+          );
+        } else if (password != password2) {
+          // 비밀번호가 올바르게 입력되지 않은 경우
+          sendData.isSuccess = "입력된 비밀번호가 서로 다릅니다.";
+          res.send(sendData);
+        } else {
+          // DB에 같은 이름의 회원아이디가 있는 경우
+          sendData.isSuccess = "이미 존재하는 아이디 입니다!";
+          res.send(sendData);
+        }
       }
-      else {                                                  // DB에 같은 이름의 회원아이디가 있는 경우            
-        sendData.isSuccess = "이미 존재하는 아이디 입니다!"
-        res.send(sendData);
-      }
-    });
+    );
   } else {
-    sendData.isSuccess = "아이디와 비밀번호를 입력하세요!"
+    sendData.isSuccess = "아이디와 비밀번호를 입력하세요!";
     res.send(sendData);
   }
-
 });
 
-
 app.listen(3001, () => {
-  console.log('3001 port running')
-})
+  console.log("3001 port running");
+});
