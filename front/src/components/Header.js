@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import styles from "./css/Header.module.css";
 import { CgProfile } from "react-icons/cg";
 
+import axios from "axios";
+
 function Header() {
   return (
     <div className={styles.container}>
@@ -36,7 +38,7 @@ function Header() {
           </Link>
         </div>
         <div className={styles.menus}>
-          <Link to="/BoardList" className={styles.link}>
+          <Link to="#" className={styles.link}>
             게시판
           </Link>
         </div>

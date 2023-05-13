@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useState } from "react";
 
+import Header from '../components/Header';
 
 function Admin() {
     const API_KEY = process.env.REACT_APP_API_KEY;
@@ -77,6 +78,7 @@ function Admin() {
 
     return (
         <div>
+            <Header />
             <div>
                 <button onClick={() => insertData()}>data 삽입</button>
                 <button onClick={() => showData()}>data 출력</button>
@@ -87,12 +89,13 @@ function Admin() {
                 <button onClick={() => showFestival()}>festival 출력</button>
                 <button onClick={() => initFestival()}>festival 초기화</button>
             </div>
-            <button onClick={() => {
-                axios.get('http://localhost:3001/authCheck')
-                    .then(function (response) {
-                        console.log(response);
-                    });
-            }}>서버 연결 테스트</button>
+            <div>
+                <button onClick={() => {
+                    const response = axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230511}`);
+                    const resData = response.data.response.body.items.item;
+                }}>분류 조회</button>
+            </div>
+
         </div>
     );
 }

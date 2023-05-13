@@ -1,7 +1,10 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import './modal.css';
+import axios from 'axios';
 // import axios from 'axios';
+
+import Header from "../components/Header";
 
 const Modal = (props) => {
   // 열기, 닫기, 모달 헤더 텍스트를 부모로부터 받아옴
@@ -43,7 +46,8 @@ function MainTest() {
   // });
   return (
     <div>
-      개발단계용입니다.
+      <Header />
+      <div>개발단계용입니다.</div>
       <hr />
 
       <div>
@@ -102,6 +106,12 @@ function MainTest() {
         <Link to="/boardviewrecommand">boardviewrecommand</Link>
       </div>
       <button onClick={openModal}>일정에 추가</button>
+      <button onClick={() => {
+        axios.get('http://localhost:3001/authCheck')
+          .then(function (response) {
+            console.log(response.data);
+          });
+      }}>로그인 테스트</button>
       <Modal open={modalOpen} close={closeModal} header="일정에 추가">
         날짜 : <textarea></textarea>
         시간 : <textarea></textarea>
