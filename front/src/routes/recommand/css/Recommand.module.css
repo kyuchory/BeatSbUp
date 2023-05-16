@@ -6,12 +6,10 @@
 
 .type {
     display: flex;
-
-
 }
 
 .selectType {
-    font-size: 1.7rem;
+    font-size: 1.3rem;
     flex: 1;
     height: 100px;
     line-height: 100px;

@@ -51,10 +51,16 @@ function Recommand() {
                 A0205: {
                     title: '건축/조형물'
                 },
+            }
+        },
+        14: {
+            title: '인문(문화/예술/역사)',
+            A01: {
+                title: '자연',
                 A0206: {
                     title: '문화시설'
                 }
-            }
+            },
         },
         28: {
             title: '레포츠',
@@ -72,7 +78,7 @@ function Recommand() {
             }
         },
         /*38: {
-            title: '쇼핑'
+            title: '쇼핑'  나중에 쇼핑, 음식점들도 세분화하기(ex. 시장, 백화점, 한식, 일식 등등으로)
         },
         39: {
             title: '음식점'
@@ -88,6 +94,8 @@ function Recommand() {
                 <div className={styles.type}>
                     <div className={styles.selectType}
                         onClick={() => setType(12)}>관광지, 문화시설</div>
+                    <div className={styles.selectType}
+                        onClick={() => setType(14)}>문화시설</div>
                     <div className={styles.selectType}
                         onClick={() => setType(28)}>레포츠</div>
                     <div className={styles.selectType}

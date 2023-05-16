@@ -73,11 +73,20 @@ router.post('/recommand', (req, res, next) => {
     const type = req.body.type;
     const cat = req.body.cat;
 
-    console.log(type + cat);
-    connection.query(`select * from sight where contentTypeId = ${type}${cat ? ` and cat like '${cat}%'` : ''}`,
-        function (error, results, fields) {
-            if (error) throw error;
-            res.json(results);
-        })
-})
+    let typeString = '';
+    if (Array.isArray(type)) {
+        typeString = type.join(',');
+    } else {
+        typeString = type.toString();
+    }
+
+    console.log(typeString + cat);
+    const query = `SELECT * FROM sight WHERE contentTypeId IN (${typeString})${cat ? ` AND cat LIKE '${cat}%'` : ''}`;
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+    });
+});
+
 module.exports = router;

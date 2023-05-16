@@ -57,13 +57,10 @@ function App() {
 
         <Route path="/BoardList" element={<BoardList />} />
         <Route path="/BoardView" element={<BoardView />} />
-<<<<<<< HEAD
         <Route path="/BoardWrite" element={<BoardWrite />} />
-=======
 
         <Route path="/recommand" element={<Recommand />} />
 
->>>>>>> 5effb867d245a7c73f92767d07730895a3a331e7
       </Routes>
     </Router>
   );
