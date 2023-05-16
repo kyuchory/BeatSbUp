@@ -2,15 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
+const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
-
-const manageData = require("./route/data");
-const manageFestival = require("./route/festival");
-
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionOption);
-
 var sessionOption = {
   host: "localhost",
   user: "manager",
@@ -28,21 +24,37 @@ app.use(
     secret: "~",
     store: sessionStore,
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
+    cookie: {
+      is_logined: false,
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
   })
 );
+const connection = mysql.createConnection({
+  host: "127.0.0.1",
+  user: "manager",
+  password: "test1234",
+  database: "travel",
+  port: "3306",
+});
+
+connection.connect((error) => {
+  if (error) {
+    console.error("Error connecting to MySQL server: " + error.stack);
+    return;
+  }
+  console.log("Connected to MySQL server as id " + connection.threadId);
+});
 
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors());
 app.use(bodyParser.json({ limit: "50mb" }));
 
-app.use("/data", manageData); // 여행지 데이터 입출력 라우트
-app.use("/festival", manageFestival); // 행사 데이터 입출력 라우트
-
 app.get("/", (req, res) => {
   res.send("HelloWorld");
 });
-
 //권한 있으면 True반환 없으면 False반환
 app.get("/authcheck", (req, res) => {
   const sendData = { isLogin: "" };
@@ -51,7 +63,7 @@ app.get("/authcheck", (req, res) => {
   } else {
     sendData.isLogin = "False";
   }
-  res.send(sendData);
+  console.log(req.session.is_logined);
 });
 //로그아웃하면 메인페이지로
 app.get("/logout", function (req, res) {
@@ -79,15 +91,17 @@ app.post("/login", (req, res) => {
             // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
 
             if (result === true) {
-              // 비밀번호가 일치하면
-              req.session.is_logined = true; // 세션 정보 갱신
+              console.log(req.session);
+
+              req.session.is_logined = true;
               req.session.nickname = username;
               req.session.save(function () {
                 sendData.isLogin = "True";
                 res.send(sendData);
               });
+              console.log(req.session);
               connection.query(
-                `INSERT INTO logTable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`,
+                `INSERT INTO logtable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`,
                 [req.session.nickname, "-", `React 로그인 테스트`],
                 function (error, result) {}
               );
@@ -108,6 +122,33 @@ app.post("/login", (req, res) => {
     // 아이디, 비밀번호 중 입력되지 않은 값이 있는 경우
     sendData.isLogin = "아이디와 비밀번호를 입력하세요!";
     res.send(sendData);
+  }
+});
+app.post("/BoardWrite", (req, res) => {
+  const writer = req.body.writer;
+  const title = req.body.title;
+  const content = req.body.content;
+  const regdate = req.body.regdate;
+  const updatedate = req.body.updatedate;
+  const viewcount = req.body.viewcount;
+  const image = req.body.image;
+
+  const sendData = { isSuccess: "" };
+
+  if (writer && title && content && regdate) {
+    connection.query(
+      "INSERT INTO board_free (writer, title, content, regdate) VALUES(?,?,?,?)",
+      [writer, title, content, regdate],
+      function (error, data) {
+        if (error) throw error;
+        req.session.save(function () {
+          sendData.isSuccess = "True";
+          res.send(sendData);
+        });
+      }
+    );
+  } else {
+    sendData.isSuccess = "제목, 본문을 작성해주세요.";
   }
 });
 app.post("/signin", (req, res) => {
@@ -154,6 +195,64 @@ app.post("/signin", (req, res) => {
     sendData.isSuccess = "아이디와 비밀번호를 입력하세요!";
     res.send(sendData);
   }
+});
+//DB테스트
+app.get("/showdata", (req, res) => {
+  connection.query(`select * from sight`, function (error, results, fields) {
+    console.log(results);
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+// 여행지 데이터 추가
+app.post("/insertdata", async (req, res, next) => {
+  let errorCount = 0;
+  let insertCount = 0;
+  const data = req.body.data;
+
+  for (let i = 0; i < data.length; i++) {
+    const element = data[i];
+    try {
+      const result = await connection
+        .promise()
+        .query(
+          "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
+          [
+            element.title,
+            element.addr1,
+            element.cat3,
+            element.firstimage,
+            element.tel,
+            element.contentid,
+            element.contenttypeid,
+          ]
+        );
+      insertCount++;
+      console.log("Insert data : " + element.title);
+    } catch (error) {
+      if (error.code === "ER_DUP_ENTRY") {
+        console.log("Duplicate data : " + element.title);
+        errorCount++;
+      } else {
+        console.log("Error while inserting data : " + element.title);
+        errorCount++;
+      }
+    }
+  }
+
+  console.log("에러 or 중복된 데이터 개수 : " + errorCount);
+  console.log("추가된 데이터 개수 : " + insertCount);
+  res.send("Data inserted successfully.");
+});
+
+// 여행지 데이터 전부 삭제
+app.get("/initdata", (req, res, next) => {
+  connection.query(`truncate sight`, function (error, results, fields) {
+    console.log(results);
+    if (error) throw error;
+    res.json(results);
+  });
 });
 
 app.listen(3001, () => {

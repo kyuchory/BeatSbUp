@@ -20,6 +20,7 @@ import RegionAttraction from "./routes/region/RegionAttraction";
 
 import BoardList from "./routes/board/BoardList.js";
 import BoardView from "./routes/board/BoardView.js";
+import BoardWrite from "./routes/board/BoardWrite.js";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -51,6 +52,7 @@ function App() {
         <Route path="/regionattraction" element={<RegionAttraction />} />
         <Route path="/BoardList" element={<BoardList />} />
         <Route path="/BoardView" element={<BoardView />} />
+        <Route path="/BoardWrite" element={<BoardWrite />} />
       </Routes>
     </Router>
   );

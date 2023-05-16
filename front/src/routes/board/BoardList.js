@@ -145,6 +145,11 @@ const BoardList = () => {
               nextPageText={">"}
             ></Pagination>
           </div>
+          <div>
+            <Link to="/BoardWrite">
+              <a>글작성</a>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

@@ -38,7 +38,7 @@ function Header() {
           </Link>
         </div>
         <div className={styles.menus}>
-          <Link to="#" className={styles.link}>
+          <Link to="/boardList" className={styles.link}>
             게시판
           </Link>
         </div>
