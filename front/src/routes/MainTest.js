@@ -105,6 +105,12 @@ function MainTest() {
       <div>
         <Link to="/boardviewrecommand">boardviewrecommand</Link>
       </div>
+      <div>
+        <Link to="/boardlist">boardlist</Link>
+      </div>
+      <div>
+        <Link to="/boardview">boardview</Link>
+      </div>
       <button onClick={openModal}>일정에 추가</button>
       <button onClick={() => {
         axios.get('http://localhost:3001/authCheck')

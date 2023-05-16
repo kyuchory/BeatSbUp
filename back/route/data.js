@@ -69,4 +69,15 @@ router.get('/init', (req, res, next) => {
         })
 });
 
+router.post('/recommand', (req, res, next) => {
+    const type = req.body.type;
+    const cat = req.body.cat;
+
+    console.log(type + cat);
+    connection.query(`select * from sight where contentTypeId = ${type}${cat ? ` and cat like '${cat}%'` : ''}`,
+        function (error, results, fields) {
+            if (error) throw error;
+            res.json(results);
+        })
+})
 module.exports = router;

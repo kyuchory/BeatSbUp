@@ -22,6 +22,8 @@ import BoardList from "./routes/board/BoardList.js";
 import BoardView from "./routes/board/BoardView.js";
 import BoardWrite from "./routes/board/BoardWrite.js";
 
+import Recommand from "./routes/recommand/Recommand.js";
+
 function ScrollToTop() {
   const { pathname } = useLocation();
 
@@ -37,8 +39,10 @@ function App() {
       <Routes>
         <Route path="/" element={<MainTest />} />{" "}
         {/* 개발 초기 테스트용 페이지 전환할때 사용 */}
+
         <Route path="/main" element={<Main />} />{" "}
         {/* 추후에 path="/" 으로 변경 */}
+
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/class" element={<Class />} />
         <Route path="/login" element={<Login />} />
@@ -50,9 +54,16 @@ function App() {
         <Route path="/regions" element={<Regions />} />
         <Route path="/regiondetail" element={<RegionDetail />} />
         <Route path="/regionattraction" element={<RegionAttraction />} />
+
         <Route path="/BoardList" element={<BoardList />} />
         <Route path="/BoardView" element={<BoardView />} />
+<<<<<<< HEAD
         <Route path="/BoardWrite" element={<BoardWrite />} />
+=======
+
+        <Route path="/recommand" element={<Recommand />} />
+
+>>>>>>> 5effb867d245a7c73f92767d07730895a3a331e7
       </Routes>
     </Router>
   );
