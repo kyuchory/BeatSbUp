@@ -135,7 +135,7 @@ function Recommand() {
                     })}
                 </div>
                 <button onClick={() => {
-                    console.log('type : ' + type + 'cat : ' + cat);
+                    console.log('type : ' + type + '\ncat : ' + cat);
                     axios.post("http://localhost:3001/data/recommand", {
                         type, cat
                     }).then(function (response) {

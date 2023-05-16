@@ -13,10 +13,10 @@ const connection = mysql.createConnection({
 
 connection.connect((error) => {
     if (error) {
-        console.error('Error connecting to MySQL server: ' + error.stack);
+        console.error('Error connecting to MySQL server(festival): ' + error.stack);
         return;
     }
-    console.log('Connected to MySQL server as id ' + connection.threadId);
+    console.log('Connected to MySQL server as id(festival) ' + connection.threadId);
 });
 
 router.get('/show', (req, res) => {

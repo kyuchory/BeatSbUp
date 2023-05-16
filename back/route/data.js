@@ -1,4 +1,4 @@
-const express = require('express')
+const express = require('express');
 const mysql = require('mysql2');
 
 const router = express.Router();
@@ -13,10 +13,10 @@ const connection = mysql.createConnection({
 
 connection.connect((error) => {
     if (error) {
-        console.error('Error connecting to MySQL server: ' + error.stack);
+        console.error('Error connecting to MySQL server(data): ' + error.stack);
         return;
     }
-    console.log('Connected to MySQL server as id ' + connection.threadId);
+    console.log('Connected to MySQL server as id(data) ' + connection.threadId);
 });
 
 router.get('/show', (req, res) => {

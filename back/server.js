@@ -5,10 +5,17 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
+
+const router = express.Router();
+const data = require('./route/data');
+const festival = require('./route/festival');
+app.use('/data', data);
+app.use('/festival', festival);
+
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionOption);
 var sessionOption = {
-  host: "localhost",
+  host: "127.0.0.1",
   user: "manager",
   password: "test1234",
   database: "travel",
@@ -45,7 +52,7 @@ connection.connect((error) => {
     console.error("Error connecting to MySQL server: " + error.stack);
     return;
   }
-  console.log("Connected to MySQL server as id " + connection.threadId);
+  console.log("Connected to MySQL server as id(main) " + connection.threadId);
 });
 
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
@@ -112,7 +119,7 @@ app.post("/login", (req, res) => {
               connection.query(
                 `INSERT INTO logtable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`,
                 [req.session.nickname, "-", `React 로그인 테스트`],
-                function (error, result) {}
+                function (error, result) { }
               );
             } else {
               // 비밀번호가 다른 경우
