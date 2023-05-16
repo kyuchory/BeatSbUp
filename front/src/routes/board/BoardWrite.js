@@ -82,6 +82,7 @@ function BoardWrite() {
                 viewcount: null,
                 image: null,
               };
+              console.log(boardData.writer);
               fetch("http://localhost:3001/BoardWrite", {
                 method: "post",
                 headers: {

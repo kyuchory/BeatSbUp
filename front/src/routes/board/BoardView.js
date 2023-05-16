@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styles from "./css/BoardView.module.css";
+import Header from "../../components/Header";
 
 const BoardView = () => {
   useEffect(() => {
@@ -17,10 +18,7 @@ const BoardView = () => {
 
   return (
     <div className={styles.mainPageContainer}>
-      <div className={styles.headerContainer}>
-        <div className={styles.logoHeaderContainer}>logo</div>
-        <div className={styles.menuHedaerContainer}>menu</div>
-      </div>
+      <Header />
       <div className={styles.contentContainer}>
         <div className={styles.title}>여행 같이 가실분 !</div>
         <div className={styles.date}>2023-05-01</div>

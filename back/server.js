@@ -71,6 +71,15 @@ app.get("/logout", function (req, res) {
     res.redirect("/");
   });
 });
+app.get("/boardList", (req, res) => {
+  console.log("으아아악");
+  connection.query(
+    "SELECT * FROM board_free",
+    function (error, results, fields) {
+      res.send(results);
+    }
+  );
+});
 app.post("/login", (req, res) => {
   // 데이터 받아서 결과 전송
   const username = req.body.userId;
@@ -124,28 +133,33 @@ app.post("/login", (req, res) => {
     res.send(sendData);
   }
 });
+
 app.post("/BoardWrite", (req, res) => {
+  console.log("test2");
   const writer = req.body.writer;
+  console.log("test3");
   const title = req.body.title;
   const content = req.body.content;
   const regdate = req.body.regdate;
   const updatedate = req.body.updatedate;
   const viewcount = req.body.viewcount;
   const image = req.body.image;
-
+  console.log(writer);
   const sendData = { isSuccess: "" };
 
   if (writer && title && content && regdate) {
+    console.log("test4");
     connection.query(
       "INSERT INTO board_free (writer, title, content, regdate) VALUES(?,?,?,?)",
-      [writer, title, content, regdate],
-      function (error, data) {
-        if (error) throw error;
-        req.session.save(function () {
-          sendData.isSuccess = "True";
-          res.send(sendData);
-        });
-      }
+      [writer, title, content, regdate]
+      // 여기 에러남 알아봐야함 ㅠㅠ
+      // function (error, data) {
+      //   if (error) throw error;
+      //   req.session.save(function () {
+      //     sendData.isSuccess = "True";
+      //     res.send(sendData);
+      //   });
+      // }
     );
   } else {
     sendData.isSuccess = "제목, 본문을 작성해주세요.";

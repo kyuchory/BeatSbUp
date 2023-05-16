@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./css/BoardList.module.css";
 import { useState } from "react";
 import Pagination from "react-js-pagination";
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 const BoardList = () => {
   const test = [
     {
@@ -95,16 +97,30 @@ const BoardList = () => {
       id: 11,
     },
   ];
+
   //pagination --
   //실제로 데이터 받아오면 여기다가 넣기
   const [data, setData] = useState([]);
+
   const [page, setPage] = useState(1);
   const [items] = useState(7);
 
   const handlePageChange = (page) => {
     setPage(page);
   };
-  // --
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const td = await axios.get("http://localhost:3001/BoardList");
+        setData(td.data);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    fetchData();
+  }, []);
+
   return (
     <div className={styles.mainPageContainer}>
       <Header />
@@ -119,16 +135,16 @@ const BoardList = () => {
         </div>
         <div className={styles.BoardLists}>
           <div className={styles.BoardList}>
-            {test
+            {data
               .slice(items * (page - 1), items * (page - 1) + items)
-              .map((post) => (
+              .map((p) => (
                 <Link to="/BoardView">
                   <ul>
-                    <li key={post.id}>{post.title}</li>
-                    <li key={post.id}>{post.Views}</li>
-                    <li key={post.id}>{post.Date}</li>
-                    <li key={post.id}>{post.Comments}</li>
-                    <li key={post.id}>{post.User}</li>
+                    <li>{p.title}</li>
+                    <li>{p.view_count}</li>
+                    <li>{p.regdate}</li>
+                    <li>댓글수 구현</li>
+                    <li>{p.writer}</li>
                   </ul>
                 </Link>
               ))}
@@ -147,7 +163,7 @@ const BoardList = () => {
           </div>
           <div>
             <Link to="/BoardWrite">
-              <a>글작성</a>
+              <div>글작성</div>
             </Link>
           </div>
         </div>
