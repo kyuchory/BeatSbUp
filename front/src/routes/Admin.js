@@ -5,7 +5,6 @@ import Header from '../components/Header';
 
 function Admin() {
     const API_KEY = process.env.REACT_APP_API_KEY;
-    console.log(API_KEY)
     const [data, setData] = useState([]);
 
     const insertData = async () => {
