@@ -5,6 +5,13 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
+
+app.use(cors());
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+app.use(bodyParser.json({ limit: "50mb" }));
+
+
+// db mysql 관련
 const connection = require('./db');
 connection.connect((error) => {
   if (error) {
@@ -14,7 +21,6 @@ connection.connect((error) => {
   console.log('Connected to MySQL server as id(main) ' + connection.threadId);
 });
 
-app.use(cors());
 
 // router 관련
 const data = require('./route/data');
@@ -22,8 +28,6 @@ const festival = require('./route/festival');
 app.use('/data', data);
 app.use('/festival', festival);
 
-app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-app.use(bodyParser.json({ limit: "50mb" }));
 
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionOption);
@@ -168,6 +172,7 @@ app.post("/BoardWrite", (req, res) => {
     sendData.isSuccess = "제목, 본문을 작성해주세요.";
   }
 });
+
 app.post("/signin", (req, res) => {
   // 데이터 받아서 결과 전송
   const username = req.body.userId;
