@@ -66,16 +66,33 @@ router.get('/init', (req, res, next) => {
 });
 
 router.post('/recommand', (req, res, next) => {
-    const type = req.body.type;
-    const cat = req.body.cat;
+    let type = req.body.type;
+    let cat = req.body.cat;
 
-    console.log(type + cat);
-    const query = `SELECT * FROM sight WHERE contentTypeId = ${type}${cat ? ` AND cat LIKE '${cat}%'` : ''}`;
+    if (type == 12) type = [12, 14];
+    if (cat == 'A04010120') cat = ['A04010100', 'A04010200'];
+    else if (cat == 'A04010340') cat = ['A04010300', 'A04010400'];
+
+    console.log(type, cat);
+
+    let query = `SELECT * FROM sight WHERE contentTypeId IN (${type})`;
+
+    if (cat && cat.length > 0) {
+        if (Array.isArray(cat)) {
+            const catConditions = cat.map(category => `cat LIKE '${category}%'`);
+            const catQuery = catConditions.join(' OR ');
+            query += ` AND (${catQuery})`;
+        } else {
+            query += ` AND cat LIKE '${cat}%'`;
+        }
+    }
+    console.log(query);
 
     connection.query(query, function (error, results, fields) {
         if (error) throw error;
         res.json(results);
     });
 });
+
 
 module.exports = router;
