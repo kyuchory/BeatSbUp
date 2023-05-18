@@ -1,6 +1,5 @@
 const express = require('express')
-const mysql = require('mysql2');
-
+const bodyParser = require("body-parser");
 
 const router = express.Router();
 
@@ -12,6 +11,9 @@ connection.connect((error) => {
     }
     console.log('Connected to MySQL server as id(festival) ' + connection.threadId);
 });
+
+router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+router.use(bodyParser.json({ limit: "50mb" }));
 
 router.get('/show', (req, res) => {
     connection.query(`select * from festival`,
@@ -31,7 +33,7 @@ router.post('/insert', async (req, res, next) => {
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         try {
-            const result = await connection.promise().query(
+            await connection.promise().query(
                 "INSERT INTO festival (title, addr, image, tel, contentId, eventStartDate, eventEndDate) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 [element.title, element.addr1, element.firstimage, element.tel, element.contentid, element.eventstartdate, element.eventenddate]
             );
@@ -55,7 +57,7 @@ router.post('/insert', async (req, res, next) => {
 
 // 여행지 데이터 전부 삭제
 router.get('/init', (req, res, next) => {
-    connection.query(`truncate table festival`,
+    connection.query(`truncate festival`,
         function (error, results, fields) {
             console.log(results)
             if (error) throw error;

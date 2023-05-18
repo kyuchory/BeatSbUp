@@ -18,7 +18,7 @@ function Admin() {
             }
 
             setData(responseData);
-            await axios.post("http://localhost:3001/insert", {
+            await axios.post("http://localhost:3001/data/insert", {
                 data
             })
             console.log("데이터 삽입 성공!");

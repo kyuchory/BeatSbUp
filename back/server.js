@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
@@ -213,36 +212,6 @@ app.post("/signin", (req, res) => {
     sendData.isSuccess = "아이디와 비밀번호를 입력하세요!";
     res.send(sendData);
   }
-});
-
-app.post('/insert', async (req, res, next) => {
-  let errorCount = 0;
-  let insertCount = 0;
-  const data = req.body.data;
-
-  for (let i = 0; i < data.length; i++) {
-    const element = data[i];
-    try {
-      const result = await connection.promise().query(
-        "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
-        [element.title, element.addr1, element.cat3, element.firstimage, element.tel, element.contentid, element.contenttypeid]
-      );
-      console.log('Insert data : ' + element.title);
-      insertCount++;
-    } catch (error) {
-      if (error.code === 'ER_DUP_ENTRY') {
-        // console.log('Duplicate data : ' + element.title);
-        errorCount++;
-      } else {
-        console.log('Error while inserting data : ' + error + '\ntitle : ' + JSON.stringify(element));
-        errorCount++;
-      }
-    }
-  }
-
-  console.log("에러 or 중복된 데이터 개수 : " + errorCount);
-  console.log("추가된 데이터 개수 : " + insertCount);
-  res.send('Data inserted successfully.');
 });
 
 app.listen(3001, () => {

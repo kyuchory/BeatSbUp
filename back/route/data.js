@@ -1,12 +1,9 @@
 const express = require('express');
-const mysql = require('mysql2');
-
+const bodyParser = require("body-parser");
 
 const router = express.Router();
 
 const connection = require('../db');
-
-
 connection.connect((error) => {
     if (error) {
         console.error('Error connecting to MySQL server(data): ' + error.stack);
@@ -14,6 +11,9 @@ connection.connect((error) => {
     }
     console.log('Connected to MySQL server as id(data) ' + connection.threadId);
 });
+
+router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+router.use(bodyParser.json({ limit: "50mb" }));
 
 router.get('/show', (req, res) => {
     connection.query(`select * from sight`,
@@ -33,7 +33,7 @@ router.post('/insert', async (req, res, next) => {
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         try {
-            const result = await connection.promise().query(
+            await connection.promise().query(
                 "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 [element.title, element.addr1, element.cat3, element.firstimage, element.tel, element.contentid, element.contenttypeid]
             );
@@ -69,7 +69,7 @@ router.post('/recommand', (req, res, next) => {
     const type = req.body.type;
     const cat = req.body.cat;
 
-    console.log(typeString + cat);
+    console.log(type + cat);
     const query = `SELECT * FROM sight WHERE contentTypeId = ${type}${cat ? ` AND cat LIKE '${cat}%'` : ''}`;
 
     connection.query(query, function (error, results, fields) {
