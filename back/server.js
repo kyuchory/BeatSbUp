@@ -6,6 +6,15 @@ const mysql = require("mysql2");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
+const connection = require('./db');
+connection.connect((error) => {
+  if (error) {
+    console.error('Error connecting to MySQL server(main): ' + error.stack);
+    return;
+  }
+  console.log('Connected to MySQL server as id(main) ' + connection.threadId);
+});
+
 app.use(cors());
 
 // router 관련
@@ -44,21 +53,6 @@ app.use(
     },
   })
 );
-const connection = mysql.createConnection({
-  host: "127.0.0.1",
-  user: "manager",
-  password: "test1234",
-  database: "travel",
-  port: "3306",
-});
-
-connection.connect((error) => {
-  if (error) {
-    console.error("Error connecting to MySQL server: " + error.stack);
-    return;
-  }
-  console.log("Connected to MySQL server as id(main) " + connection.threadId);
-});
 
 
 

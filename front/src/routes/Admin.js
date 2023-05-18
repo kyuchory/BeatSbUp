@@ -6,7 +6,6 @@ import Header from '../components/Header';
 function Admin() {
     const API_KEY = process.env.REACT_APP_API_KEY;
     const [data, setData] = useState([]);
-
     const insertData = async () => {
         try {
             const typeId = [12, 14, 28, 38, 39]; // 차례대로 관광지, 문화시설, 레포츠, 쇼핑, 음식점
@@ -19,8 +18,8 @@ function Admin() {
             }
 
             setData(responseData);
-            await axios.post("http://localhost:3001/data/insert", {
-                data: responseData
+            await axios.post("http://localhost:3001/insert", {
+                data
             })
             console.log("데이터 삽입 성공!");
 

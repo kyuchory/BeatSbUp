@@ -4,14 +4,7 @@ const mysql = require('mysql2');
 
 const router = express.Router();
 
-const connection = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "manager",
-    password: "test1234",
-    database: "travel",
-    port: "3306",
-});
-
+const connection = require('../db');
 connection.connect((error) => {
     if (error) {
         console.error('Error connecting to MySQL server(festival): ' + error.stack);
@@ -62,7 +55,7 @@ router.post('/insert', async (req, res, next) => {
 
 // 여행지 데이터 전부 삭제
 router.get('/init', (req, res, next) => {
-    connection.query(`truncate festival`,
+    connection.query(`truncate table festival`,
         function (error, results, fields) {
             console.log(results)
             if (error) throw error;
