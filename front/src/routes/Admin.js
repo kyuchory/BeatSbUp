@@ -45,7 +45,7 @@ function Admin() {
 
     const insertFestival = async () => {
         try {
-            const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230511}`);
+            const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230520}`);
             const resData = response.data.response.body.items.item;
             console.log(`${resData.length}개의 데이터를 받아왔습니다.`); // 받아온 데이터
 
