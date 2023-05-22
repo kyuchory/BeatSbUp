@@ -68,14 +68,23 @@ router.get('/init', (req, res, next) => {
 router.post('/recommand', (req, res, next) => {
     let type = req.body.type;
     let cat = req.body.cat;
+    let region = req.body.region;
 
     if (type == 12) type = [12, 14];
     if (cat == 'A04010120') cat = ['A04010100', 'A04010200'];
     else if (cat == 'A04010340') cat = ['A04010300', 'A04010400'];
 
-    console.log(type, cat);
 
-    let query = `SELECT * FROM sight WHERE contentTypeId IN (${type})`;
+    let query = 'SELECT * FROM sight';
+
+    if (type && type.length > 0) {
+        query += ` WHERE contentTypeId IN (${type})`;
+    }
+
+    if (region && region.length > 0) {
+
+        query += (type && type.length > 0) ? ` AND addr LIKE '%${region}%'` : ` WHERE addr LIKE '%${region}%'`;
+    }
 
     if (cat && cat.length > 0) {
         if (Array.isArray(cat)) {
@@ -86,7 +95,7 @@ router.post('/recommand', (req, res, next) => {
             query += ` AND cat LIKE '${cat}%'`;
         }
     }
-    console.log(query);
+    console.log('query : ' + query);
 
     connection.query(query, function (error, results, fields) {
         if (error) throw error;

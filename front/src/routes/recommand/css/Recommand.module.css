@@ -4,6 +4,39 @@
     text-align: center;
 }
 
+.regionContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.doName {
+    flex: 1;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.doName:hover {
+    color: blue;
+}
+
+.cityList {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 20px;
+    list-style-type: none;
+}
+
+.cityItem {
+    margin-right: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.cityItem:hover {
+    color: red;
+}
+
 .type {
     display: flex;
 }
