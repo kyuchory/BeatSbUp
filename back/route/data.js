@@ -1,23 +1,19 @@
-const express = require('express')
-const mysql = require('mysql2');
+const express = require('express');
+const bodyParser = require("body-parser");
 
 const router = express.Router();
 
-const connection = mysql.createConnection({
-    host: "127.0.0.1",
-    user: "manager",
-    password: "test1234",
-    database: "travel",
-    port: "3306",
-});
-
+const connection = require('../db');
 connection.connect((error) => {
     if (error) {
-        console.error('Error connecting to MySQL server: ' + error.stack);
+        console.error('Error connecting to MySQL server(data): ' + error.stack);
         return;
     }
-    console.log('Connected to MySQL server as id ' + connection.threadId);
+    console.log('Connected to MySQL server as id(data) ' + connection.threadId);
 });
+
+router.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
+router.use(bodyParser.json({ limit: "50mb" }));
 
 router.get('/show', (req, res) => {
     connection.query(`select * from sight`,
@@ -37,7 +33,7 @@ router.post('/insert', async (req, res, next) => {
     for (let i = 0; i < data.length; i++) {
         const element = data[i];
         try {
-            const result = await connection.promise().query(
+            await connection.promise().query(
                 "INSERT INTO sight (title, addr, cat, image, tel, contentId, contentTypeId) VALUES (?, ?, ?, ?, ?, ?, ?)",
                 [element.title, element.addr1, element.cat3, element.firstimage, element.tel, element.contentid, element.contenttypeid]
             );
@@ -70,14 +66,42 @@ router.get('/init', (req, res, next) => {
 });
 
 router.post('/recommand', (req, res, next) => {
-    const type = req.body.type;
-    const cat = req.body.cat;
+    let type = req.body.type;
+    let cat = req.body.cat;
+    let region = req.body.region;
 
-    console.log(type + cat);
-    connection.query(`select * from sight where contentTypeId = ${type}${cat ? ` and cat like '${cat}%'` : ''}`,
-        function (error, results, fields) {
-            if (error) throw error;
-            res.json(results);
-        })
-})
+    if (type == 12) type = [12, 14];
+    if (cat == 'A04010120') cat = ['A04010100', 'A04010200'];
+    else if (cat == 'A04010340') cat = ['A04010300', 'A04010400'];
+
+
+    let query = 'SELECT * FROM sight';
+
+    if (type && type.length > 0) {
+        query += ` WHERE contentTypeId IN (${type})`;
+    }
+
+    if (region && region.length > 0) {
+
+        query += (type && type.length > 0) ? ` AND addr LIKE '%${region}%'` : ` WHERE addr LIKE '%${region}%'`;
+    }
+
+    if (cat && cat.length > 0) {
+        if (Array.isArray(cat)) {
+            const catConditions = cat.map(category => `cat LIKE '${category}%'`);
+            const catQuery = catConditions.join(' OR ');
+            query += ` AND (${catQuery})`;
+        } else {
+            query += ` AND cat LIKE '${cat}%'`;
+        }
+    }
+    console.log('query : ' + query);
+
+    connection.query(query, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+    });
+});
+
+
 module.exports = router;

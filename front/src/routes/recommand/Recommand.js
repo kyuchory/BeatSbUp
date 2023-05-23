@@ -1,139 +1,132 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "../../components/Header";
 import styles from "./css/Recommand.module.css"
 import axios from "axios";
 
+import categoryData, { region } from './datas'
+
 function Recommand() {
-    const [type, setType] = useState(0);
-    const [cat, setCat] = useState('');  // 대분류
 
-    const typeToTop = {
-        12: ['자연', '인문(문화/예술/역사)'],
-        28: ['육상레포츠', '수상레포츠', '항공레포츠', '복합레포츠'],
-        38: ['쇼핑'],
-        39: ['음식점'],
+    const [selectedTopCategory, setSelectedTopCategory] = useState("");
+    const [selectedMidCategory, setSelectedMidCategory] = useState("");
+    const [selectedSubCategory, setSelectedSubCategory] = useState("");
+
+    const [resCount, setResCount] = useState(0)
+
+    const handleTopCategorySelect = (topCategory) => {
+        setSelectedTopCategory(topCategory);
+        setSelectedMidCategory("");
+        setSelectedSubCategory("");
     };
 
-    const topToMid = [
-        ['자연관광지', '관광자원'],
-        ['역사관광지', '휴양관광지', '체험관광지', '산업관광지', '건축/조형물', '문화시설'],
-        ['육상레포츠', '수상레포츠', '항공레포츠', '복합레포츠'],
-        ['쇼핑'],
-        ['음식점']
-    ];
+    const handleMidCategorySelect = (midCategory) => {
+        setSelectedMidCategory(midCategory);
+        setSelectedSubCategory("");
+    };
 
-    const category = {
-        12: {
-            title: '관광지/문화시설',
-            A01: {
-                title: '자연',
-                A0101: {
-                    title: '자연관광지'
-                },
-                A0102: {
-                    title: '관광자원'
-                }
-            },
-            A02: {
-                title: '인문(문화/예술/역사)',
-                A0201: {
-                    title: '역사관광지'
-                },
-                A0202: {
-                    title: '휴양관광지'
-                },
-                A0203: {
-                    title: '체험관광지'
-                },
-                A0204: {
-                    title: '산업관광지'
-                },
-                A0205: {
-                    title: '건축/조형물'
-                },
-                A0206: {
-                    title: '문화시설'
-                }
-            }
-        },
-        28: {
-            title: '레포츠',
-            A0302: {
-                title: '육상 레포츠'
-            },
-            A0303: {
-                title: '수상 레포츠'
-            },
-            A0304: {
-                title: '항공 레포츠'
-            },
-            A0305: {
-                title: '복합 레포츠'
-            }
-        },
-        /*38: {
-            title: '쇼핑'
-        },
-        39: {
-            title: '음식점'
-        }*/
+    const handleSubCategorySelect = (subCategory) => {
+        setSelectedSubCategory(subCategory);
     };
 
 
-    console.log(cat)
+    const [selectedDo, setSelectedDo] = useState(null);
+    const [selectedSi, setSelectedSi] = useState(null);
+
+    // 선택된 도 정보 변경 함수
+    const handleDoSelect = (selectedDo) => {
+        setSelectedDo(selectedDo);
+        setSelectedSi(null); // 선택된 도 변경 시 선택된 시 초기화
+    };
+
+    // 선택된 시 정보 변경 함수
+    const handleSiSelect = (selectedSi) => {
+        setSelectedSi(selectedSi);
+    };
+
+    useEffect(() => {
+        axios.post("http://localhost:3001/data/recommand", {
+            type: selectedTopCategory,
+            cat: selectedSubCategory ? selectedSubCategory : selectedMidCategory ? selectedMidCategory : "",
+            region: selectedSi ? selectedSi : selectedDo ? selectedDo : ""
+        }).then(function (response) {
+            console.log(response.data.length + "개의 데이터")
+            setResCount(response.data.length)
+        });
+    }, [selectedTopCategory, selectedMidCategory, selectedSubCategory, selectedDo, selectedSi]);
+
     return (
         <div>
             <Header />
             <div className={styles.contents}>
-                <div className={styles.type}>
-                    <div className={styles.selectType}
-                        onClick={() => setType(12)}>관광지, 문화시설</div>
-                    <div className={styles.selectType}
-                        onClick={() => setType(28)}>레포츠</div>
-                    <div className={styles.selectType}
-                        onClick={() => setType(38)}>쇼핑</div>
-                    <div className={styles.selectType}
-                        onClick={() => setType(39)}>음식점</div>
+                <div>{resCount}개의 목적지가 존재합니다.</div>
+                <div className={styles.regionContainer}>
+                    {true &&
+                        region.map((area, index) => {
+                            const doName = Object.keys(area)[0];
+                            return (
+                                <div key={index}>
+                                    <h3 className={styles.doName} onClick={() => handleDoSelect(doName)}>
+                                        {doName}
+                                    </h3>
+                                    {selectedDo === doName && (
+                                        <ul className={styles.cityList}>
+                                            {area[doName].map((city, i) => (
+                                                <li className={styles.cityItem} key={i} onClick={() => handleSiSelect(city)}>
+                                                    {city}
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    )}
+                                </div>
+                            );
+                        })}
                 </div>
-                <div></div>
                 <div className={styles.topcat}>
-                    {category[type] && Object.keys(category[type]).map((key, index) => {
-                        const value = category[type][key];
-                        if (typeof value === 'object') {
-                            return (
-                                <div key={index} className={styles.selectTopcat} onClick={() => setCat(key)}>
-                                    {value.title}
-                                </div>
-                            )
-                        } else {
-                            return (
-                                <div key={index} className={styles.selectTopcat} onClick={() => setCat(key)}>
-                                    {value}
-                                </div>
-                            )
-                        }
-                    })}
+                    {Object.keys(categoryData).map((topCategory) => (
+                        <div
+                            key={topCategory}
+                            className={styles.selectTopcat}
+                            onClick={() => handleTopCategorySelect(topCategory)}
+                        >
+                            {categoryData[topCategory].title}
+                        </div>
+                    ))}
                 </div>
                 <div className={styles.midcat}>
-                    {category[type] && category[type][cat] && Object.keys(category[type][cat]).map((key, index) => {
-                        const value = category[type][cat][key];
-                        if (typeof value === 'object' && category[type][key] != category[type][cat][key]) {
-                            return (
-                                <div key={index} className={styles.selectMidcat} onClick={() => setCat(key)}>
-                                    {value.title}
-                                </div>
-                            )
-                        }
-                    })}
+                    {selectedTopCategory &&
+                        Object.keys(categoryData[selectedTopCategory]).map((midCategory) => (
+                            <div
+                                key={midCategory}
+                                className={styles.selectMidcat}
+                                onClick={() => handleMidCategorySelect(midCategory)}
+                            >
+                                {categoryData[selectedTopCategory][midCategory].title}
+                            </div>
+                        ))}
+                </div>
+                <div className={styles.subcat}>
+                    {selectedMidCategory &&
+                        Object.keys(categoryData[selectedTopCategory][selectedMidCategory]).map((subCategory) => (
+                            <div
+                                key={subCategory}
+                                className={styles.selectSubcat}
+                                onClick={() => handleSubCategorySelect(subCategory)}
+                            >
+                                {categoryData[selectedTopCategory][selectedMidCategory][subCategory].title}
+                            </div>
+                        ))}
                 </div>
                 <button onClick={() => {
-                    console.log('type : ' + type + 'cat : ' + cat);
+                    console.log('type : ' + selectedTopCategory + '\ncat : ' + selectedMidCategory + '\ncat : ' + selectedSubCategory + '\nregion : ' + selectedDo + selectedSi);
                     axios.post("http://localhost:3001/data/recommand", {
-                        type, cat
+                        type: selectedTopCategory,
+                        cat: selectedSubCategory ? selectedSubCategory : selectedMidCategory ? selectedMidCategory : "",
+                        region: selectedSi ? selectedSi : selectedDo ? selectedDo : ""
                     }).then(function (response) {
                         console.log(response.data.length + "개의 데이터 : ")
                         console.log(response.data);
                     });
+
                 }
 
                 }>검색</button>

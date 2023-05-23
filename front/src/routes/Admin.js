@@ -5,9 +5,7 @@ import Header from '../components/Header';
 
 function Admin() {
     const API_KEY = process.env.REACT_APP_API_KEY;
-    console.log(API_KEY)
     const [data, setData] = useState([]);
-
     const insertData = async () => {
         try {
             const typeId = [12, 14, 28, 38, 39]; // 차례대로 관광지, 문화시설, 레포츠, 쇼핑, 음식점
@@ -21,7 +19,7 @@ function Admin() {
 
             setData(responseData);
             await axios.post("http://localhost:3001/data/insert", {
-                data: responseData
+                data
             })
             console.log("데이터 삽입 성공!");
 
@@ -47,7 +45,7 @@ function Admin() {
 
     const insertFestival = async () => {
         try {
-            const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230511}`);
+            const response = await axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?serviceKey=${API_KEY}&numOfRows=1000&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&arrange=A&eventStartDate=${20230520}`);
             const resData = response.data.response.body.items.item;
             console.log(`${resData.length}개의 데이터를 받아왔습니다.`); // 받아온 데이터
 
