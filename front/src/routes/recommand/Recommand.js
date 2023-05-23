@@ -29,13 +29,13 @@ function Recommand() {
     };
 
 
-    const [selectedDo, setSelectedDo] = useState(null);
-    const [selectedSi, setSelectedSi] = useState(null);
+    const [selectedDo, setSelectedDo] = useState('');
+    const [selectedSi, setSelectedSi] = useState('');
 
     // 선택된 도 정보 변경 함수
     const handleDoSelect = (selectedDo) => {
         setSelectedDo(selectedDo);
-        setSelectedSi(null); // 선택된 도 변경 시 선택된 시 초기화
+        setSelectedSi(''); // 선택된 도 변경 시 선택된 시 초기화
     };
 
     // 선택된 시 정보 변경 함수
@@ -43,16 +43,32 @@ function Recommand() {
         setSelectedSi(selectedSi);
     };
 
+    const initAll = () => {
+        setSelectedTopCategory('');
+        setSelectedMidCategory('');
+        setSelectedSubCategory('');
+        setSelectedDo('');
+        setSelectedSi('');
+    }
     useEffect(() => {
-        axios.post("http://localhost:3001/data/recommand", {
-            type: selectedTopCategory,
-            cat: selectedSubCategory ? selectedSubCategory : selectedMidCategory ? selectedMidCategory : "",
-            region: selectedSi ? selectedSi : selectedDo ? selectedDo : ""
-        }).then(function (response) {
-            console.log(response.data.length + "개의 데이터")
-            setResCount(response.data.length)
-        });
+        const fetchData = async () => {
+            try {
+                const response = await axios.post("http://localhost:3001/data/recommand", {
+                    type: selectedTopCategory,
+                    cat: selectedSubCategory ? selectedSubCategory : selectedMidCategory ? selectedMidCategory : "",
+                    region: selectedSi ? selectedSi : selectedDo ? selectedDo : ""
+                });
+                console.log(response.data.length + "개의 데이터");
+                setResCount(response.data.length);
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        fetchData();
     }, [selectedTopCategory, selectedMidCategory, selectedSubCategory, selectedDo, selectedSi]);
+
+
 
     return (
         <div>
@@ -126,10 +142,12 @@ function Recommand() {
                         console.log(response.data.length + "개의 데이터 : ")
                         console.log(response.data);
                     });
-
                 }
 
                 }>검색</button>
+                <button onClick={() => {
+                    initAll();
+                }}>초기화</button>
 
             </div>
 
