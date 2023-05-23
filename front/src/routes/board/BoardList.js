@@ -7,97 +7,6 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const BoardList = () => {
-  const test = [
-    {
-      title: "테스트제목1",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 1,
-    },
-    {
-      title: "테스트제목2",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 2,
-    },
-    {
-      title: "테스트제목3",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 3,
-    },
-    {
-      title: "테스트제목4",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 4,
-    },
-    {
-      title: "테스트제목5",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 5,
-    },
-    {
-      title: "테스트제목6",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 6,
-    },
-    {
-      title: "테스트제목7",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 7,
-    },
-    {
-      title: "테스트제목8",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 8,
-    },
-    {
-      title: "테스트제목9",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 9,
-    },
-    {
-      title: "테스트제목10",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 10,
-    },
-    {
-      title: "테스트제목11",
-      Views: 1,
-      Date: 2,
-      Comments: 3,
-      User: "신규철",
-      id: 11,
-    },
-  ];
-
   //pagination --
   //실제로 데이터 받아오면 여기다가 넣기
   const [data, setData] = useState([]);
@@ -138,7 +47,12 @@ const BoardList = () => {
             {data
               .slice(items * (page - 1), items * (page - 1) + items)
               .map((p) => (
-                <Link to="/BoardView">
+                <Link
+                  to="/BoardView"
+                  state={{
+                    boardData: p,
+                  }}
+                >
                   <ul>
                     <li>{p.title}</li>
                     <li>{p.view_count}</li>
@@ -154,7 +68,7 @@ const BoardList = () => {
               className={styles.Pagination}
               activePage={page}
               itemsCountPerPage={items}
-              totalItemsCount={test.length - 1}
+              totalItemsCount={data.length - 1}
               pageRangeDisplayed={5}
               onChange={handlePageChange}
               prevPageText={"<"}

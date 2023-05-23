@@ -80,6 +80,17 @@ app.get("/boardList", (req, res) => {
     }
   );
 });
+
+app.get("/boardViewComment2", (req, res) => {
+  const id = req.query.id;
+  connection.query(
+    "SELECT * FROM board_free_comment WHERE id = ?",
+    [id],
+    function (error, results, fields) {
+      res.send(results);
+    }
+  );
+});
 app.post("/login", (req, res) => {
   // 데이터 받아서 결과 전송
   const username = req.body.userId;
@@ -131,6 +142,18 @@ app.post("/login", (req, res) => {
     // 아이디, 비밀번호 중 입력되지 않은 값이 있는 경우
     sendData.isLogin = "아이디와 비밀번호를 입력하세요!";
     res.send(sendData);
+  }
+});
+
+app.post("/BoardWriteComment", (req, res) => {
+  const writer = req.body.writer;
+  const id = req.body.id;
+  const comment = req.body.comment;
+  if (writer && id && comment) {
+    connection.query(
+      "INSERT INTO board_free_comment (writer, id,comment, create_date) VALUES(?,?,?,CURRENT_TIMESTAMP)",
+      [writer, id, comment, 0]
+    );
   }
 });
 
