@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import './modal.css';
-import axios from 'axios';
+import "./modal.css";
+import axios from "axios";
 // import axios from 'axios';
 
 import Header from "../components/Header";
@@ -12,7 +12,7 @@ const Modal = (props) => {
 
   return (
     // 모달이 열릴때 openModal 클래스가 생성된다.
-    <div className={open ? 'openModal modal' : 'modal'}>
+    <div className={open ? "openModal modal" : "modal"}>
       {open ? (
         <section>
           <header>
@@ -111,13 +111,27 @@ function MainTest() {
       <div>
         <Link to="/boardview">boardview</Link>
       </div>
+      <div>
+        <Link to="/boardView_party">boardview_party</Link>
+      </div>
+      <div>
+        <Link to="/boardList_party">boardList_party</Link>
+      </div>
+      <div>
+        <Link to="/boardWrite_party">boardWrite_party</Link>
+      </div>
       <button onClick={openModal}>일정에 추가</button>
-      <button onClick={() => {
-        axios.get('http://localhost:3001/authCheck')
-          .then(function (response) {
-            console.log(response.data);
-          });
-      }}>로그인 테스트</button>
+      <button
+        onClick={() => {
+          axios
+            .get("http://localhost:3001/authCheck")
+            .then(function (response) {
+              console.log(response.data);
+            });
+        }}
+      >
+        로그인 테스트
+      </button>
       <Modal open={modalOpen} close={closeModal} header="일정에 추가">
         날짜 : <textarea></textarea>
         시간 : <textarea></textarea>

@@ -5,29 +5,25 @@ const bodyParser = require("body-parser");
 const bcrypt = require("bcrypt");
 const session = require("express-session");
 
-
 app.use(cors());
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 app.use(bodyParser.json({ limit: "50mb" }));
 
-
 // db mysql 관련
-const connection = require('./db');
+const connection = require("./db");
 connection.connect((error) => {
   if (error) {
-    console.error('Error connecting to MySQL server(main): ' + error.stack);
+    console.error("Error connecting to MySQL server(main): " + error.stack);
     return;
   }
-  console.log('Connected to MySQL server as id(main) ' + connection.threadId);
+  console.log("Connected to MySQL server as id(main) " + connection.threadId);
 });
 
-
 // router 관련
-const data = require('./route/data');
-const festival = require('./route/festival');
-app.use('/data', data);
-app.use('/festival', festival);
-
+const data = require("./route/data");
+const festival = require("./route/festival");
+app.use("/data", data);
+app.use("/festival", festival);
 
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionOption);
@@ -57,8 +53,6 @@ app.use(
   })
 );
 
-
-
 app.get("/", (req, res) => {
   res.send("HelloWorld");
 });
@@ -78,26 +72,7 @@ app.get("/logout", function (req, res) {
     res.redirect("/");
   });
 });
-app.get("/boardList", (req, res) => {
-  console.log("으아아악");
-  connection.query(
-    "SELECT * FROM board_free",
-    function (error, results, fields) {
-      res.send(results);
-    }
-  );
-});
 
-app.get("/boardViewComment2", (req, res) => {
-  const id = req.query.id;
-  connection.query(
-    "SELECT * FROM board_free_comment WHERE id = ?",
-    [id],
-    function (error, results, fields) {
-      res.send(results);
-    }
-  );
-});
 app.post("/login", (req, res) => {
   // 데이터 받아서 결과 전송
   const username = req.body.userId;
@@ -130,7 +105,7 @@ app.post("/login", (req, res) => {
               connection.query(
                 `INSERT INTO logtable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`,
                 [req.session.nickname, "-", `React 로그인 테스트`],
-                function (error, result) { }
+                function (error, result) {}
               );
             } else {
               // 비밀번호가 다른 경우
@@ -149,50 +124,6 @@ app.post("/login", (req, res) => {
     // 아이디, 비밀번호 중 입력되지 않은 값이 있는 경우
     sendData.isLogin = "아이디와 비밀번호를 입력하세요!";
     res.send(sendData);
-  }
-});
-
-app.post("/BoardWriteComment", (req, res) => {
-  const writer = req.body.writer;
-  const id = req.body.id;
-  const comment = req.body.comment;
-  if (writer && id && comment) {
-    connection.query(
-      "INSERT INTO board_free_comment (writer, id,comment, create_date) VALUES(?,?,?,CURRENT_TIMESTAMP)",
-      [writer, id, comment, 0]
-    );
-  }
-});
-
-app.post("/BoardWrite", (req, res) => {
-  console.log("test2");
-  const writer = req.body.writer;
-  console.log("test3");
-  const title = req.body.title;
-  const content = req.body.content;
-  const regdate = req.body.regdate;
-  const updatedate = req.body.updatedate;
-  const viewcount = req.body.viewcount;
-  const image = req.body.image;
-  console.log(writer);
-  const sendData = { isSuccess: "" };
-
-  if (writer && title && content && regdate) {
-    console.log("test4");
-    connection.query(
-      "INSERT INTO board_free (writer, title, content, regdate) VALUES(?,?,?,?)",
-      [writer, title, content, regdate]
-      // 여기 에러남 알아봐야함 ㅠㅠ
-      // function (error, data) {
-      //   if (error) throw error;
-      //   req.session.save(function () {
-      //     sendData.isSuccess = "True";
-      //     res.send(sendData);
-      //   });
-      // }
-    );
-  } else {
-    sendData.isSuccess = "제목, 본문을 작성해주세요.";
   }
 });
 
@@ -245,3 +176,107 @@ app.post("/signin", (req, res) => {
 app.listen(3001, () => {
   console.log("3001 port running");
 });
+
+///규철 게시판 관련 시작///
+app.get("/boardList", (req, res) => {
+  connection.query(
+    "SELECT * FROM board_free",
+    function (error, results, fields) {
+      res.send(results);
+    }
+  );
+});
+
+app.get("/BoardList_party", (req, res) => {
+  connection.query(
+    "SELECT * FROM board_party",
+    function (error, results, fields) {
+      res.send(results);
+    }
+  );
+});
+
+app.get("/boardViewComment2", (req, res) => {
+  const id = req.query.id;
+  connection.query(
+    "SELECT * FROM board_free_comment WHERE id = ?",
+    [id],
+    function (error, results, fields) {
+      res.send(results);
+    }
+  );
+});
+
+app.post("/BoardWriteComment", (req, res) => {
+  const writer = req.body.writer;
+  const id = req.body.id;
+  const comment = req.body.comment;
+  if (writer && id && comment) {
+    connection.query(
+      "INSERT INTO board_free_comment (writer, id,comment, create_date) VALUES(?,?,?,CURRENT_TIMESTAMP)",
+      [writer, id, comment, 0]
+    );
+  }
+});
+
+app.post("/BoardWrite", (req, res) => {
+  const writer = req.body.writer;
+  const title = req.body.title;
+  const content = req.body.content;
+  const regdate = req.body.regdate;
+  const updatedate = req.body.updatedate;
+  const viewcount = req.body.viewcount;
+  const image = req.body.image;
+  const sendData = { isSuccess: "" };
+
+  if (writer && title && content && regdate) {
+    connection.query(
+      "INSERT INTO board_free (writer, title, content, regdate) VALUES(?,?,?,?)",
+      [writer, title, content, regdate]
+      // 여기 에러남 알아봐야함 ㅠㅠ
+      // function (error, data) {
+      //   if (error) throw error;
+      //   req.session.save(function () {
+      //     sendData.isSuccess = "True";
+      //     res.send(sendData);
+      //   });
+      // }
+    );
+  } else {
+    sendData.isSuccess = "제목, 본문을 작성해주세요.";
+  }
+});
+
+app.post("/BoardWrite_party", (req, res) => {
+  console.log("게시글 작성(파티)");
+  const writer = req.body.writer;
+  const title = req.body.title;
+  const content = req.body.content;
+  const regdate = req.body.regdate;
+  const start_date = req.body.start_date;
+  const end_date = req.body.end_date;
+  const updatedate = req.body.updatedate;
+  const viewcount = req.body.viewcount;
+  const image = req.body.image;
+  const number = req.body.number;
+  const sendData = { isSuccess: "" };
+
+  if (writer && title && content && regdate) {
+    connection.query(
+      "INSERT INTO board_party (writer, title, content,  start_date, end_date, number,regdate) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP)",
+      [writer, title, content, start_date, end_date, number, 0]
+      // 여기 에러남 알아봐야함 ㅠㅠ
+      // function (error, data) {
+      //   if (error) throw error;
+      //   req.session.save(function () {
+      //     sendData.isSuccess = "True";
+      //     res.send(sendData);
+      //   });
+      // }
+    );
+  } else {
+    sendData.isSuccess = "제목, 본문을 작성해주세요.";
+  }
+});
+
+///규철 게시판 관련 끝///

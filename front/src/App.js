@@ -21,6 +21,9 @@ import RegionAttraction from "./routes/region/RegionAttraction";
 import BoardList from "./routes/board/BoardList.js";
 import BoardView from "./routes/board/BoardView.js";
 import BoardWrite from "./routes/board/BoardWrite.js";
+import BoardList_party from "./routes/board_party/BoardList_party.js";
+import BoardView_party from "./routes/board_party/BoardView_party.js";
+import BoardWrite_party from "./routes/board_party/BoardWrite_party.js";
 
 import Recommand from "./routes/recommand/Recommand.js";
 
@@ -55,7 +58,9 @@ function App() {
         <Route path="/BoardList" element={<BoardList />} />
         <Route path="/BoardView" element={<BoardView />} />
         <Route path="/BoardWrite" element={<BoardWrite />} />
-
+        <Route path="/BoardList_party" element={<BoardList_party />} />
+        <Route path="/BoardView_party" element={<BoardView_party />} />
+        <Route path="/BoardWrite_party" element={<BoardWrite_party />} />
         <Route path="/recommand" element={<Recommand />} />
       </Routes>
     </Router>

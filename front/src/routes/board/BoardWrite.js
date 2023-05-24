@@ -5,8 +5,11 @@ import React from "react";
 import EditorComponent from "./quill/EditorComponent";
 import { useState } from "react";
 import Header from "../../components/Header";
+import { useNavigate } from "react-router-dom";
+import BoardView_party from "../board_party/BoardView_party";
 
 function BoardWrite() {
+  const navigate = useNavigate();
   const uploadReferenece = React.createRef();
 
   const writer = "sls9905"; // 테스트용 아이디
@@ -82,7 +85,6 @@ function BoardWrite() {
                 viewcount: null,
                 image: null,
               };
-              console.log(boardData.writer);
               fetch("http://localhost:3001/BoardWrite", {
                 method: "post",
                 headers: {
