@@ -25,7 +25,6 @@ router.get("/show", (req, res) => {
 
 // 여행지 데이터 추가
 router.post("/insert", async (req, res, next) => {
-  console.log("개씨발");
   let errorCount = 0;
   let insertCount = 0;
   const data = req.body.data;

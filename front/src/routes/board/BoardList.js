@@ -5,6 +5,7 @@ import Pagination from "react-js-pagination";
 import Header from "../../components/Header";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import dayjs from "dayjs";
 
 const BoardList = () => {
   //pagination --
@@ -56,7 +57,7 @@ const BoardList = () => {
                   <ul>
                     <li>{p.title}</li>
                     <li>{p.view_count}</li>
-                    <li>{p.regdate}</li>
+                    <li>{dayjs(p.regdate).format("YYYY-MM-DD")}</li>
                     <li>댓글수 구현</li>
                     <li>{p.writer}</li>
                   </ul>
