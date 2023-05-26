@@ -64,7 +64,7 @@ app.get("/authcheck", (req, res) => {
   } else {
     sendData.isLogin = "False";
   }
-  console.log('is_logined', req.session.is_logined);
+  console.log("is_logined", req.session.is_logined);
 });
 //로그아웃하면 메인페이지로
 app.get("/logout", function (req, res) {
@@ -93,7 +93,7 @@ app.post("/login", (req, res) => {
             // 입력된 비밀번호가 해시된 저장값과 같은 값인지 비교
 
             if (result === true) {
-              console.log('session', req.session);
+              console.log("session", req.session);
 
               req.session.is_logined = true;
               req.session.nickname = username;
@@ -101,11 +101,11 @@ app.post("/login", (req, res) => {
                 sendData.isLogin = "True";
                 res.send(sendData);
               });
-              console.log('session', req.session);
+              console.log("session", req.session);
               connection.query(
                 `INSERT INTO logtable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`,
                 [req.session.nickname, "-", `React 로그인 테스트`],
-                function (error, result) { }
+                function (error, result) {}
               );
             } else {
               // 비밀번호가 다른 경우
@@ -253,9 +253,10 @@ app.post("/BoardWrite", (req, res) => {
   const sendData = { isSuccess: "" };
 
   if (writer && title && content && regdate) {
+    console.log("글작성중");
     connection.query(
-      "INSERT INTO board_free (writer, title, content, regdate) VALUES(?,?,?,?)",
-      [writer, title, content, regdate]
+      "INSERT INTO board_free (writer, title, content, regdate) VALUES(?,?,?,CURRENT_TIMESTAMP)",
+      [writer, title, content, 0]
       // 여기 에러남 알아봐야함 ㅠㅠ
       // function (error, data) {
       //   if (error) throw error;

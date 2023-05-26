@@ -47,9 +47,107 @@
 }
 
 .contentContainer {
-  background-color: bisque;
   height: 1000px;
   /* 내용물에따라 수정 */
   width: 940px;
   margin: 0 auto;
+}
+.boardViews {
+  margin-top: 10px;
+  display: flex;
+  height: 380px;
+}
+.boardFree {
+  width: 470px;
+}
+.boardTitle {
+  padding-left: 10px;
+  font-weight: bold;
+}
+.boardParty {
+  width: 470px;
+}
+.line {
+  margin-top: 3px;
+  border-bottom: 1px solid #adadad;
+  margin-right: 6px;
+  margin-left: 6px;
+}
+.line2 {
+  margin-top: 3px;
+  border-bottom: 1px solid #dddddd;
+  margin-right: 6px;
+  margin-left: 6px;
+  margin-bottom: 3px;
+}
+.contents {
+  margin-top: 5px;
+  width: auto;
+  padding: 0 5px 0 5px;
+}
+
+.contents ul {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  text-align: center;
+}
+.writer {
+  margin-left: auto;
+}
+.listLink:link {
+  color: black;
+}
+.listLink:visited {
+  color: #595959;
+}
+.listLink:hover {
+  text-decoration: underline;
+}
+
+.PaginationBox {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.PaginationBox ul {
+  list-style: none;
+  padding: 0;
+}
+
+.PaginationBox li {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  /*border: 1px solid #e2e2e2;*/
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+}
+
+.PaginationBox li:first-child {
+  border-radius: 5px 0 0 5px;
+}
+
+.PaginationBox li:last-child {
+  border-radius: 0 5px 5px 0;
+}
+.PaginationBox li a {
+  text-decoration: none;
+  color: #18415c;
+  font-size: 1rem;
+}
+
+.PaginationBox li.active a {
+  color: white;
+}
+
+.PaginationBox li.active {
+  background-color: #18415c;
+}
+
+.PaginationBox li a:hover,
+.PaginationBox li a.active {
+  color: black;
 }

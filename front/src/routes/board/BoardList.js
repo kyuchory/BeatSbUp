@@ -22,7 +22,7 @@ const BoardList = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const td = await axios.get("http://localhost:3001/BoardList");
+        const td = await axios.get("http://localhost:3001/boardList");
         setData(td.data);
       } catch (e) {
         console.log(e);
@@ -55,7 +55,7 @@ const BoardList = () => {
                   }}
                   className={styles.listLink}
                 >
-                  <ul>
+                  <ul className={styles.BoardListEach}>
                     <li>{p.title}</li>
                     <li>{p.view_count}</li>
                     <li>{dayjs(p.regdate).format("YYYY/MM/DD")}</li>
