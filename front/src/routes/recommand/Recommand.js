@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import styles from "./css/Recommand.module.css";
 import axios from "axios";
@@ -6,6 +7,8 @@ import axios from "axios";
 import categoryData, { region } from "./datas";
 
 function Recommand() {
+  const navigate = useNavigate();
+
   const [selectedTopCategory, setSelectedTopCategory] = useState("");
   const [selectedMidCategory, setSelectedMidCategory] = useState("");
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
@@ -58,12 +61,11 @@ function Recommand() {
             cat: selectedSubCategory
               ? selectedSubCategory
               : selectedMidCategory
-              ? selectedMidCategory
-              : "",
+                ? selectedMidCategory
+                : "",
             region: selectedSi ? selectedSi : selectedDo ? selectedDo : "",
           }
         );
-        console.log(response.data.length + "개의 데이터");
         setResCount(response.data.length);
       } catch (error) {
         console.log(error);
@@ -158,31 +160,23 @@ function Recommand() {
         </div>
         <button
           onClick={() => {
-            console.log(
-              "type : " +
-                selectedTopCategory +
-                "\ncat : " +
-                selectedMidCategory +
-                "\ncat : " +
-                selectedSubCategory +
-                "\nregion : " +
-                selectedDo +
-                selectedSi
-            );
-            axios
-              .post("http://localhost:3001/data/recommand", {
-                type: selectedTopCategory,
-                cat: selectedSubCategory
-                  ? selectedSubCategory
-                  : selectedMidCategory
-                  ? selectedMidCategory
-                  : "",
-                region: selectedSi ? selectedSi : selectedDo ? selectedDo : "",
-              })
+            console.log("type : " + selectedTopCategory + "\ncat : " + selectedMidCategory + "\ncat : " + selectedSubCategory + "\nregion : " + selectedDo + selectedSi);
+            axios.post("http://localhost:3001/data/recommand", {
+              type: selectedTopCategory,
+              cat: selectedSubCategory ? selectedSubCategory : selectedMidCategory ? selectedMidCategory : "",
+              region: selectedSi ? selectedSi : selectedDo ? selectedDo : "",
+            })
               .then(function (response) {
                 console.log(response.data.length + "개의 데이터 : ");
-                console.log(response.data);
+                try {
+                  navigate('/recommandDetail', {
+                    state: { datas: response.data }
+                  });
+                } catch (error) {
+                  console.error(error);
+                }
               });
+
           }}
         >
           검색
