@@ -11,7 +11,7 @@ function Gathering() {
         params: {
           name: item,
           user: 12345,
-        }
+        },
       })
       .then(function (response) {
         console.log(response);
@@ -23,7 +23,7 @@ function Gathering() {
       .get("http://localhost:3001/gathering/select", {
         params: {
           user: 12345,
-        }
+        },
       })
       .then(function (response) {
         console.log(response);
@@ -36,18 +36,18 @@ function Gathering() {
 
   return (
     <div>
-      <div>
-        hi
-      </div>
+      <div>hi</div>
       <div>
         {data.length === 0 ? (
           <p>모임을 생성하거나 모임에 가입하세요!</p>
         ) : (
           data.map((item, index) => (
             <div>
-            <p>{item.name}</p>
-            <Link to={'/gather_modi'} state={{name : item.name}}>o</Link>
-            <button onClick={()=>drop(item.name)}>x</button>
+              <p>{item.name}</p>
+              <Link to={"/gather_modi"} state={{ name: item.name }}>
+                o
+              </Link>
+              <button onClick={() => drop(item.name)}>x</button>
             </div>
           ))
         )}

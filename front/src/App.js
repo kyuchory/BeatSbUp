@@ -27,6 +27,11 @@ import BoardWrite_party from "./routes/board_party/BoardWrite_party.js";
 
 import Recommand from "./routes/recommand/Recommand.js";
 import RecommandDetail from "./routes/recommand/RecommandDetail.js";
+import Gathering from "./routes/gathering/Gathering.js";
+import Gather_modi from "./routes/gathering/Gather_modi.js";
+import Gather_new from "./routes/gathering/Gather_new.js";
+import Floating from "./routes/schedule/Floating.js"
+import AddSch from "./routes/schedule/AddSch.js";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -67,6 +72,11 @@ function App() {
 
         <Route path="/recommand" element={<Recommand />} />
         <Route path="/recommanddetail" element={<RecommandDetail />} />
+        <Route path="/gathering" element={<Gathering />} />
+        <Route path="/gather_modi" element={<Gather_modi />} />
+        <Route path="/gather_new" element={<Gather_new />} />
+        <Route path="/addSch" element={<AddSch/>} />
+        <Route path="/floating" element={<Floating />} />
       </Routes>
     </Router>
   );
