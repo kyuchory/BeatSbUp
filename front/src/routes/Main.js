@@ -9,6 +9,7 @@ import axios from "axios";
 
 import dayjs from "dayjs";
 import Pagination from "react-js-pagination";
+import Floating from "./schedule/Floating";
 
 function Main() {
   const [searchText, setSearchText] = useState("");
@@ -144,77 +145,90 @@ function Main() {
           )}
         </Link>
       </div>
-      <div className={styles.contentContainer}>
-        <div className={styles.boardViews}>
-          <div className={styles.boardFree}>
-            <div className={styles.boardTitle}>자유 게시판</div>
-            <div className={styles.line}></div>
-            <div className={styles.contents}>
-              {boardFreeData.map((p) => (
-                <Link
-                  to="/BoardView"
-                  state={{
-                    boardData: p,
-                  }}
-                  className={styles.listLink}
-                >
-                  <ul className={styles.BoardListEach}>
-                    <li className={styles.title}>{p.title}　</li>
-                    <li className={styles.commentsNum}>({"3"})</li>
-                    <li className={styles.writer}>{p.writer}</li>
-                  </ul>
-                  <div className={styles.line2}></div>
-                </Link>
-              ))}
-              <div className={styles.PaginationBox}>
-                <Pagination
-                  className={styles.Pagination}
-                  activePage={page}
-                  itemsCountPerPage={items}
-                  totalItemsCount={boardFreeData.length - 1}
-                  pageRangeDisplayed={5}
-                  onChange={handlePageChange}
-                  prevPageText={"<"}
-                  nextPageText={">"}
-                ></Pagination>
+      <div className={styles.testWrap}>
+        <div className={styles.containerFaker}></div>
+        <div className={styles.contentContainer}>
+          <div className={styles.boardViews}>
+            <div className={styles.boardFree}>
+              <div className={styles.boardTitle}>자유 게시판</div>
+              <div className={styles.line}></div>
+              <div className={styles.contents}>
+                {boardFreeData.map((p) => (
+                  <Link
+                    to="/BoardView"
+                    state={{
+                      boardData: p,
+                    }}
+                    className={styles.listLink}
+                  >
+                    <ul className={styles.BoardListEach}>
+                      <li className={styles.title}>{p.title}　</li>
+                      <li className={styles.commentsNum}>({"3"})</li>
+                      <li className={styles.writer}>{p.writer}</li>
+                    </ul>
+                    <div className={styles.line2}></div>
+                  </Link>
+                ))}
+                <div className={styles.PaginationBox}>
+                  <Pagination
+                    className={styles.Pagination}
+                    activePage={page}
+                    itemsCountPerPage={items}
+                    totalItemsCount={boardFreeData.length - 1}
+                    pageRangeDisplayed={5}
+                    onChange={handlePageChange}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                  ></Pagination>
+                </div>
               </div>
             </div>
-          </div>
-          <div className={styles.boardParty}>
-            <div className={styles.boardTitle}>함께 가요 게시판</div>
-            <div className={styles.line}></div>
-            <div className={styles.contents}>
-              {boardPartyData.map((p) => (
-                <Link
-                  to="/BoardView"
-                  state={{
-                    boardData: p,
-                  }}
-                  className={styles.listLink}
-                >
-                  <ul className={styles.BoardListEach}>
-                    <li className={styles.title}>{p.title}　</li>
-                    <li className={styles.commentsNum}>({"3"})</li>
-                    <li className={styles.writer}>{p.writer}</li>
-                  </ul>
-                  <div className={styles.line2}></div>
-                </Link>
-              ))}
-              <div className={styles.PaginationBox}>
-                <Pagination
-                  className={styles.Pagination}
-                  activePage={page}
-                  itemsCountPerPage={items}
-                  totalItemsCount={boardPartyData.length - 1}
-                  pageRangeDisplayed={5}
-                  onChange={handlePageChange}
-                  prevPageText={"<"}
-                  nextPageText={">"}
-                ></Pagination>
+            <div className={styles.boardParty}>
+              <div className={styles.boardTitle}>함께 가요 게시판</div>
+              <div className={styles.line}></div>
+              <div className={styles.contents}>
+                {boardPartyData.map((p) => (
+                  <Link
+                    to="/BoardView"
+                    state={{
+                      boardData: p,
+                    }}
+                    className={styles.listLink}
+                  >
+                    <ul className={styles.BoardListEach}>
+                      <li className={styles.title}>{p.title}　</li>
+                      <li className={styles.commentsNum}>({"3"})</li>
+                      <li className={styles.writer}>{p.writer}</li>
+                    </ul>
+                    <div className={styles.line2}></div>
+                  </Link>
+                ))}
+                <div className={styles.PaginationBox}>
+                  <Pagination
+                    className={styles.Pagination}
+                    activePage={page}
+                    itemsCountPerPage={items}
+                    totalItemsCount={boardPartyData.length - 1}
+                    pageRangeDisplayed={5}
+                    onChange={handlePageChange}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                  ></Pagination>
+                </div>
               </div>
             </div>
           </div>
         </div>
+        <div className={styles.floatingContainer}>
+          <div className={styles.floatingBanner}>
+            <Floating />
+          </div>
+        </div>
+        <div
+          style={{
+            height: 5000,
+          }}
+        ></div>
       </div>
     </div>
   );

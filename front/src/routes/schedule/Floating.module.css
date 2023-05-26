@@ -1,196 +1,97 @@
-<<<<<<< HEAD
-.container{
-width : 300px;
-height : 600px;
-display: flex;
-flex-direction: column;
-margin:auto;
-margin-top: 30px;
-border : 1px solid black;
+.container {
+  width: 300px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  margin-top: 30px;
+  border: 1px solid black;
 }
-.selGath{
-    flex:1;
-    display: flex;
-    overflow-x: scroll;
+.selGath {
+  flex: 1;
+  display: flex;
+  overflow-x: scroll;
 }
 .selGath::-webkit-scrollbar {
-    width: 8px;  /* 스크롤바의 너비 */
+  width: 8px; /* 스크롤바의 너비 */
 }
 
 .selGath::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
-    
-    border-radius: 10px;
+  height: 30%; /* 스크롤바의 길이 */
+  background: #217af4; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
 }
 
 .selGath::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+  background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
 }
-.selButton{
-    align-items: center; 
-    margin:auto;
-    margin-left : 10px;
-    background-color:orange;
-    min-width:100px;
-    width : 50px;
-    height:70%;
-    flex-grow: 1;
-    border : none;
-}
-
-.selButton:hover {
-    background-color: yellow;
-    cursor: pointer;
-    }
-.info{
-    flex:1.5;
-    margin : auto;
-    width:100%;
-    align-items: center;
-    display: flex;
-    background-color: aliceblue;
-}
-.pickdate{
-    flex:1;
-    display: flex;
-    overflow-x: scroll;
-}
-.pickdate::-webkit-scrollbar {
-    width: 4px;  /* 스크롤바의 너비 */
-}
-
-.pickdate::-webkit-scrollbar-thumb {
-    height: 10%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
-    
-    border-radius: 10px;
-}
-
-.pickdate::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
-}
-.selButton2{
-    align-items: center; 
-    margin:auto;
-    margin-left : 10px;
-    background-color:orange;
-    min-width:70px;
-    width : 50px;
-    height:70%;
-    flex-grow: 1;
-    border : none;
-    border-radius: 50%;
-}
-.selButton2:hover {
-    background-color: yellow;
-    cursor: pointer;
-    }
-.schedule{
-    flex:5;
-    display: flex;
-    overflow-y: scroll;
-    flex-direction: column;
-}
-.ele{
-    min-height: 70px;
-    border-bottom:1px solid black;
-=======
-.container{
-width : 300px;
-height : 600px;
-display: flex;
-flex-direction: column;
-margin:auto;
-margin-top: 30px;
-border : 1px solid black;
-}
-.selGath{
-    flex:1;
-    display: flex;
-    overflow-x: scroll;
-}
-.selGath::-webkit-scrollbar {
-    width: 8px;  /* 스크롤바의 너비 */
-}
-
-.selGath::-webkit-scrollbar-thumb {
-    height: 30%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
-    
-    border-radius: 10px;
-}
-
-.selGath::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
-}
-.selButton{
-    align-items: center; 
-    margin:auto;
-    margin-left : 10px;
-    background-color:orange;
-    min-width:100px;
-    width : 50px;
-    height:70%;
-    flex-grow: 1;
-    border : none;
+.selButton {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: orange;
+  min-width: 100px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
 }
 
 .selButton:hover {
-    background-color: yellow;
-    cursor: pointer;
-    }
-.info{
-    flex:1.5;
-    margin : auto;
-    width:100%;
-    align-items: center;
-    display: flex;
-    background-color: aliceblue;
+  background-color: yellow;
+  cursor: pointer;
 }
-.pickdate{
-    flex:1;
-    display: flex;
-    overflow-x: scroll;
+.info {
+  flex: 1.5;
+  margin: auto;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  background-color: aliceblue;
+}
+.pickdate {
+  flex: 1;
+  display: flex;
+  overflow-x: scroll;
 }
 .pickdate::-webkit-scrollbar {
-    width: 4px;  /* 스크롤바의 너비 */
+  width: 4px; /* 스크롤바의 너비 */
 }
 
 .pickdate::-webkit-scrollbar-thumb {
-    height: 10%; /* 스크롤바의 길이 */
-    background: #217af4; /* 스크롤바의 색상 */
-    
-    border-radius: 10px;
+  height: 10%; /* 스크롤바의 길이 */
+  background: #217af4; /* 스크롤바의 색상 */
+
+  border-radius: 10px;
 }
 
 .pickdate::-webkit-scrollbar-track {
-    background: rgba(33, 122, 244, .1);  /*스크롤바 뒷 배경 색상*/
+  background: rgba(33, 122, 244, 0.1); /*스크롤바 뒷 배경 색상*/
 }
-.selButton2{
-    align-items: center; 
-    margin:auto;
-    margin-left : 10px;
-    background-color:orange;
-    min-width:70px;
-    width : 50px;
-    height:70%;
-    flex-grow: 1;
-    border : none;
-    border-radius: 50%;
+.selButton2 {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: orange;
+  min-width: 70px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
+  border-radius: 50%;
 }
 .selButton2:hover {
-    background-color: yellow;
-    cursor: pointer;
-    }
-.schedule{
-    flex:5;
-    display: flex;
-    overflow-y: scroll;
-    flex-direction: column;
+  background-color: yellow;
+  cursor: pointer;
 }
-.ele{
-    min-height: 70px;
-    border-bottom:1px solid black;
->>>>>>> e0fc7cf1f2c5127254447dbf6ad045b425e54626
+.schedule {
+  flex: 5;
+  display: flex;
+  overflow-y: scroll;
+  flex-direction: column;
+}
+.ele {
+  min-height: 70px;
+  border-bottom: 1px solid black;
 }

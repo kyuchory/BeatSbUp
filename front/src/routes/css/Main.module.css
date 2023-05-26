@@ -47,10 +47,14 @@
 }
 
 .contentContainer {
-  height: 1000px;
+  height: 2000px;
   /* 내용물에따라 수정 */
   width: 940px;
   margin: 0 auto;
+}
+.containerFaker {
+  flex: 1;
+  height: 100px;
 }
 .boardViews {
   margin-top: 10px;
@@ -150,4 +154,24 @@
 .PaginationBox li a:hover,
 .PaginationBox li a.active {
   color: black;
+}
+.floatingContainer {
+  /* position: absolute;
+  left: 1360px;
+  top: 630px; */
+
+  /* position: relative;
+  left: 670px;
+  bottom: 2000px; */
+  flex: 1;
+}
+.floatingBanner {
+  /* position: sticky;
+  top: 0; */
+  position: sticky;
+  top: 0;
+}
+.testWrap {
+  display: flex;
+  flex-direction: row;
 }

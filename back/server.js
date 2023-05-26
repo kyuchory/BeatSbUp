@@ -22,12 +22,12 @@ connection.connect((error) => {
 // router 관련
 const data = require("./route/data");
 const festival = require("./route/festival");
-const gathering = require('./route/gathering');
-const schedule = require('./route/schedule');
+const gathering = require("./route/gathering");
+const schedule = require("./route/schedule");
 app.use("/data", data);
 app.use("/festival", festival);
-app.use('/gathering',gathering);
-app.use('/schedule', schedule);
+app.use("/gathering", gathering);
+app.use("/schedule", schedule);
 
 var MySQLStore = require("express-mysql-session")(session);
 var sessionStore = new MySQLStore(sessionOption);
