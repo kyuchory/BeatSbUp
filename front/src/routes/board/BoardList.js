@@ -53,11 +53,12 @@ const BoardList = () => {
                   state={{
                     boardData: p,
                   }}
+                  className={styles.listLink}
                 >
                   <ul>
                     <li>{p.title}</li>
                     <li>{p.view_count}</li>
-                    <li>{dayjs(p.regdate).format("YYYY-MM-DD")}</li>
+                    <li>{dayjs(p.regdate).format("YYYY/MM/DD")}</li>
                     <li>댓글수 구현</li>
                     <li>{p.writer}</li>
                   </ul>

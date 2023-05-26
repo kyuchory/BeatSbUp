@@ -3,6 +3,7 @@ import styles from "./css/BoardView.module.css";
 import Header from "../../components/Header";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import * as dayjs from "dayjs";
 
 const BoardView = () => {
   const location = useLocation();
@@ -53,7 +54,9 @@ const BoardView = () => {
       <Header />
       <div className={styles.contentContainer}>
         <div className={styles.title}>{board_data.title}</div>
-        <div className={styles.date}>{board_data.regdate}</div>
+        <div className={styles.date}>
+          {dayjs(board_data.regdate).format("YYYY/MM/DD")}
+        </div>
         <div className={styles.viewAndWriter}>
           <div>102 Views</div>
           <div className={styles.bar}> </div>
@@ -87,11 +90,13 @@ const BoardView = () => {
           <div className={styles.commentList}>댓글 리스트</div>
           <div>
             {commentData.map((p) => (
-              <ul>
-                <li>{p.writer}</li>
-                <li>{p.create_date}</li>
-                <li>{p.comment}</li>
-              </ul>
+              <div className={styles.commentBox}>
+                <div className={styles.commentWriter}>{p.writer}</div>
+                <div className={styles.commentRegdate}>
+                  {dayjs(p.create_date).format("YYYY/MM/DD")}
+                </div>
+                <div className={styles.commentContent}>{p.comment}</div>
+              </div>
             ))}
           </div>
         </div>

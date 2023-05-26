@@ -60,6 +60,8 @@
 .BoardList {
   display: flex;
   flex-direction: column;
+
+  border-bottom: 2px solid #e8e8e8;
 }
 .BoardList ul {
   display: flex;
@@ -82,6 +84,9 @@
 }
 .BoardList li:nth-child(5) {
   width: 15%;
+}
+.BoardListEach:not(:first-child) {
+  border-top: 1px solid #e8e8e8;
 }
 
 .PaginationBox {
@@ -129,4 +134,14 @@
 .PaginationBox li a:hover,
 .PaginationBox li a.active {
   color: black;
+}
+
+.listLink:link {
+  color: black;
+}
+.listLink:visited {
+  color: #595959;
+}
+.listLink:hover {
+  text-decoration: underline;
 }

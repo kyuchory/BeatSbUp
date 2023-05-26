@@ -3,6 +3,7 @@ import styles from "./css/BoardView_party.module.css";
 import Header from "../../components/Header";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
+import * as dayjs from "dayjs";
 
 const BoardView_party = () => {
   const location = useLocation();
@@ -13,7 +14,7 @@ const BoardView_party = () => {
   useEffect(() => {
     async function fetchData() {
       axios
-        .get("http://localhost:3001/BoardViewComment2", {
+        .get("http://localhost:3001/BoardView_party_Comment2", {
           params: {
             id: board_id,
           },
@@ -36,7 +37,7 @@ const BoardView_party = () => {
       id: board_id,
     };
     //comment의 내용을 db로 전송 -> 내용을 댓글 리스트에 표현.
-    fetch("http://localhost:3001/BoardWriteComment", {
+    fetch("http://localhost:3001/BoardWrite_party_Comment", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -53,7 +54,9 @@ const BoardView_party = () => {
       <Header />
       <div className={styles.contentContainer}>
         <div className={styles.title}>{board_data.title}</div>
-        <div className={styles.date}>{board_data.regdate}</div>
+        <div className={styles.date}>
+          {dayjs(board_data.regdate).format("YYYY/MM/DD")}
+        </div>
         <div className={styles.viewAndWriter}>
           <div>102 Views</div>
           <div className={styles.bar}> </div>
@@ -87,11 +90,20 @@ const BoardView_party = () => {
           <div className={styles.commentList}>댓글 리스트</div>
           <div>
             {commentData.map((p) => (
-              <ul>
-                <li>{p.writer}</li>
-                <li>{p.create_date}</li>
-                <li>{p.comment}</li>
-              </ul>
+              <div className={styles.commentBox}>
+                <div className={styles.commentWriterBox}>
+                  <span className={styles.commentWriter}>{p.writer}</span>
+                  {board_data.writer === writer ? (
+                    <button className={styles.commentAddParty}>
+                      모임원 추가
+                    </button>
+                  ) : null}
+                </div>
+                <div className={styles.commentRegdate}>
+                  {dayjs(p.create_date).format("YYYY/MM/DD")}
+                </div>
+                <div className={styles.commentContent}>{p.comment}</div>
+              </div>
             ))}
           </div>
         </div>

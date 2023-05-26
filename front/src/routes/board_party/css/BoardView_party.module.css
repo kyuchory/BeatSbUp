@@ -98,12 +98,51 @@
   font-size: 13px;
   color: #fff;
   letter-spacing: -0.5px;
+  cursor: pointer;
 }
 .commentList {
   margin-top: 50px;
   border-top: 1px solid #333;
+  margin-bottom: 20px;
 }
 .bar {
   margin-left: 5px;
   border-left: 1px #b0b3be solid;
+}
+.commentBox {
+  border: #b0b3be 1px solid;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
+.commentWriterBox {
+  border-bottom: 1px #f0f0f0 solid;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.commentWriter {
+  padding-left: 10px;
+}
+.commentAddParty {
+  margin-left: 740px;
+
+  display: inline-flex;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 13px;
+  cursor: pointer;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  background-color: #b0b3be;
+}
+.commentRegdate {
+  border-bottom: 1px #f0f0f0 solid;
+  font-size: 13px;
+  padding-left: 10px;
+}
+.commentContent {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }

@@ -219,6 +219,29 @@ app.post("/BoardWriteComment", (req, res) => {
   }
 });
 
+app.post("/BoardWrite_party_Comment", (req, res) => {
+  const writer = req.body.writer;
+  const id = req.body.id;
+  const comment = req.body.comment;
+  if (writer && id && comment) {
+    connection.query(
+      "INSERT INTO board_party_comment (writer, id,comment, create_date) VALUES(?,?,?,CURRENT_TIMESTAMP)",
+      [writer, id, comment, 0]
+    );
+  }
+});
+
+app.get("/boardView_party_Comment2", (req, res) => {
+  const id = req.query.id;
+  connection.query(
+    "SELECT * FROM board_party_comment WHERE id = ?",
+    [id],
+    function (error, results, fields) {
+      res.send(results);
+    }
+  );
+});
+
 app.post("/BoardWrite", (req, res) => {
   const writer = req.body.writer;
   const title = req.body.title;

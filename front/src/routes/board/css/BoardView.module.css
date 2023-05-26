@@ -98,12 +98,35 @@
   font-size: 13px;
   color: #fff;
   letter-spacing: -0.5px;
+  cursor: pointer;
 }
 .commentList {
   margin-top: 50px;
   border-top: 1px solid #333;
+  margin-bottom: 20px;
 }
 .bar {
   margin-left: 5px;
   border-left: 1px #b0b3be solid;
+}
+.commentBox {
+  border: #b0b3be 1px solid;
+  border-radius: 5px;
+  margin-bottom: 12px;
+}
+.commentWriter {
+  border-bottom: 1px #f0f0f0 solid;
+  padding-left: 10px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+.commentRegdate {
+  border-bottom: 1px #f0f0f0 solid;
+  font-size: 13px;
+  padding-left: 10px;
+}
+.commentContent {
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
