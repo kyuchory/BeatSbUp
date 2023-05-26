@@ -120,6 +120,18 @@ function MainTest() {
       <div>
         <Link to="/boardWrite_party">boardWrite_party</Link>
       </div>
+      <div>
+        <Link to="/gathering">gathering</Link>
+      </div>
+      <div>
+        <Link to="/gather_new">gather_new</Link>
+      </div>
+      <div>
+        <Link to="/floating">floating</Link>
+      </div>
+      <div>
+        <Link to="/addSch">addSch</Link>
+      </div>
       <button onClick={openModal}>일정에 추가</button>
       <button
         onClick={() => {
