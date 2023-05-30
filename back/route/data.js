@@ -55,9 +55,9 @@ router.post("/insert", async (req, res, next) => {
       } else {
         console.log(
           "Error while inserting data : " +
-            error +
-            "\ntitle : " +
-            JSON.stringify(element)
+          error +
+          "\ntitle : " +
+          JSON.stringify(element)
         );
         errorCount++;
       }

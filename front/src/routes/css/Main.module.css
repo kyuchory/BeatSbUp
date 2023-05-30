@@ -8,10 +8,110 @@
   flex-direction: column;
 }
 
+.header {
+  width: 1140px;
+  margin: 0 auto;
+  position: absolute;
+  z-index: 2;
+  top: 80px;
+  left: 50%;
+  border-radius: 10px;
+  transform: translate(-50%, 0%);
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  margin-left: 20px;
+  height: 90px;
+}
+
+.profile {
+  position: absolute;
+  right: -20px;
+  top: -70px;
+  width: 200px;
+  text-align: center;
+}
+
+/* 나중에 애니메이션 효과로 바꾸기 */
+.profile:hover .profileSelector {
+  display: block;
+}
+
+.profileSelector {
+  display: none;
+  border: 2px solid grey;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+  line-height: 30px;
+  animation-duration: 1s;
+  /* transition: all 0.5s; */
+  cursor: pointer;
+}
+
+.profileSelect {
+  font-weight: bold;
+}
+
+.profileSelect:hover a {
+  color: black;
+  text-decoration: underline;
+}
+
+.profileSelect>a {
+  color: rgb(155, 155, 155);
+}
+
+.menuContainer {
+  width: 800px;
+  align-items: center;
+  display: flex;
+}
+
+.menus {
+  flex: 1;
+  display: flex;
+}
+
+.menu {
+  flex: 1;
+  text-align: center;
+  margin: 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-right: 1px solid #595959;
+}
+
+.menu:last-child {
+  border-right: 0;
+
+}
+
+.menus ul {
+  display: none;
+}
+
+.menus:hover {
+  /* height: 200px; */
+}
+
+.menus:hover ul {
+  display: block;
+}
+
+.link {
+  text-decoration: none;
+  display: block;
+  color: black;
+}
+
 .imageContainer {
   position: relative;
   background-color: rgb(212, 212, 212);
-  height: 450px;
+  height: 700px;
   /* 내용물에따라 수정 */
   width: 100%;
   margin: 0 auto;
@@ -33,17 +133,33 @@
 
 .search {
   position: absolute;
-  top: 10px;
+  top: 250px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 50%;
   height: 50px;
-  padding: 5px 10px;
+  padding: 5px 20px;
   border-radius: 25px;
   border: 0;
-  box-shadow: 3px 3px 5px rgb(192, 192, 192);
   font-size: 1.2rem;
-  opacity: 0.7;
+}
+
+.search:focus {
+  outline: none;
+  box-shadow: 3px 3px 5px rgb(192, 192, 192);
+}
+
+.imageContainer image {
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.imageInfo {
+  position: absolute;
+  color: white;
+  font-size: 1.5rem;
+  bottom: 20px;
+  right: 20px;
 }
 
 .contentContainer {
@@ -52,31 +168,38 @@
   width: 940px;
   margin: 0 auto;
 }
+
 .containerFaker {
   flex: 1;
   height: 100px;
 }
+
 .boardViews {
   margin-top: 10px;
   display: flex;
   height: 380px;
 }
+
 .boardFree {
   width: 470px;
 }
+
 .boardTitle {
   padding-left: 10px;
   font-weight: bold;
 }
+
 .boardParty {
   width: 470px;
 }
+
 .line {
   margin-top: 3px;
   border-bottom: 1px solid #adadad;
   margin-right: 6px;
   margin-left: 6px;
 }
+
 .line2 {
   margin-top: 3px;
   border-bottom: 1px solid #dddddd;
@@ -84,6 +207,7 @@
   margin-left: 6px;
   margin-bottom: 3px;
 }
+
 .contents {
   margin-top: 5px;
   width: auto;
@@ -96,15 +220,19 @@
   list-style: none;
   text-align: center;
 }
+
 .writer {
   margin-left: auto;
 }
+
 .listLink:link {
   color: black;
 }
+
 .listLink:visited {
   color: #595959;
 }
+
 .listLink:hover {
   text-decoration: underline;
 }
@@ -137,6 +265,7 @@
 .PaginationBox li:last-child {
   border-radius: 0 5px 5px 0;
 }
+
 .PaginationBox li a {
   text-decoration: none;
   color: #18415c;
@@ -155,6 +284,7 @@
 .PaginationBox li a.active {
   color: black;
 }
+
 .floatingContainer {
   /* position: absolute;
   left: 1360px;
@@ -165,12 +295,14 @@
   bottom: 2000px; */
   flex: 1;
 }
+
 .floatingBanner {
   /* position: sticky;
   top: 0; */
   position: sticky;
   top: 0;
 }
+
 .testWrap {
   display: flex;
   flex-direction: row;
