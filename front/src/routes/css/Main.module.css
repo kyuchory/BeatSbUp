@@ -9,11 +9,11 @@
 }
 
 .header {
-  width: 1140px;
+  width: 1200px;
   margin: 0 auto;
   position: absolute;
   z-index: 2;
-  top: 80px;
+  top: 70px;
   left: 50%;
   border-radius: 10px;
   transform: translate(-50%, 0%);
@@ -24,7 +24,12 @@
 
 .logo {
   margin-left: 20px;
-  height: 90px;
+  height: 80px;
+}
+.logo img {
+  margin-top: 10px;
+  width: 148px;
+  height: 60px;
 }
 
 .profile {
@@ -61,7 +66,7 @@
   text-decoration: underline;
 }
 
-.profileSelect>a {
+.profileSelect > a {
   color: rgb(155, 155, 155);
 }
 
@@ -87,7 +92,6 @@
 
 .menu:last-child {
   border-right: 0;
-
 }
 
 .menus ul {

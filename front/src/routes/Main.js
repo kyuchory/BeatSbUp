@@ -72,12 +72,10 @@ function Main() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(
-          "http://localhost:3001/query",
-          {
-            query: "SELECT * FROM sight WHERE cat LIKE 'A0101%' and image LIKE 'h%'"
-          }
-        );
+        const response = await axios.post("http://localhost:3001/query", {
+          query:
+            "SELECT * FROM sight WHERE cat LIKE 'A0101%' and image LIKE 'h%'",
+        });
         console.log(response.data);
         setData(response.data);
       } catch (error) {
@@ -87,7 +85,6 @@ function Main() {
 
     fetchData();
   }, []);
-
 
   useEffect(() => {
     if (Object.keys(data).length > 0) {
@@ -210,7 +207,7 @@ function Main() {
             <div>
               <img
                 src={random10FData[fPage].image}
-                style={{ height: '700px', width: "100%", objectFit: 'cover' }}
+                style={{ height: "700px", width: "100%", objectFit: "cover" }}
               />
               <div className={styles.imageInfo}>
                 <h3>{random10FData[fPage].title}</h3>
@@ -218,7 +215,6 @@ function Main() {
               </div>
             </div>
           )}
-
         </Link>
       </div>
       <div className={styles.testWrap}>
