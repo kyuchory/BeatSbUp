@@ -3,12 +3,13 @@
 
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../components/Header';
 import styles from './css/SearchDetail.module.css'
 
 function SearchDetail() {
     const location = useLocation();
+    const navigate = useNavigate();
     const [searchText, setSearchText] = useState(location.state.searchText);
 
     const [res, setRes] = useState(null);
@@ -55,7 +56,18 @@ function SearchDetail() {
                 {res ? (
                     <ul className={styles.lists}>
                         {res.map(item => (
-                            <li key={item.contentid} className={styles.list}>
+                            <li key={item.contentid} className={styles.list}
+                                onClick={() =>
+                                    navigate("/regionDetail", {
+                                        state: {
+                                            data: {
+                                                title: item.title,
+                                                addr: item.addr1,
+                                                image: item.firstimage,
+                                                contentId: item.contentid
+                                            }
+                                        },
+                                    })}>
                                 <div className={styles.imageContainer}>
                                     <img src={`${item.firstimage}`} width="200px" className={styles.image} />
                                 </div>

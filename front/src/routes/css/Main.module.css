@@ -26,6 +26,7 @@
   margin-left: 20px;
   height: 80px;
 }
+
 .logo img {
   margin-top: 10px;
   width: 148px;
@@ -66,7 +67,7 @@
   text-decoration: underline;
 }
 
-.profileSelect > a {
+.profileSelect>a {
   color: rgb(155, 155, 155);
 }
 
