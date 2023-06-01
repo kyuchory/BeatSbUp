@@ -42,6 +42,23 @@
   background-color: yellow;
   cursor: pointer;
 }
+.selButtons {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: blueviolet;
+  color:white;
+  min-width: 100px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
+}
+
+.selButtons:hover {
+  background-color: yellow;
+  cursor: pointer;
+}
 .info {
   flex: 1.5;
   margin: auto;
@@ -82,6 +99,23 @@
   border-radius: 50%;
 }
 .selButton2:hover {
+  background-color: yellow;
+  cursor: pointer;
+}
+.selButton2s {
+  align-items: center;
+  margin: auto;
+  margin-left: 10px;
+  background-color: blueviolet;
+  color: white;
+  min-width: 70px;
+  width: 50px;
+  height: 70%;
+  flex-grow: 1;
+  border: none;
+  border-radius: 50%;
+}
+.selButton2s:hover {
   background-color: yellow;
   cursor: pointer;
 }
