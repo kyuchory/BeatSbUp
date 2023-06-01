@@ -20,9 +20,7 @@ const BoardList_party = () => {
   };
   useEffect(() => {
     async function fetchData() {
-      console.log("여긴와?");
       try {
-        console.log("여기는?");
         const td = await axios.get("http://localhost:3001/BoardList_party");
         console.log(td.data);
         setData(td.data);

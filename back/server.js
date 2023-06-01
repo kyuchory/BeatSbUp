@@ -298,11 +298,12 @@ app.post("/BoardWrite_party", (req, res) => {
   const image = req.body.image;
   const number = req.body.number;
   const sendData = { isSuccess: "" };
+  const name = req.body.gather_name
 
   if (writer && title && content && regdate) {
     connection.query(
-      "INSERT INTO board_party (writer, title, content,  start_date, end_date, number,regdate) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP)",
-      [writer, title, content, start_date, end_date, number, 0]
+      "INSERT INTO board_party (writer, title, content,  start_date, end_date, number,regdate,gather_name) VALUES(?,?,?,?,?,?,CURRENT_TIMESTAMP,?)",
+      [writer, title, content, start_date, end_date, number, name]
       // 여기 에러남 알아봐야함 ㅠㅠ
       // function (error, data) {
       //   if (error) throw error;

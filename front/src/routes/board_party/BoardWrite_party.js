@@ -9,12 +9,21 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { ko } from "date-fns/esm/locale";
 import * as dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function BoardWrite_party() {
+  const navigate = useNavigate()
   const uploadReferenece = React.createRef();
-
+  const [checked, setChecked] = useState(false);
   const writer = "sls9905"; // 테스트용 아이디
   const date = "22-05-05"; //테스트용 데이트
+  const [name, setName] = useState('');
+  const [dateDifference, setDateDifference] = useState(0);
+
+  const handleCheckboxChange = (event) => {
+    setChecked(event.target.checked);
+  };
 
   async function onClickSearch() {
     await uploadReferenece.current
@@ -33,11 +42,16 @@ function BoardWrite_party() {
     setBoaderTitleText(text);
   };
 
+
   const [title, setTitle] = useState("");
   const handelTitle = (e) => {
     const titleText = e.target.value;
     console.log(titleText);
     setTitle(titleText);
+  };
+  const handelName = (e) => {
+    const name = e.target.value;
+    setName(name);
   };
   const [desc, setDesc] = useState("");
   function onEditorChange(value) {
@@ -48,6 +62,22 @@ function BoardWrite_party() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
+  function insert() {
+    const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
+    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay));
+    axios
+      .get("http://localhost:3001/gathering/insert", {
+        params: {
+          name: name,
+          user: writer,
+          startDate : dayjs(startDate).format('YYYY-MM-DD'),
+          date_long : diffDays,
+        },
+      })
+      .then(function (response) {
+        console.log(response);
+      });
+  }
   const [num, setNum] = useState(2);
 
   const onChangeHandler = (e) => {
@@ -66,7 +96,7 @@ function BoardWrite_party() {
     { key: 7, value: "7인" },
     { key: 8, value: "8인" },
   ];
-
+  console.log(name)
   return (
     <div className={styles.mainPageContainer}>
       <Header />
@@ -82,6 +112,19 @@ function BoardWrite_party() {
             >
               {title}
             </textarea>
+          </div>
+          <div className={styles.boardTitle}>
+          모임 이름
+          <div className={styles.boaderTitleWrite}>
+            <textarea
+              className={styles.boardTitleTextArea}
+              placeholder="모임 이름을 입력하세요"
+              value={name}
+              onChange={handelName}
+            >
+              {name}
+            </textarea>
+          </div>
           </div>
           <div className={styles.boardFileUpload}>
             {/*파일 올리고 내리고...*/}
@@ -158,6 +201,9 @@ function BoardWrite_party() {
           <button
             className="lf-button primary"
             onClick={() => {
+              if(checked == true){
+                insert();
+              };
               const boardData = {
                 writer: writer,
                 title: title,
@@ -169,6 +215,7 @@ function BoardWrite_party() {
                 viewcount: null,
                 image: null,
                 number: num,
+                gather_name : name,
               };
               console.log("테스트중이용~");
               console.log(boardData.start_date);
@@ -185,14 +232,22 @@ function BoardWrite_party() {
                 .then((json) => {
                   if (json.isSuccess === "True") {
                     alert("게시물 작성 성공");
+                    navigate(-1)
                   } else {
                     alert(json.isSuccess);
                   }
                 });
+                alert("게시글 작성 성공");
+                navigate(-1)
             }}
           >
             저장
-          </button>
+          </button>모임 생성
+          <input
+          type="checkbox"
+          checked={checked}
+          onChange={handleCheckboxChange}
+        />
         </div>
       </div>
     </div>
