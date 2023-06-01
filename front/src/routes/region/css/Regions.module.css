@@ -5,6 +5,7 @@
 
 .contents{
   display: flex;
+  margin-top:30px;
 }
 
 .select{
@@ -15,8 +16,17 @@
   border-radius: 5px;
   display:flex;
   flex-direction: column;
+  position:relative;
 }
 
+.h2{
+  margin:auto;
+  position:absolute;
+  left:150px;
+  top:10px;
+  transform: translate(-50%, 0);
+  width:100%;
+}
 .regionSelect{
   margin:40px 20px;
   border-top: 1px solid #cccccc;
@@ -67,6 +77,7 @@
 
 .datas{
   width:100%;
+  margin-left:25px;
 }
 
 .lists{
@@ -77,8 +88,9 @@
 .list{
   height:180px;
   margin:20px;
+  margin-right: 150px;
   padding:10px;
-  border: 1px solid #cccccc;
+  border-top: 1px solid #cccccc;
   display: flex;
   align-items: center;
 }

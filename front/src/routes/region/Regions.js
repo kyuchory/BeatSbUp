@@ -54,10 +54,10 @@ function Regions() {
   return (
     <div className={styles.container}>
       <Header />
-      <h2>지역별 관광지 보기</h2>
       <div className={styles.contents}>
         <div className={styles.select}>
-          <div className={styles.regionSelect}>
+            <h2 className={styles.h2}>지역별 관광지 보기</h2>
+            <div className={styles.regionSelect}>
             <div className={styles.do}>
               <div
                 className={styles.doName}
