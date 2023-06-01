@@ -118,7 +118,7 @@ function Main() {
   setInterval(() => {
     // 10초마다 변경
     fNext();
-  }, 10000);
+  }, 30000);
 
   const [festivalData, setFestivalData] = useState([]);
   const [randomFestivalData, setRandomFestivalData] = useState({});
@@ -166,6 +166,8 @@ function Main() {
   }, [festivalData]);
 
   const [fPage, setFPage] = useState(0);
+  const [fPage2, setFPage2] = useState(0);
+
   const fNext = () => {
     if (fPage == 9) setFPage(0);
     else setFPage(fPage + 1);
@@ -174,10 +176,12 @@ function Main() {
     if (fPage == 0) setFPage(9);
     else setFPage(fPage - 1);
   };
+  
 
   //pagination --
   //실제로 데이터 받아오면 여기다가 넣기
 
+  const [page2, setPage2] = useState(1);
   const [page, setPage] = useState(1);
   const [items] = useState(7);
 
@@ -297,15 +301,15 @@ function Main() {
         <div className={styles.containerFaker}></div>
         <div className={styles.contentContainer}>
           <div className={styles.bannerOnText}>
-            {randomFestivalData[fPage] && (
+            {randomFestivalData[fPage2] && (
               <>
                 <h2 className={styles.bannerOnTextH2}>
-                  {randomFestivalData[fPage].title}
+                  {randomFestivalData[fPage2].title}
                 </h2>
                 <p className={styles.bannerOnTextP}>
-                  {randomFestivalData[fPage].addr} <br />
-                  {randomFestivalData[fPage].eventStartDate} ~{" "}
-                  {randomFestivalData[fPage].eventEndDate}
+                  {randomFestivalData[fPage2].addr} <br />
+                  {randomFestivalData[fPage2].eventStartDate} ~{" "}
+                  {randomFestivalData[fPage2].eventEndDate}
                 </p>
               </>
             )}
@@ -314,7 +318,7 @@ function Main() {
             {randomFestivalData.length > 0 && (
               <div className={styles.imageWrap}>
                 <img
-                  src={randomFestivalData[fPage].image}
+                  src={randomFestivalData[fPage2].image}
                   style={{ width: "100%" }}
                 />
               </div>
