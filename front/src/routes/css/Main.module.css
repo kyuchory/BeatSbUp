@@ -179,7 +179,7 @@
 }
 
 .boardViews {
-  margin-top: 10px;
+  margin-top: 40px;
   display: flex;
   height: 380px;
 }
@@ -310,4 +310,60 @@
 .testWrap {
   display: flex;
   flex-direction: row;
+}
+.boardUp {
+  margin-top: 60px;
+  display: flex;
+}
+.boardTextBox {
+  margin-left: 50px;
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: center;
+}
+.boardText1 {
+  margin-bottom: 30px;
+}
+.boardText2 {
+  margin-bottom: 30px;
+}
+.boardText3 {
+}
+
+.festivalContainer {
+  margin-top: 350px;
+}
+.imageWrap {
+  border: 1px none none;
+  padding: 20px;
+  background-color: white;
+  border-radius: 20px;
+}
+.bannerOnText {
+  position: absolute;
+  top: 870px;
+  padding-left: 30px;
+  width: 100%;
+}
+.bannerOnTextH2 {
+  font-size: 36px;
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 40px;
+  max-width: 420px;
+  width: 410px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.bannerOnTextP {
+  margin-top: 40px;
+  font-size: 17px;
+  line-height: 25px;
+  letter-spacing: -0.5px;
+  width: 410px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

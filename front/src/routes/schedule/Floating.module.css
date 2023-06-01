@@ -6,6 +6,7 @@
   margin: auto;
   margin-top: 30px;
   border: 1px solid black;
+  background-color: white;
 }
 .selGath {
   flex: 1;

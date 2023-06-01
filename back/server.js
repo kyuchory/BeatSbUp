@@ -63,7 +63,16 @@ app.get("/", (req, res) => {
 
 app.post("/query", function (req, res) {
   const query = req.body.query;
-  console.log('query : ', query)
+  console.log("query : ", query);
+  connection.query(query, function (error, results, fields) {
+    if (error) throw error;
+    res.json(results);
+  });
+});
+
+app.post("/query2", function (req, res) {
+  const query = req.body.query;
+  console.log("query : ", query);
   connection.query(query, function (error, results, fields) {
     if (error) throw error;
     res.json(results);
@@ -119,7 +128,7 @@ app.post("/login", (req, res) => {
               connection.query(
                 `INSERT INTO logtable (created, username, action, command, actiondetail) VALUES (NOW(), ?, 'login' , ?, ?)`,
                 [req.session.nickname, "-", `React 로그인 테스트`],
-                function (error, result) { }
+                function (error, result) {}
               );
             } else {
               // 비밀번호가 다른 경우
