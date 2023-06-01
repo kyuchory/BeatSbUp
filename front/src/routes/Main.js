@@ -115,11 +115,17 @@ function Main() {
       setRandom10FData(randomDatas);
     }
   }, [data]);
-  setInterval(() => {
-    // 10초마다 변경
-    fNext();
-  }, 30000);
-
+  
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFPage((prevFPage) => (prevFPage + 1) % 10);
+    }, 10000);
+  
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+  
   const [festivalData, setFestivalData] = useState([]);
   const [randomFestivalData, setRandomFestivalData] = useState({});
   useEffect(() => {
