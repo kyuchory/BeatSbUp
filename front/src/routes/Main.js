@@ -115,6 +115,10 @@ function Main() {
       setRandom10FData(randomDatas);
     }
   }, [data]);
+  setInterval(() => {
+    // 10초마다 변경
+    fNext();
+  }, 10000);
 
   const [festivalData, setFestivalData] = useState([]);
   const [randomFestivalData, setRandomFestivalData] = useState({});
@@ -263,7 +267,7 @@ function Main() {
             onKeyPress={enterKeyPress}
           />
         </form>
-        <Link to="/">
+        <Link to="/regiondetail" state={{ data: random10FData[fPage] }}>
           {random10FData.length > 0 && (
             <div>
               <img

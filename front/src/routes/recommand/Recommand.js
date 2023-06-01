@@ -4,7 +4,7 @@ import Header from "../../components/Header";
 import styles from "./css/Recommand.module.css";
 import axios from "axios";
 
-import categoryData, { region } from "./datas";
+import categoryData, { region } from "../datas";
 
 function Recommand() {
   const navigate = useNavigate();

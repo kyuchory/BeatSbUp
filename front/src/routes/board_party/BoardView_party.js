@@ -11,6 +11,20 @@ const BoardView_party = () => {
   const board_data = location.state.boardData;
   const writer = "sls9905";
   const [commentData, setCommentData] = useState([]);
+
+  function addMem(user) {
+    axios
+      .get("http://localhost:3001/gathering/addMem", {
+        params: {
+          name: board_data.gather_name,
+          user: user,
+          admin: board_data.writer,
+        },
+      })
+      .then(function (response) {
+      });
+  }
+
   useEffect(() => {
     async function fetchData() {
       axios
@@ -94,7 +108,7 @@ const BoardView_party = () => {
                 <div className={styles.commentWriterBox}>
                   <span className={styles.commentWriter}>{p.writer}</span>
                   {board_data.writer === writer ? (
-                    <button className={styles.commentAddParty}>
+                    <button className={styles.commentAddParty} onClick={()=>addMem(p.writer)}>
                       모임원 추가
                     </button>
                   ) : null}
