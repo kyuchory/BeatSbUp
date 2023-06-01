@@ -94,8 +94,10 @@ function BoardWrite() {
               })
                 .then((res) => res.json())
                 .then((json) => {
+                  console.log(json.isSuccess)
                   if (json.isSuccess === "True") {
                     alert("게시물 작성 성공");
+                    navigate(-1)
                   } else {
                     alert(json.isSuccess);
                   }

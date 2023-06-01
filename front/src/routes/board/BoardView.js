@@ -24,7 +24,7 @@ const BoardView = () => {
         });
     }
     fetchData();
-  }, []);
+  }, [commentData]);
   const [comment, setComment] = useState("");
 
   const handleComment = (e) => {

@@ -12,7 +12,21 @@ import dayjs from "dayjs";
 import Pagination from "react-js-pagination";
 import Floating from "./schedule/Floating";
 
+import img2 from "./img/rptlvks.jpg";
+import img3 from "./img/picnic5.jpg";
+import banner from "./img/banner.png";
+
 function Main() {
+  const getMeta = (url) =>
+    new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = (err) => reject(err);
+      img.src = url;
+    });
+
+  // Usage example:
+
   const [islogin, setIslogin] = useState(false);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
@@ -60,7 +74,7 @@ function Main() {
     async function fetchData() {
       try {
         const td = await axios.get("http://localhost:3001/BoardList_party");
-        console.log(td.data);
+        //console.log(td.data);
         setBoardPartyData(td.data);
       } catch (e) {
         console.log(e);
@@ -71,11 +85,13 @@ function Main() {
 
   useEffect(() => {
     const fetchData = async () => {
+      console.log("여기좀 봅시다2");
       try {
         const response = await axios.post("http://localhost:3001/query", {
           query:
             "SELECT * FROM sight WHERE cat LIKE 'A0101%' and image LIKE 'h%'",
         });
+        console.log("여기좀 봅시다");
         console.log(response.data);
         setData(response.data);
       } catch (error) {
@@ -99,9 +115,55 @@ function Main() {
       setRandom10FData(randomDatas);
     }
   }, [data]);
-  setInterval(() => {  // 10초마다 변경
-    fNext()
+  setInterval(() => {
+    // 10초마다 변경
+    fNext();
   }, 10000);
+
+  const [festivalData, setFestivalData] = useState([]);
+  const [randomFestivalData, setRandomFestivalData] = useState({});
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await axios.post("http://localhost:3001/query", {
+          query: "SELECT * FROM festival WHERE image LIKE 'h%'",
+        });
+        console.log("ㅗ디ㅣ");
+        console.log(response.data);
+        console.log("ㅗ디ㅣ");
+        setFestivalData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(festivalData).length > 0) {
+      const randomDatas = [];
+      while (randomDatas.length < 10) {
+        const randomIndex = Math.floor(Math.random() * festivalData.length);
+        const randomData = festivalData[randomIndex];
+        if (!randomDatas.includes(randomData)) {
+          (async () => {
+            const img = await getMeta(randomData.image);
+            //console.log("안녕");
+            //console.log(img.naturalHeight + " " + img.naturalWidth);
+            if (img.naturalWidth < 700) {
+              // console.log("하이3");
+              // console.log("하이3");
+            }
+          })();
+          randomDatas.push(randomData);
+        }
+      }
+
+      setRandomFestivalData(randomDatas);
+      //console.log(randomDatas[0].image);
+      //console.log(randomFestivalData[0]);
+    }
+  }, [festivalData]);
 
   const [fPage, setFPage] = useState(0);
   const fNext = () => {
@@ -205,8 +267,7 @@ function Main() {
             onKeyPress={enterKeyPress}
           />
         </form>
-        <Link to="/regiondetail"
-          state={{ data: random10FData[fPage] }}>
+        <Link to="/regiondetail" state={{ data: random10FData[fPage] }}>
           {random10FData.length > 0 && (
             <div>
               <img
@@ -221,9 +282,67 @@ function Main() {
           )}
         </Link>
       </div>
+      <div className={styles.banner}>
+        <img
+          src={banner}
+          style={{
+            position: "absolute",
+            top: "800px",
+            zIndex: "-1",
+          }}
+        />
+      </div>
+
       <div className={styles.testWrap}>
         <div className={styles.containerFaker}></div>
         <div className={styles.contentContainer}>
+          <div className={styles.bannerOnText}>
+            {randomFestivalData[fPage] && (
+              <>
+                <h2 className={styles.bannerOnTextH2}>
+                  {randomFestivalData[fPage].title}
+                </h2>
+                <p className={styles.bannerOnTextP}>
+                  {randomFestivalData[fPage].addr} <br />
+                  {randomFestivalData[fPage].eventStartDate} ~{" "}
+                  {randomFestivalData[fPage].eventEndDate}
+                </p>
+              </>
+            )}
+          </div>
+          <div className={styles.festivalContainer}>
+            {randomFestivalData.length > 0 && (
+              <div className={styles.imageWrap}>
+                <img
+                  src={randomFestivalData[fPage].image}
+                  style={{ width: "100%" }}
+                />
+              </div>
+            )}
+          </div>
+          <div className={styles.boardUp}>
+            <div className={styles.boardImg}>
+              <img
+                src={img3}
+                style={{
+                  width: "100%",
+                }}
+              />
+            </div>
+            <div className={styles.boardTextBox}>
+              <span className={styles.boardText1}>
+                우리 함께 소통해 볼까요 ?
+              </span>
+              <br />
+              <span className={styles.boardText2}>
+                자유게시판을 활용해 자유롭게 소통하고,
+              </span>
+              <br />
+              <span className={styles.boardText3}>
+                함께 가요 게시판을 활용해 모임을 구성해 보세요!
+              </span>
+            </div>
+          </div>
           <div className={styles.boardViews}>
             <div className={styles.boardFree}>
               <div className={styles.boardTitle}>자유 게시판</div>
@@ -300,11 +419,6 @@ function Main() {
             <Floating />
           </div>
         </div>
-        <div
-          style={{
-            height: 5000,
-          }}
-        ></div>
       </div>
     </div>
   );
