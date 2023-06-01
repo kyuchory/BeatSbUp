@@ -69,9 +69,14 @@ function Mypage() {
                             ) : (
                                 data.map((item, index) => (
                                     <li className={styles.meetingList}>
-                                        <p>{item.name}</p>
-                                        <Link to={'/gather_modi'} state={{ name: item.name }}>o</Link>
-                                        <button onClick={() => drop(item.name)}>x</button>
+                                         <Link to='/gathering'
+                                            state={{
+                                                name:item.name,
+                                                admin:item.admin
+                                            }}
+                                        >{item.name} {item.admin}</Link>
+                                        <Link to={'/gather_modi'} state={{ name: item.name }}>수정</Link>
+                                        <button onClick={() => drop(item.name)}>삭제</button>
                                     </li>
                                 ))
                             )}
