@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
+import { CgProfile } from "react-icons/cg";
 
 import Header from "../components/Header";
 
@@ -12,6 +13,7 @@ import Pagination from "react-js-pagination";
 import Floating from "./schedule/Floating";
 
 function Main() {
+  const [islogin, setIslogin] = useState(false);
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
 
@@ -35,7 +37,7 @@ function Main() {
     }
   };
 
-  const [festivalData, setFestivalData] = useState({});
+  const [data, setData] = useState({});
   const [random10FData, setRandom10FData] = useState([]);
 
   const [boardFreeData, setBoardFreeData] = useState([]);
@@ -67,25 +69,39 @@ function Main() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   axios.get("http://localhost:3001/festival/show").then(function (response) {
-  //     setFestivalData(response.data);
-  //   });
-  // }, []);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.post("http://localhost:3001/query", {
+          query:
+            "SELECT * FROM sight WHERE cat LIKE 'A0101%' and image LIKE 'h%'",
+        });
+        console.log(response.data);
+        setData(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
 
-  // useEffect(() => {
-  //   if (Object.keys(festivalData).length > 0) {
-  //     const randomFestivals = [];
-  //     while (randomFestivals.length < 10) {
-  //       const randomIndex = Math.floor(Math.random() * festivalData.length);
-  //       const randomFestival = festivalData[randomIndex];
-  //       if (!randomFestivals.includes(randomFestival)) {
-  //         randomFestivals.push(randomFestival);
-  //       }
-  //     }
-  //     setRandom10FData(randomFestivals);
-  //   }
-  // }, [festivalData]);
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    if (Object.keys(data).length > 0) {
+      const randomDatas = [];
+      while (randomDatas.length < 10) {
+        const randomIndex = Math.floor(Math.random() * data.length);
+        const randomData = data[randomIndex];
+        if (!randomDatas.includes(randomData)) {
+          randomDatas.push(randomData);
+        }
+      }
+      setRandom10FData(randomDatas);
+    }
+  }, [data]);
+  setInterval(() => {  // 10초마다 변경
+    fNext()
+  }, 10000);
 
   const [fPage, setFPage] = useState(0);
   const fNext = () => {
@@ -110,18 +126,71 @@ function Main() {
   ////////
   return (
     <div className={styles.mainPageContainer}>
-      <Header />
+      <div className={styles.header}>
+        <div className={styles.logo}>
+          <Link to="/">
+            <img src="./logo.png" />
+          </Link>
+        </div>
+        <div className={styles.profile}>
+          <CgProfile size={"50px"} color="rgb(72, 72, 72)" cursor="pointer" />
+          <div className={styles.profileSelector}>
+            <div className={styles.profileSelect}>
+              <Link to="/mypage">내정보</Link>
+            </div>
+            <div className={styles.profileSelect}>
+              <Link to="./">정보 수정</Link>
+            </div>
+            <div className={styles.profileSelect}>
+              {islogin ? <div>로그아웃</div> : <div>로그인</div>}
+              <Link to="./">로그아웃</Link>
+            </div>
+          </div>
+        </div>
+        <div className={styles.menuContainer}>
+          <div className={styles.menus}>
+            <div className={styles.menu}>
+              <Link to="/recommand" className={styles.link}>
+                여행지 추천
+              </Link>
+            </div>
+            <div className={styles.menu}>
+              <Link to="/regions" className={styles.link}>
+                관광지 보기
+              </Link>
+              <ul className={styles.subMenu}>
+                <li>
+                  <Link to="/submenu1">시, 도 지역별</Link>
+                </li>
+              </ul>
+            </div>
+            <div className={styles.menu}>
+              <Link to="/boardList" className={styles.link}>
+                게시판
+              </Link>
+              <ul className={styles.subMenu}>
+                <li>
+                  <Link to="/submenu1">자유 게시판</Link>
+                </li>
+                <li>
+                  <Link to="/submenu2">함께가요 게시판</Link>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
       <div className={styles.imageContainer}>
         <AiFillCaretLeft
           size={50}
-          color="grey"
+          color="white"
           className={styles.imageLeft}
           cursor="pointer"
           onClick={() => fPrevious()}
         />
         <AiFillCaretRight
           size={50}
-          color="grey"
+          color="white"
           className={styles.imageRight}
           cursor="pointer"
           onClick={() => fNext()}
@@ -136,12 +205,19 @@ function Main() {
             onKeyPress={enterKeyPress}
           />
         </form>
-        <Link to="/">
+        <Link to="/regiondetail"
+          state={{ data: random10FData[fPage] }}>
           {random10FData.length > 0 && (
-            <img
-              src={random10FData[fPage].image}
-              style={{ maxWidth: "100%", height: "auto" }}
-            />
+            <div>
+              <img
+                src={random10FData[fPage].image}
+                style={{ height: "700px", width: "100%", objectFit: "cover" }}
+              />
+              <div className={styles.imageInfo}>
+                <h3>{random10FData[fPage].title}</h3>
+                <h4>{random10FData[fPage].addr}</h4>
+              </div>
+            </div>
           )}
         </Link>
       </div>

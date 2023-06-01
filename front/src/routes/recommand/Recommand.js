@@ -4,32 +4,26 @@ import Header from "../../components/Header";
 import styles from "./css/Recommand.module.css";
 import axios from "axios";
 
-import categoryData, { region } from "./datas";
+import categoryData, { region } from "../datas";
 
 function Recommand() {
   const navigate = useNavigate();
 
   const [selectedTopCategory, setSelectedTopCategory] = useState("");
   const [selectedMidCategory, setSelectedMidCategory] = useState("");
-  const [selectedSubCategory, setSelectedSubCategory] = useState("");
 
   const [resCount, setResCount] = useState(0);
 
   const handleTopCategorySelect = (topCategory) => {
     setSelectedTopCategory(topCategory);
     setSelectedMidCategory("");
-    setSelectedSubCategory("");
   };
 
   const handleMidCategorySelect = (midCategory) => {
     setSelectedMidCategory(midCategory);
-    setSelectedSubCategory("");
   };
 
-  const handleSubCategorySelect = (subCategory) => {
-    setSelectedSubCategory(subCategory);
-  };
-
+  const [isRegion, setIsRegion] = useState(false);
   const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
 
@@ -47,7 +41,6 @@ function Recommand() {
   const initAll = () => {
     setSelectedTopCategory("");
     setSelectedMidCategory("");
-    setSelectedSubCategory("");
     setSelectedDo("");
     setSelectedSi("");
   };
@@ -58,11 +51,9 @@ function Recommand() {
           "http://localhost:3001/data/recommand",
           {
             type: selectedTopCategory,
-            cat: selectedSubCategory
-              ? selectedSubCategory
-              : selectedMidCategory
-                ? selectedMidCategory
-                : "",
+            cat: selectedMidCategory
+              ? selectedMidCategory
+              : "",
             region: selectedSi ? selectedSi : selectedDo ? selectedDo : "",
           }
         );
@@ -76,7 +67,6 @@ function Recommand() {
   }, [
     selectedTopCategory,
     selectedMidCategory,
-    selectedSubCategory,
     selectedDo,
     selectedSi,
   ]);
@@ -86,34 +76,45 @@ function Recommand() {
       <Header />
       <div className={styles.contents}>
         <div>{resCount}개의 목적지가 존재합니다.</div>
-        <div className={styles.regionContainer}>
-          {true &&
-            region.map((area, index) => {
-              const doName = Object.keys(area)[0];
-              return (
-                <div key={index}>
-                  <h3
-                    className={styles.doName}
-                    onClick={() => handleDoSelect(doName)}
-                  >
-                    {doName}
-                  </h3>
-                  {selectedDo === doName && (
-                    <ul className={styles.cityList}>
-                      {area[doName].map((city, i) => (
-                        <li
-                          className={styles.cityItem}
-                          key={i}
-                          onClick={() => handleSiSelect(city)}
-                        >
-                          {city}
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
-              );
-            })}
+        <div className={styles.regionSelect}>
+          <div>지역을 선택하시겠습니까?</div>
+          <div onClick={() => setIsRegion(true)}>예</div>
+          <div onClick={() => setIsRegion(false)}>아니오</div>
+          <div className={styles.regionContainer}>
+            {isRegion && (
+              <div className={styles.regionContainer}>
+                {region.map((area, index) => {
+                  const doName = Object.keys(area)[0];
+                  const cities = area[doName]; // 도시 배열 추출
+
+                  return (
+                    <div key={index}>
+                      <h3
+                        className={styles.doName}
+                        onClick={() => handleDoSelect(doName)}
+                      >
+                        {doName}
+                      </h3>
+
+                      {selectedDo === doName && (
+                        <ul className={styles.cityList}>
+                          {cities.map((city, i) => (
+                            <li
+                              className={styles.cityItem}
+                              key={i}
+                              onClick={() => handleSiSelect(city)}
+                            >
+                              {city}
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+          </div>
         </div>
         <div className={styles.topcat}>
           {Object.keys(categoryData).map((topCategory) => (
@@ -140,30 +141,12 @@ function Recommand() {
               )
             )}
         </div>
-        <div className={styles.subcat}>
-          {selectedMidCategory &&
-            Object.keys(
-              categoryData[selectedTopCategory][selectedMidCategory]
-            ).map((subCategory) => (
-              <div
-                key={subCategory}
-                className={styles.selectSubcat}
-                onClick={() => handleSubCategorySelect(subCategory)}
-              >
-                {
-                  categoryData[selectedTopCategory][selectedMidCategory][
-                    subCategory
-                  ].title
-                }
-              </div>
-            ))}
-        </div>
         <button
           onClick={() => {
-            console.log("type : " + selectedTopCategory + "\ncat : " + selectedMidCategory + "\ncat : " + selectedSubCategory + "\nregion : " + selectedDo + selectedSi);
+            console.log("type : " + selectedTopCategory + "\ncat : " + selectedMidCategory + "\nregion : " + selectedDo + selectedSi);
             axios.post("http://localhost:3001/data/recommand", {
               type: selectedTopCategory,
-              cat: selectedSubCategory ? selectedSubCategory : selectedMidCategory ? selectedMidCategory : "",
+              cat: selectedMidCategory ? selectedMidCategory : "",
               region: selectedSi ? selectedSi : selectedDo ? selectedDo : "",
             })
               .then(function (response) {

@@ -7,6 +7,8 @@ import styles from './css/RecommandDetail.module.css'
 function RecommandDetail() {
     const location = useLocation();
 
+    const seed = new Date().getTime();
+
     const [datas, setDatas] = useState(null);
 
     useEffect(() => {
