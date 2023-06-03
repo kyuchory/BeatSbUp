@@ -115,17 +115,17 @@ function Main() {
       setRandom10FData(randomDatas);
     }
   }, [data]);
-  
+
   useEffect(() => {
     const interval = setInterval(() => {
       setFPage((prevFPage) => (prevFPage + 1) % 10);
     }, 10000);
-  
+
     return () => {
       clearInterval(interval);
     };
   }, []);
-  
+
   const [festivalData, setFestivalData] = useState([]);
   const [randomFestivalData, setRandomFestivalData] = useState({});
   useEffect(() => {
@@ -200,7 +200,7 @@ function Main() {
       <div className={styles.header}>
         <div className={styles.logo}>
           <Link to="/">
-            <img src="./logo.png" />
+            <img src="./logo44.png" />
           </Link>
         </div>
         <div className={styles.profile}>
@@ -291,6 +291,7 @@ function Main() {
           )}
         </Link>
       </div>
+      <div className={styles.testBOOOOOOOX}></div>
       <div className={styles.banner}>
         <img
           src={banner}
@@ -329,27 +330,28 @@ function Main() {
               </div>
             )}
           </div>
+          <div className={styles.line3}></div>
           <div className={styles.boardUp}>
             <div className={styles.boardImg}>
               <img
                 src={img3}
                 style={{
                   width: "100%",
+                  width: "900px",
+                  verticalAlign: "middle",
                 }}
-              />
+              ></img>
             </div>
             <div className={styles.boardTextBox}>
-              <span className={styles.boardText1}>
-                우리 함께 소통해 볼까요 ?
-              </span>
-              <br />
-              <span className={styles.boardText2}>
+              <p className={styles.boardText1}>우리 함께 소통해 볼까요?</p>
+
+              <p className={styles.boardText2}>
                 자유게시판을 활용해 자유롭게 소통하고,
-              </span>
-              <br />
-              <span className={styles.boardText3}>
+              </p>
+
+              <p className={styles.boardText3}>
                 함께 가요 게시판을 활용해 모임을 구성해 보세요!
-              </span>
+              </p>
             </div>
           </div>
           <div className={styles.boardViews}>

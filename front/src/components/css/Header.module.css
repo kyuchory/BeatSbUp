@@ -12,6 +12,7 @@ a {
 .logoContainer {
   height: 90px;
   text-align: center;
+  margin-bottom: 15px;
 }
 
 .profile {
