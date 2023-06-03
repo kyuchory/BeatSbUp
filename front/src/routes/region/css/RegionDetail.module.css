@@ -2,3 +2,32 @@
     width: 940px;
     margin: 0 auto;
 }
+
+.content{
+    margin-top:50px;
+}
+
+.title{
+    color:#222222
+}
+
+.addr{
+    text-align: right;
+    color:#444444
+}
+
+.imageBox{
+    text-align: center;
+    width:100%;
+    overflow: hidden;
+}
+
+.image{
+    object-fit:fill;
+    
+}
+
+.overview{
+    font-size: 1.2rem;
+    line-height: 40px;
+}

@@ -25,10 +25,15 @@ function RegionDetail() {
     return (
         <div className={styles.container}>
             <Header />
-            <div className={styles.title}>{data.title}</div>
-            <div className={styles.addr}>{data.addr}</div>
-            <img src={data.image} />
-            <div className={styles.overview}>{intro.overview}</div>
+            <div className={styles.content}>
+                <h1 className={styles.title}>{data.title}</h1>
+                <div className={styles.addr}>{data.addr}</div>
+                <div className={styles.imageBox}>
+                    <img src={data.image?data.image:'./defaultImage.png'} className={styles.image}/>
+                </div>
+                
+                <div className={styles.overview}>{intro.overview}</div>
+            </div>
 
         </div>
     );
