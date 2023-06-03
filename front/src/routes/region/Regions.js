@@ -1,15 +1,18 @@
 import styles from "./css/Regions.module.css";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import categoryData, { region } from "../datas";
 import axios from "axios";
+
+import { AiOutlinePlusSquare } from "react-icons/ai";
 
 import Pagination from "react-js-pagination";
 
 import Header from "../../components/Header";
 
 function Regions() {
-  const [selectedDo, setSelectedDo] = useState("");
+    const navigate = useNavigate();
+    const [selectedDo, setSelectedDo] = useState("");
   const [selectedSi, setSelectedSi] = useState("");
   const [selectedCat, setSelectedCat] = useState("");
   const [data, setData] = useState(null);
@@ -60,7 +63,7 @@ function Regions() {
             <div className={styles.regionSelect}>
             <div className={styles.do}>
               <div
-                className={styles.doName}
+                className={`${styles.doName} ${selectedDo === '' ? styles.selected : ""}`}
                 onClick={() => handleDo("")}
               >
                 전체
@@ -72,7 +75,7 @@ function Regions() {
                 return (
                   <div
                     key={index}
-                    className={styles.doName}
+                    className={`${styles.doName} ${selectedDo === doName ? styles.selected : ""}`}
                     onClick={() => handleDo(doName)}
                   >
                     {doName}
@@ -83,7 +86,7 @@ function Regions() {
             {selectedDo && (
               <div className={styles.si}>
                 <div
-                  className={styles.siName}
+                  className={`${styles.siName} ${selectedSi === '' ? styles.selected : ""}`}
                   onClick={() => handleSi("")}
                 >
                   전체
@@ -93,7 +96,7 @@ function Regions() {
                   .map((siName, index) => (
                     <div
                       key={index}
-                      className={styles.siName}
+                      className={`${styles.siName} ${selectedSi === siName ? styles.selected : ""}`}
                       onClick={() => handleSi(siName)}
                     >
                       {siName}
@@ -103,14 +106,14 @@ function Regions() {
             )}
           </div>
           <div className={styles.categorySelect}>
-            <div className={styles.cat} onClick={() => handleCat("")}>
+            <div className={`${styles.cat} ${selectedCat === '' ? styles.selected : ""}`} onClick={() => handleCat("")}>
               전체
             </div>
             {Object.keys(categoryData).map((topCategory) =>
               Object.keys(categoryData[topCategory]).map((midCategory) => (
                 <div
                   key={midCategory}
-                  className={styles.cat}
+                  className={`${styles.cat} ${selectedCat === midCategory ? styles.selected : ""}`}
                   onClick={() => handleCat(midCategory)}
                 >
                   {categoryData[topCategory][midCategory]?.title}
@@ -132,15 +135,24 @@ function Regions() {
               data.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => (
                 <div key={index} className={styles.list}>
                   <div className={styles.imgBox}>
-                    <img src={item.image} className={styles.img} />
+                    <img src={item.image?item.image:'defaultImage.png'} className={styles.img} />
                   </div>
                   <div className={styles.cont}>
-                    <div className={styles.title}>{item.title}</div>
+                    <h3 className={styles.title}>{item.title}</h3>
                     <div className={styles.title}>{item.addr}</div>
                     <div className={styles.cat}>
-                      {categoryData[item.contentTypeId]?.title}{" "}
-                      {categoryData[item.contentTypeId]?.[item.cat]}
+                    {categoryData[item.contentTypeId]?.title}{" "}
+                    {categoryData[item.contentTypeId]?.[item.cat]?.title}
                     </div>
+
+                    <AiOutlinePlusSquare 
+                    className={styles.icon} 
+                    size={'30px'}
+                    onClick={() => {
+                        navigate('/regiondetail', {
+                            state: { data:item }
+                          });
+                    }}/>
                   </div>
                 </div>
               ))}

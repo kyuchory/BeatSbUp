@@ -79,42 +79,46 @@ router.get("/init", (req, res, next) => {
 });
 
 router.post("/recommand", (req, res, next) => {
-  let type = req.body.type;
-  let cat = req.body.cat;
-  let region = req.body.region;
-
-  if (type == 12) type = [12, 14];
-  if (cat == "A04010120") cat = ["A04010100", "A04010200"];
-  else if (cat == "A04010340") cat = ["A04010300", "A04010400"];
-
-  let query = "SELECT * FROM sight";
-
-  if (type && type.length > 0) {
-    query += ` WHERE contentTypeId IN (${type})`;
-  }
-
-  if (region && region.length > 0) {
-    query +=
-      type && type.length > 0
-        ? ` AND addr LIKE '%${region}%'`
-        : ` WHERE addr LIKE '%${region}%'`;
-  }
-
-  if (cat && cat.length > 0) {
-    if (Array.isArray(cat)) {
-      const catConditions = cat.map((category) => `cat LIKE '${category}%'`);
-      const catQuery = catConditions.join(" OR ");
-      query += ` AND (${catQuery})`;
-    } else {
-      query += ` AND cat LIKE '${cat}%'`;
+    let type = req.body.type;
+    let cat = req.body.cat;
+    let region = req.body.region;
+  
+    if (type == 12) type = [12, 14];
+    if (cat == "A04010120") cat = ["A04010100", "A04010200"];
+    else if (cat == "A04010340") cat = ["A04010300", "A04010400"];
+  
+    let query = "SELECT * FROM sight";
+  
+    let conditions = [];
+  
+    if (type && type.length > 0) {
+      conditions.push(`contentTypeId IN (${type})`);
     }
-  }
-  console.log("query : " + query);
-
-  connection.query(query, function (error, results, fields) {
-    if (error) throw error;
-    res.json(results);
+  
+    if (region && region.length > 0) {
+      conditions.push(`addr LIKE '%${region}%'`);
+    }
+  
+    if (cat && cat.length > 0) {
+      if (Array.isArray(cat)) {
+        const catConditions = cat.map((category) => `cat LIKE '${category}%'`);
+        conditions.push(`(${catConditions.join(" OR ")})`);
+      } else {
+        conditions.push(`cat LIKE '${cat}%'`);
+      }
+    }
+  
+    if (conditions.length > 0) {
+      query += " WHERE " + conditions.join(" AND ");
+    }
+  
+    console.log("query : " + query);
+  
+    connection.query(query, function (error, results, fields) {
+      if (error) throw error;
+      res.json(results);
+    });
   });
-});
+  
 
 module.exports = router;
