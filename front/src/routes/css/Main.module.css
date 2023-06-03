@@ -67,7 +67,7 @@
   text-decoration: underline;
 }
 
-.profileSelect>a {
+.profileSelect > a {
   color: rgb(155, 155, 155);
 }
 
@@ -305,7 +305,7 @@
   /* position: sticky;
   top: 0; */
   position: sticky;
-  top: 0;
+  top: 100px;
 }
 
 .testWrap {

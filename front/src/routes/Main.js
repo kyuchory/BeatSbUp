@@ -17,6 +17,8 @@ import img3 from "./img/picnic5.jpg";
 import banner from "./img/banner.png";
 
 function Main() {
+  const [testId, setTestId] = useState("sls9905");
+
   const getMeta = (url) =>
     new Promise((resolve, reject) => {
       const img = new Image();
@@ -85,13 +87,11 @@ function Main() {
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("여기좀 봅시다2");
       try {
         const response = await axios.post("http://localhost:3001/query", {
           query:
             "SELECT * FROM sight WHERE cat LIKE 'A0101%' and image LIKE 'h%'",
         });
-        console.log("여기좀 봅시다");
         console.log(response.data);
         setData(response.data);
       } catch (error) {
@@ -176,7 +176,6 @@ function Main() {
     if (fPage == 0) setFPage(9);
     else setFPage(fPage - 1);
   };
-  
 
   //pagination --
   //실제로 데이터 받아오면 여기다가 넣기
@@ -236,10 +235,10 @@ function Main() {
               </Link>
               <ul className={styles.subMenu}>
                 <li>
-                  <Link to="/submenu1">자유 게시판</Link>
+                  <Link to="/boardList">자유 게시판</Link>
                 </li>
                 <li>
-                  <Link to="/submenu2">함께가요 게시판</Link>
+                  <Link to="/boardList_party">함께가요 게시판</Link>
                 </li>
               </ul>
             </div>

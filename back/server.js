@@ -307,7 +307,7 @@ app.post("/BoardWrite_party", (req, res) => {
   const image = req.body.image;
   const number = req.body.number;
   const sendData = { isSuccess: "" };
-  const name = req.body.gather_name
+  const name = req.body.gather_name;
 
   if (writer && title && content && regdate) {
     connection.query(
