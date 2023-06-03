@@ -7,21 +7,19 @@ import axios from "axios";
 
 function Header() {
   const [islogin, setIslogin] = useState(false);
-  axios.get('http://localhost:3001/authCheck')
-    .then(function (response) {
-      if (response.data.isLogin == 'False') {
-        setIslogin(false);
-      }
-      else {
-        setIslogin(true);
-      }
-    });
+  axios.get("http://localhost:3001/authCheck").then(function (response) {
+    if (response.data.isLogin == "False") {
+      setIslogin(false);
+    } else {
+      setIslogin(true);
+    }
+  });
 
   return (
     <div className={styles.container}>
       <div className={styles.logoContainer}>
         <Link to="/">
-          <img src="./logo.png" />
+          <img src="./logo44.png" styles={{}} />
         </Link>
       </div>
       <div className={styles.profile}>
