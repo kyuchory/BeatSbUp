@@ -57,8 +57,10 @@
 .boardTitleWrite {
 }
 .boardFileUpload {
+  padding-left: 10px;
 }
 .boardDatePicker {
+  padding-left: 10px;
   display: flex;
 }
 .boardStartParty {
