@@ -3,6 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import styles from "./css/Recommand.module.css";
 import axios from "axios";
+import { FaMonument } from "react-icons/fa"
+import { AiFillShopping } from "react-icons/ai"
+import { BiRun, BiSolidShoppingBags } from "react-icons/bi"
+import { MdFastfood } from "react-icons/md"
 
 import categoryData, { region } from "../datas";
 
@@ -63,6 +67,7 @@ function Recommand() {
       }
     };
 
+    console.log(categoryData)
     fetchData();
   }, [
     selectedTopCategory,
@@ -78,53 +83,73 @@ function Recommand() {
         <div>{resCount}개의 목적지가 존재합니다.</div>
         <div className={styles.regionSelect}>
           <div>지역을 선택하시겠습니까?</div>
-          <div onClick={() => setIsRegion(true)}>예</div>
-          <div onClick={() => setIsRegion(false)}>아니오</div>
+          <div className={styles.selector}>
+            <div className={styles.yesorno} onClick={() => setIsRegion(true)}>예</div>
+            <div className={styles.yesorno} onClick={() => {
+              setIsRegion(false);
+              setSelectedDo("");
+              setSelectedSi("");
+            }
+            }>아니오</div>
+          </div>
+          
           <div className={styles.regionContainer}>
             {isRegion && (
               <div className={styles.regionContainer}>
-                {region.map((area, index) => {
-                  const doName = Object.keys(area)[0];
-                  const cities = area[doName]; // 도시 배열 추출
-
-                  return (
-                    <div key={index}>
-                      <h3
-                        className={styles.doName}
+                <div className={styles.do}>
+                  {region.map((item, index) => {
+                    const doName = Object.keys(item)[0];
+                    return (
+                      <div
+                        key={index}
+                        className={`${styles.doName} ${selectedDo === doName ? styles.selected : ""}`}
                         onClick={() => handleDoSelect(doName)}
                       >
                         {doName}
-                      </h3>
-
-                      {selectedDo === doName && (
-                        <ul className={styles.cityList}>
-                          {cities.map((city, i) => (
-                            <li
-                              className={styles.cityItem}
-                              key={i}
-                              onClick={() => handleSiSelect(city)}
-                            >
-                              {city}
-                            </li>
-                          ))}
-                        </ul>
-                      )}
+                      </div>
+                    );
+                  })}
+                </div>
+                {selectedDo && (
+                  <div className={styles.si}>
+                    <div
+                      className={`${styles.siName} ${selectedSi === '' ? styles.selected : ""}`}
+                      onClick={() => handleSiSelect("")}
+                    >
+                      전체
                     </div>
-                  );
-                })}
+                    {region
+                      .find((item) => Object.keys(item)[0] === selectedDo)[selectedDo]
+                      .map((siName, index) => (
+                        <div
+                          key={index}
+                          className={`${styles.siName} ${selectedSi === siName ? styles.selected : ""}`}
+                          onClick={() => handleSiSelect(siName)}
+                        >
+                          {siName}
+                        </div>
+                      ))}
+                  </div>
+                )}
+                
               </div>
             )}
           </div>
         </div>
         <div className={styles.topcat}>
           {Object.keys(categoryData).map((topCategory) => (
-            <div
+            <div 
               key={topCategory}
-              className={styles.selectTopcat}
-              onClick={() => handleTopCategorySelect(topCategory)}
-            >
-              {categoryData[topCategory].title}
-            </div>
+              className={`${styles.selectTopcat} ${selectedTopCategory === topCategory ? styles.selected : ""}`}
+              onClick={() => handleTopCategorySelect(topCategory)}>
+              <div className={styles.title}>
+                {categoryData[topCategory].title}
+              </div>
+              {topCategory == 12 && <FaMonument size={'50px'}/>}
+              {topCategory == 28 && <BiRun size={'50px'}/>}
+              {topCategory == 38 && <AiFillShopping size={'50px'}/>}
+              {topCategory == 39 && <MdFastfood size={'50px'}/>}
+           </div>
           ))}
         </div>
         <div className={styles.midcat}>
@@ -133,7 +158,7 @@ function Recommand() {
               (midCategory) => (
                 <div
                   key={midCategory}
-                  className={styles.selectMidcat}
+                  className={`${styles.selectMidcat} ${selectedMidCategory === midCategory ? styles.selected : ""}`}
                   onClick={() => handleMidCategorySelect(midCategory)}
                 >
                   {categoryData[selectedTopCategory][midCategory].title}
