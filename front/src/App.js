@@ -46,9 +46,9 @@ function App() {
     <Router basename={process.env.PUBLIC_URL}>
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<MainTest />} />{" "}
+        <Route path="/" element={<Main />} />
         {/* 개발 초기 테스트용 페이지 전환할때 사용 */}
-        <Route path="/main" element={<Main />} />{" "}
+        <Route path="/main" element={<MainTest />} />
         {/* 추후에 path="/" 으로 변경 */}
         <Route path="/mypage" element={<Mypage />} />
         <Route path="/class" element={<Class />} />
