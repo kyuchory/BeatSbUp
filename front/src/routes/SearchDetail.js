@@ -69,7 +69,7 @@ function SearchDetail() {
                                         },
                                     })}>
                                 <div className={styles.imageContainer}>
-                                    <img src={`${item.firstimage}`} width="200px" className={styles.image} />
+                                    <img src={item.firstimage?item.firstimage:'defaultImage.png'} width="200px" className={styles.image} />
                                 </div>
                                 <div className={styles.info}>
                                     <div>{item.title}</div>

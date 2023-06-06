@@ -98,7 +98,7 @@
 
 .lists{
   width:100%;
-  
+  cursor: pointer;
 }
 
 .list{

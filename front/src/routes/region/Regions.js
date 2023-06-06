@@ -133,7 +133,12 @@ function Regions() {
           <div className={styles.lists}>
             {data &&
               data.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => (
-                <div key={index} className={styles.list}>
+                <div key={index} className={styles.list}
+                  onClick={() => {
+                    navigate('/regiondetail', {
+                        state: { data:item }
+                      });
+                }}>
                   <div className={styles.imgBox}>
                     <img src={item.image?item.image:'defaultImage.png'} className={styles.img} />
                   </div>
@@ -148,11 +153,7 @@ function Regions() {
                     <AiOutlinePlusSquare 
                     className={styles.icon} 
                     size={'30px'}
-                    onClick={() => {
-                        navigate('/regiondetail', {
-                            state: { data:item }
-                          });
-                    }}/>
+                    />
                   </div>
                 </div>
               ))}
