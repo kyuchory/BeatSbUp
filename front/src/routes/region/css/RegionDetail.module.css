@@ -23,7 +23,8 @@
 }
 
 .image {
-  object-fit: fill;
+  object-fit: contain;
+  width:100%;
 }
 .imgBox {
   margin-bottom: 50px;
