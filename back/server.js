@@ -29,9 +29,9 @@ app.use("/festival", festival);
 app.use("/gathering", gathering);
 app.use("/schedule", schedule);
 
-var MySQLStore = require("express-mysql-session")(session);
-var sessionStore = new MySQLStore(sessionOption);
-var sessionOption = {
+const MySQLStore = require("express-mysql-session")(session);
+
+const sessionOption = {
   host: "127.0.0.1",
   user: "manager",
   password: "test1234",
@@ -41,7 +41,7 @@ var sessionOption = {
   checkExpirationInterval: 10000, // 만료된 세션이 지워지는 빈도 (milliseconds)
   expiration: 1000 * 60 * 60 * 2, // 유효한 세션의 최대 기간 2시간으로 설정 (milliseconds)
 };
-
+const sessionStore = new MySQLStore(sessionOption);
 app.use(
   session({
     key: "session_cookie_name",

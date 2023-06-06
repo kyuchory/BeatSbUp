@@ -35,6 +35,7 @@ router.get("/checkDate", function (req, res) {
 });
 
 router.get("/addSch", function (req, res) {
+  console.log(req.query)
   connection.query(
     `INSERT INTO schedule (id, sight_id, start, end, date, offset) VALUES ('${req.query.id}', '${req.query.sight}', '${req.query.start}', '${req.query.end}', '${req.query.date}','${req.query.offset}');`,
     function (error, results, fields) {

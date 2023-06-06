@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import categoryData, { region } from "../datas";
 import axios from "axios";
+import AddSch from "../schedule/AddSch";
 
 import { AiOutlinePlusSquare } from "react-icons/ai";
 
@@ -17,9 +18,14 @@ function Regions() {
   const [selectedCat, setSelectedCat] = useState("");
   const [data, setData] = useState(null);
   const [dataLength, setDataLength] = useState(0);
-
+  const [sightId, setSightId] = useState(0);
   const [page, setPage] = useState(1);
   const [items] = useState(7);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [contentName, setContentName] = useState('');
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const handlePageChange = (page) => {
     setPage(page);
@@ -134,29 +140,47 @@ function Regions() {
             {data &&
               data.slice(items * (page - 1), items * (page - 1) + items).map((item, index) => (
                 <div key={index} className={styles.list}>
-                  <div className={styles.imgBox}>
+                  
+                  <div className={styles.imgBox}onClick={() => {
+                    navigate('/regiondetail', {
+                        state: { data:item }
+                      });
+                }}>
                     <img src={item.image?item.image:'defaultImage.png'} className={styles.img} />
                   </div>
                   <div className={styles.cont}>
-                    <h3 className={styles.title}>{item.title}</h3>
-                    <div className={styles.title}>{item.addr}</div>
-                    <div className={styles.cat}>
+                    <h3 className={styles.title}onClick={() => {
+                    navigate('/regiondetail', {
+                        state: { data:item }
+                      });
+                }}>{item.title}</h3>
+                    <div className={styles.title}onClick={() => {
+                    navigate('/regiondetail', {
+                        state: { data:item }
+                      });
+                }}>{item.addr}</div>
+                    <div className={styles.cat}onClick={() => {
+                    navigate('/regiondetail', {
+                        state: { data:item }
+                      });
+                }}>
                     {categoryData[item.contentTypeId]?.title}{" "}
                     {categoryData[item.contentTypeId]?.[item.cat]?.title}
                     </div>
-
                     <AiOutlinePlusSquare 
                     className={styles.icon} 
                     size={'30px'}
-                    onClick={() => {
-                        navigate('/regiondetail', {
-                            state: { data:item }
-                          });
-                    }}/>
+                    onClick={()=>{
+                      setIsModalOpen(true);
+                      setSightId(item.contentId);
+                      setContentName(item.title)
+                    }}
+                    />
                   </div>
                 </div>
               ))}
           </div>
+          <AddSch isOpen={isModalOpen} contentId={sightId} contentName={contentName} closeModal={closeModal} />
           <div className={styles.PaginationBox}>
             <Pagination
               className={styles.Pagination}

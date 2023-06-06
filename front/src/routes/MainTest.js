@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import "./modal.css";
 import axios from "axios";
+import AddSch from "./schedule/AddSch";
 // import axios from 'axios';
 
 import Header from "../components/Header";
@@ -34,13 +35,11 @@ const Modal = (props) => {
 };
 
 function MainTest() {
-  const [modalOpen, setModalOpen] = useState(false);
-  const openModal = () => {
-    setModalOpen(true);
-  };
-  const closeModal = () => {
-    setModalOpen(false);
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  
   // axios.get('http://localhost:3001/test').then(function (response) {
   //   console.log(response.data[0]);
   // });
@@ -144,11 +143,14 @@ function MainTest() {
       >
         로그인 테스트
       </button>
-      <Modal open={modalOpen} close={closeModal} header="일정에 추가">
+      {/* <Modal open={modalOpen} close={closeModal} header="일정에 추가">
         날짜 : <textarea></textarea>
         시간 : <textarea></textarea>
-      </Modal>
+      </Modal> */}
+       <button onClick={openModal}>Open Modal</button>
+       <AddSch isOpen={isModalOpen} content="Hi. It's me." closeModal={closeModal} />
     </div>
+
   );
 }
 

@@ -109,14 +109,14 @@ function Floating() {
               onClick={() => select2(index)}
               className={styles.selButton2s}
             >
-              {index}일차
+              {index+1}일차
             </button>
           ) : (
             <button
               onClick={() => select2(index)}
               className={styles.selButton2}
             >
-              {index}일차
+              {index+1}일차
             </button>
           )
         )}

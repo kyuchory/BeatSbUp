@@ -98,7 +98,7 @@
 
 .lists{
   width:100%;
-  
+  cursor: pointer;
 }
 
 .list{
@@ -137,6 +137,7 @@
   size:50px;
   color:#555555;
   cursor: pointer;
+  z-index: 10;
 }
 
 .PaginationBox {
