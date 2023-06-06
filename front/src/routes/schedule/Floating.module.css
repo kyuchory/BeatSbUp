@@ -37,6 +37,7 @@
   height: 70%;
   flex-grow: 1;
   border: none;
+  border-radius: 15px;
 }
 
 .selButton:hover {
