@@ -88,6 +88,11 @@
 .BoardListEach:not(:first-child) {
   border-top: 1px solid #e8e8e8;
 }
+.BoardListEach {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
 
 .PaginationBox {
   display: flex;
@@ -144,4 +149,7 @@
 }
 .listLink:hover {
   text-decoration: underline;
+}
+.BoardListEach :first-child {
+  margin-top: 15px;
 }

@@ -163,6 +163,7 @@
 .imageInfo {
   position: absolute;
   color: white;
+  text-shadow: -1px 0px gray, 0px 1px gray, 1px 0px gray, 0px -1px gray;
   font-size: 1.3rem;
   bottom: 20px;
   right: 20px;

@@ -55,27 +55,29 @@ const BoardList_party = () => {
                   }}
                   className={styles.listLink}
                 >
-                  <ul
-                    style={{
-                      marginTop: 5,
-                    }}
-                  >
-                    <li>{p.title}</li>
-                    <li>{p.view_count} 구현해야댐</li>
-                    <li>{dayjs(p.regdate).format("YYYY/MM/DD")}</li>
-                    <li>댓글수 구현</li>
-                    <li>{p.writer}</li>
-                  </ul>
-                  <ul
-                    style={{
-                      marginTop: 5,
-                    }}
-                  >
-                    <li>여행 일자</li>
-                    <li>{dayjs(p.start_date).format("YYYY/MM/DD")}</li>
-                    <li>~</li>
-                    <li>{dayjs(p.end_date).format("YYYY/MM/DD")}</li>
-                  </ul>
+                  <div className={styles.BoardListEach}>
+                    <ul
+                      style={{
+                        marginTop: 5,
+                      }}
+                    >
+                      <li>{p.title}</li>
+                      <li>{p.view_count} 구현해야댐</li>
+                      <li>{dayjs(p.regdate).format("YYYY/MM/DD")}</li>
+                      <li>댓글수 구현</li>
+                      <li>{p.writer}</li>
+                    </ul>
+                    <ul
+                      style={{
+                        marginTop: 5,
+                      }}
+                    >
+                      <li>여행 일자</li>
+                      <li>{dayjs(p.start_date).format("YYYY/MM/DD")}</li>
+                      <li>~</li>
+                      <li>{dayjs(p.end_date).format("YYYY/MM/DD")}</li>
+                    </ul>
+                  </div>
                 </Link>
               ))}
           </div>

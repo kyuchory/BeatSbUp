@@ -140,3 +140,12 @@
 .listLink:hover {
   text-decoration: underline;
 }
+
+.BoardListEach {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.BoardListEach :first-child {
+  margin-top: 15px;
+}
