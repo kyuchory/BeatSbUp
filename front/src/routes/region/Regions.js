@@ -22,7 +22,8 @@ function Regions() {
   const [page, setPage] = useState(1);
   const [items] = useState(7);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const [contentName, setContentName] = useState('');
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
@@ -172,13 +173,14 @@ function Regions() {
                     onClick={()=>{
                       setIsModalOpen(true);
                       setSightId(item.contentId);
+                      setContentName(item.title)
                     }}
                     />
                   </div>
                 </div>
               ))}
           </div>
-          <AddSch isOpen={isModalOpen} content={sightId} closeModal={closeModal} />
+          <AddSch isOpen={isModalOpen} contentId={sightId} contentName={contentName} closeModal={closeModal} />
           <div className={styles.PaginationBox}>
             <Pagination
               className={styles.Pagination}

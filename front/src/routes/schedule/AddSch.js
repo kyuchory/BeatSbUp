@@ -8,7 +8,7 @@ import "react-clock/dist/Clock.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-function AddSch({isOpen, content, closeModal}) {
+function AddSch({isOpen, contentName, contentId, closeModal}) {
   const [testId, setTestId] = useState("sls9905");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -59,8 +59,8 @@ function AddSch({isOpen, content, closeModal}) {
 
   function addSchedule() {
     let datasight = "";
-    if(content){
-      datasight = content
+    if(contentId){
+      datasight = contentId
     }
     else{
       datasight = sight
@@ -165,8 +165,8 @@ function AddSch({isOpen, content, closeModal}) {
       <div>
         종료시간 : <TimePicker onChange={onChange2} value={value2} />
       </div>
-        {content ? 
-        <div>장소 : {content}</div> :
+        {contentId ? 
+        <div>장소 : {contentName}</div> :
           <div>장소 : <input onChange={handleChange} value={sight}></input></div>
         }
         <br/>
