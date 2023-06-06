@@ -299,6 +299,7 @@ function Main() {
             position: "absolute",
             top: "800px",
             zIndex: "-1",
+            width: "100%",
           }}
         />
       </div>

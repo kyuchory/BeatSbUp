@@ -68,7 +68,7 @@ function Floating() {
 
   useEffect(() => {
     fetchSch();
-  }, [selected2]);
+  }, [selected2, date]);
 
   return (
     <div className={styles.container}>
