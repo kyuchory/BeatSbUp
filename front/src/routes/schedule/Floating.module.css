@@ -19,13 +19,13 @@
 }
 
 .selGath::-webkit-scrollbar-thumb {
-  height: 30%; 
-  background: #8af421; 
+  height: 30%;
+  background: #8af421;
   border-radius: 10px;
 }
 
 .selGath::-webkit-scrollbar-track {
-  background: rgba(33, 122, 244, 0.1); 
+  background: rgba(33, 122, 244, 0.1);
 }
 .selButton {
   align-items: center;
@@ -131,6 +131,10 @@
   overflow-y: scroll;
   flex-direction: column;
 }
+.schedule::-webkit-scrollbar {
+  display: none;
+}
+
 .ele {
   padding-left: 10px;
   padding-right: 10px;
