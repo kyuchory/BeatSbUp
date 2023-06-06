@@ -15,17 +15,17 @@
   overflow-x: scroll;
 }
 .selGath::-webkit-scrollbar {
-  width: 8px; /* ?ㅽ겕濡ㅻ컮???덈퉬 */
+  width: 8px;
 }
 
 .selGath::-webkit-scrollbar-thumb {
-  height: 30%; /* ?ㅽ겕濡ㅻ컮??湲몄씠 */
-  background: #8af421; /* ?ㅽ겕濡ㅻ컮???됱긽 */
+  height: 30%; 
+  background: #8af421; 
   border-radius: 10px;
 }
 
 .selGath::-webkit-scrollbar-track {
-  background: rgba(33, 122, 244, 0.1); /*?ㅽ겕濡ㅻ컮 ??諛곌꼍 ?됱긽*/
+  background: rgba(33, 122, 244, 0.1); 
 }
 .selButton {
   align-items: center;
@@ -63,6 +63,7 @@
   width: 55px;
   height: 75%;
 }
+
 .info {
   flex: 1.5;
   margin: auto;
@@ -77,7 +78,7 @@
   overflow-x: scroll;
 }
 .pickdate::-webkit-scrollbar {
-  width: 4px; /* ?ㅽ겕濡ㅻ컮???덈퉬 */
+  width: 4px;
 }
 
 .pickdate::-webkit-scrollbar-thumb {
