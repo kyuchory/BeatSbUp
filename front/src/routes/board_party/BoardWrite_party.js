@@ -63,7 +63,7 @@ function BoardWrite_party() {
 
   function insert() {
     const oneDay = 24 * 60 * 60 * 1000; // 1일의 밀리초 수
-    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay));
+    const diffDays = Math.round(Math.abs((startDate - endDate) / oneDay))+1;
     axios
       .get("http://localhost:3001/gathering/insert", {
         params: {
