@@ -8,7 +8,7 @@ import "react-clock/dist/Clock.css";
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-function AddSch() {
+function AddSch({isOpen, content, closeModal}) {
   const [testId, setTestId] = useState("sls9905");
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -58,13 +58,21 @@ function AddSch() {
   }
 
   function addSchedule() {
+    let datasight = "";
+    if(content){
+      datasight = content
+    }
+    else{
+      datasight = sight
+    }
+
     axios
       .get("http://localhost:3001/schedule/addSch", {
         params: {
           id: date[0]?.id,
           start: value,
           end: value2,
-          sight: sight,
+          sight: datasight,
           date: dayjs(date[0]?.start).format("YYYY-MM-DD"),
           offset: selected2,
         },
@@ -81,7 +89,30 @@ function AddSch() {
   }, [data, selected]);
 
   return (
-    <div className={styles.container}>
+    <div style={{ display: isOpen ? "block" : "none" }} className={styles.container}>
+      <div style={{
+          width: 400,
+          height:400,
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100vw",
+          height: "100vh",
+          backgroundColor: "rgba(0, 0, 0, 0.35)",
+        }}></div>
+           <div
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: 800,
+          maxWidth: "100%",
+          maxHeight: "90%",
+          overflowY: "auto",
+          backgroundColor: "white",
+        }}
+      >
       <div>
         모임 :
         <div className={styles.gathering}>
@@ -134,11 +165,15 @@ function AddSch() {
       <div>
         종료시간 : <TimePicker onChange={onChange2} value={value2} />
       </div>
-      <div>
-        장소 : <input onChange={handleChange} value={sight}></input>
-        <br />
-      </div>
+        {content ? 
+        <div>장소 : {content}</div> :
+          <div>장소 : <input onChange={handleChange} value={sight}></input></div>
+        }
+        <br/>
       <button onClick={addSchedule}>추가하기</button>
+      <button onClick={closeModal}>Close</button>
+      
+      </div>
     </div>
   );
 }
