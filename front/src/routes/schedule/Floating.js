@@ -17,8 +17,8 @@ function Floating() {
     setSelected2(index);
   }
 
-  function fetchData() {
-    axios
+  async function fetchData() {
+    await axios
       .get("http://localhost:3001/gathering/select", {
         params: {
           user: "sls9905",
@@ -28,9 +28,9 @@ function Floating() {
         setData(response.data);
       });
   }
-  function fetchGathering() {
+  async function fetchGathering() {
     if (data[selected]?.name && data[selected]?.admin) {
-      axios
+      await axios
         .get("http://localhost:3001/schedule/checkDate", {
           params: {
             name: data[selected].name,
@@ -42,9 +42,9 @@ function Floating() {
         });
     }
   }
-  function fetchSch() {
+  async function fetchSch() {
     if (date[0]?.id) {
-      axios
+      await axios
         .get("http://localhost:3001/schedule/getSchedule", {
           params: {
             id: date[0]?.id,
@@ -57,7 +57,16 @@ function Floating() {
         });
     }
   }
-
+  async function delSch(aid){
+    await axios.get("http://localhost:3001/schedule/delSch",{
+      params:{
+        aid : aid
+      },
+    }).then(function(response){
+      alert("삭제되었습니다.")
+      window.location.reload()
+    })
+  }
   useEffect(() => {
     fetchData();
   }, []);
@@ -68,7 +77,7 @@ function Floating() {
 
   useEffect(() => {
     fetchSch();
-  }, [selected2, date]);
+  }, [selected2,date]);
 
   return (
     <div className={styles.container}>
@@ -109,14 +118,14 @@ function Floating() {
               onClick={() => select2(index)}
               className={styles.selButton2s}
             >
-              {index + 1}일차
+              {index+1}일차
             </button>
           ) : (
             <button
               onClick={() => select2(index)}
               className={styles.selButton2}
             >
-              {index + 1}일차
+              {index+1}일차
             </button>
           )
         )}
@@ -131,7 +140,7 @@ function Floating() {
               <div className={styles.schduleTime}>
                 일정 시간 : {item.start} ~ {item.end}
               </div>
-              <div style={{ textAlign: "right" }}>x</div>
+              <div onClick={()=>delSch(item.aid)} style={{ textAlign: "right" }}>{item.aid}</div>
             </div>
           ))
         )}
